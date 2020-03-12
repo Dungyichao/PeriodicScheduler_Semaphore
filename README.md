@@ -1,13 +1,12 @@
 # Task Scheduler
 Task scheduling is an important concept in Real-Time Operating Systems (Task, thread, process are interchangeable). Take your daily life for example, when trying to listen music on your cellphone while surfing news website through the internet (reaceiving data from wi-fi router in the mean time). How does it work under only one core of CPU (CPU can only execute one command at a time)? Each task such as open the browser may requires hundred or thousand line of codes, then how can we listen music and open website at the same time? It comes to task scheduling. 
 
-# 1. What is the Goal and what you need to have <br />
+# 1. What is the Goal <br />
 Let's first take a look what are we going to achieve after this tutorial.
 <p align="center">
 <img src="/img/semaphore.gif" height="80%" width="80%"> 
 </p>  
 That is really simple!!! You can see 3 line of string Task0, Task1, Task2 with different color. Totally we have three tasks, and each task displays their own string. Please refer to the following link to read the tutorial of displaying color and character on LCD display:   
-
 [link](https://github.com/Dungyichao/STM32F4-LCD_ST7735s)
 
 
