@@ -5,7 +5,8 @@ Task scheduling is an important concept in Real-Time Operating Systems (Task, th
 <img src="/img/scheduler_concept_1.gif" height="40%" width="40%"> 
 </p>  
 <br />
-You can think of Task 0 as music player, Task 1 as Chrome web browser, and Task 2 as processing Wi-Fi data. There are two way of task scheduling: <b>Preemptive Scheduling</b> and <b>Non-Preemptive Scheduling</b>. Reading resource: [link](https://www.geeksforgeeks.org/preemptive-and-non-preemptive-scheduling) 
+You can think of Task 0 as music player, Task 1 as Chrome web browser, and Task 2 as processing Wi-Fi data. There are two way of task scheduling: <b>Preemptive Scheduling</b> and <b>Non-Preemptive Scheduling</b>. Reading resource: [link](https://www.geeksforgeeks.org/preemptive-and-non-preemptive-scheduling/)
+
 
 <p align="center">
 <table>
