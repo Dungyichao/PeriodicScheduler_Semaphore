@@ -23,11 +23,9 @@ Reference: [link](https://www.geeksforgeeks.org/preemptive-and-non-preemptive-sc
         </tr>
         <tr>
             <td align="center">Non-Preemptive Scheduling</td>
-            <td align="Left">Wi-Fi, Bluetooth, Cellular</td>
+            <td align="Left">once the resources (CPU cycles) is allocated to a process, the process holds the CPU till it gets terminated or it reaches a waiting state. In case of non-preemptive scheduling does not interrupt a process running CPU in middle of the execution. Instead, it waits till the process complete its CPU burst time and then it can allocate the CPU to another process. <br /> <br /> Algorithms: Shortest Job First (SJF basically non preemptive) and Priority (non preemptive version), etc.</td>
         </tr>
     </tbody>
 </table>
 </p>
-
-Each task is being processed in a fixed amount of time. However, the amount of time can be configured based on different task.  
 
