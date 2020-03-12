@@ -7,9 +7,7 @@ Task scheduling is an important concept in Real-Time Operating Systems (Task, th
 <br />
 You can think of Task 0 as music player, Task 1 as Chrome web browser, and Task 2 as processing Wi-Fi data. There are two way of task scheduling: <b>Preemptive Scheduling</b> and <b>Non-Preemptive Scheduling</b>. 
 
-Reading resource: [link](https://www.geeksforgeeks.org/preemptive-and-non-preemptive-scheduling/)
-
-
+Reference: [link](https://www.geeksforgeeks.org/preemptive-and-non-preemptive-scheduling/)
 <p align="center">
 <table>
     <thead>
@@ -21,7 +19,7 @@ Reading resource: [link](https://www.geeksforgeeks.org/preemptive-and-non-preemp
     <tbody>
         <tr>
             <td align="center">Preemptive Scheduling</td>
-            <td align="center">SPI, I2C, UART, Ethernet</td>
+            <td align="center">The resources (mainly CPU cycles) are allocated to the process for the limited amount of time and then is taken away, and the process is again placed back in the ready queue if that process still has CPU burst time remaining. That process stays in ready queue till it gets next chance to execute. <br /> Algorithms: Round Robin (RR),Shortest Remaining Time First (SRTF), Priority (preemptive version), etc.</td>
         </tr>
         <tr>
             <td align="center">Non-Preemptive Scheduling</td>
