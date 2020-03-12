@@ -19,11 +19,11 @@ Reference: [link](https://www.geeksforgeeks.org/preemptive-and-non-preemptive-sc
     <tbody>
         <tr>
             <td align="center">Preemptive Scheduling</td>
-            <td align="center">The resources (mainly CPU cycles) are allocated to the process for the limited amount of time and then is taken away, and the process is again placed back in the ready queue if that process still has CPU burst time remaining. That process stays in ready queue till it gets next chance to execute. <br /> Algorithms: Round Robin (RR),Shortest Remaining Time First (SRTF), Priority (preemptive version), etc.</td>
+            <td align="Left">The resources (mainly CPU cycles) are allocated to the process for the limited amount of time and then is taken away, and the process is again placed back in the ready queue if that process still has CPU burst time remaining. That process stays in ready queue till it gets next chance to execute. <br /> <br /> Algorithms: Round Robin (RR),Shortest Remaining Time First (SRTF), Priority (preemptive version), etc.</td>
         </tr>
         <tr>
             <td align="center">Non-Preemptive Scheduling</td>
-            <td align="center">Wi-Fi, Bluetooth, Cellular</td>
+            <td align="Left">Wi-Fi, Bluetooth, Cellular</td>
         </tr>
     </tbody>
 </table>
