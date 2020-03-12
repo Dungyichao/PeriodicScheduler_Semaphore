@@ -5,5 +5,5 @@ Task scheduling is an important concept in Real-Time Operating Systems. Take you
 <img src="/img/scheduler_concept.gif" height="40%" width="40%"> 
 </p>  
 <br />
-
+You can think of Task 0 as music player, Task 1 as Chrome web browser, and Task 2 as processing Wi-Fi data. Each task is being processed in a fixed amount of time. However, the amount of time can be configured based on different task.  
 
