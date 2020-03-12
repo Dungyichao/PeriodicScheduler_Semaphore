@@ -6,7 +6,7 @@ Let's first take a look what are we going to achieve after this tutorial.
 <p align="center">
 <img src="/img/semaphore.gif" height="80%" width="80%"> 
 </p>  
-That is really simple!!! You can see 3 line of string Task0, Task1, Task2 with different color. Totally we have three tasks, and each task displays their own string. Please refer to the following link to read the tutorial of displaying color and character on LCD display:
+That is really simple!!! You can see 3 line of string Task0, Task1, Task2 with different color. Totally we have three tasks, and each task keep displaying their own string. Please refer to the following link to read the tutorial of displaying color and character on LCD display:
 
 [link](https://github.com/Dungyichao/STM32F4-LCD_ST7735s)
 
