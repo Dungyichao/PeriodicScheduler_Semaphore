@@ -46,7 +46,7 @@ Reference: [link](https://www.geeksforgeeks.org/preemptive-and-non-preemptive-sc
 The idea is basically the same as the first animation. Now, we add more detail in the animation. We all know CPU use <b>registers</b> to store computing data or fetch computing data for temporary. When you are calculating some complicated math problem, you write down the value on paper (registers), when you read the equation and calculate the equation in your mind (CPU) and then write down the result back to the paper.
 
 <p align="center">
-<img src="/img/RoundRobbin_Stack.png" height="60%" width="60%">
+<img src="/img/RoundRobbin_Stack.png" height="70%" width="70%">
 </p>
 <br />
 
@@ -61,11 +61,11 @@ The idea is basically the same as the first animation. Now, we add more detail i
     <tbody>
         <tr>
             <td align="center">Registers</td>
-            <td align="Left">Registers store value for CPU fetching or storing temporary data</td>
+            <td align="Left">Registers store value for CPU fetching or storing temporary data. The data accessing speed of registers is way more faster than RAM.</td>
         </tr>
         <tr>
             <td align="center">Stack</td>
-            <td align="Left">When exception happens, CPU would store some of the registers value into the stack.</td>
+            <td align="Left">When exception happens, CPU would store some of the registers value into the stack. We assign a place in RAM as stack.</td>
         </tr>
     </tbody>
 </table>
