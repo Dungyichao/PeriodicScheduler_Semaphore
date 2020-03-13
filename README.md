@@ -72,4 +72,8 @@ The idea is basically the same as the first animation. Now, we add more detail (
 </p>
 
 ### 3.1 The Essential Elements of the Code
-There are some elements and concept (based on Cortex M4) require more elaboration before we start introducing the code. 
+There are some elements and concept (based on Cortex M4) require more elaboration before we start introducing the code.
+<p align="center">
+<img src="/img/elements.JPG" height="70%" width="70%">
+</p>
+<br />
