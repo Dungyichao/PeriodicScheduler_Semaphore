@@ -43,7 +43,7 @@ Reference: [link](https://www.geeksforgeeks.org/preemptive-and-non-preemptive-sc
 </p>
 
 # 3. Implement Preemptive Scheduling with Round Robin <br />
-The idea is basically the same as the first animation. Now, we add more detail (<b>registers</b> and <b>stack</b>) in the animation. We all know CPU use <b>registers</b> to store computing data or fetch computing data for temporary. When you are calculating some complicated math problem, you write down the value on paper (registers), when you read the equation and calculate the equation in your mind (CPU) and then write down the result back to the paper. 
+The idea is basically the same as the first animation. Now, we add more detail (<b>registers</b> and <b>stack</b>) in the animation. We all know CPU use <b>registers</b> to store computing data or fetch computing data for temporary. When you are calculating some complicated math problem, you write down the value on sticky note (registers), when you read the equation and calculate the equation in your mind (CPU) and then write down the result back to the sticky note. While you are solving math problem, your Mom calls you, then you quickly write down the lastest calculation result (in registers) onto a paper (<b>stack</b>). You can now write down what your Mom tells you on the sticky note. After finishing the call, you can go back to solve your math problem by restoring what you left on the paper to the sticky note and keep going on. 
 
 <p align="center">
 <img src="/img/RoundRobbin_Stack.png" height="70%" width="70%">
