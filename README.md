@@ -43,10 +43,30 @@ Reference: [link](https://www.geeksforgeeks.org/preemptive-and-non-preemptive-sc
 </p>
 
 # 3. Implement Preemptive Scheduling with Round Robin <br />
-The idea is basically the same as the first animation. 
+The idea is basically the same as the first animation. Now, we add more detail in the animation. We all know CPU use <b>registers</b> to store computing data or fetch computing data for temporary. When you are calculating some complicated math problem, you write down the value on paper (registers), when you read the equation and calculate the equation in your mind (CPU) and then write down the result back to the paper.
 
 <p align="center">
-<img src="/img/RoundRobbin_Stack.png" height="80%" width="80%">
+<img src="/img/RoundRobbin_Stack.png" height="60%" width="60%">
 </p>
 <br />
 
+<p align="center">
+<table>
+    <thead>
+        <tr>
+            <th align="center">Item</th>
+            <th align="center">Example</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td align="center">Registers</td>
+            <td align="Left">Registers store value for CPU fetching or storing temporary data</td>
+        </tr>
+        <tr>
+            <td align="center">Stack</td>
+            <td align="Left">When exception happens, CPU would store some of the registers value into the stack.</td>
+        </tr>
+    </tbody>
+</table>
+</p>
