@@ -77,3 +77,36 @@ There are some elements and concept (based on Cortex M4) require more elaboratio
 <img src="/img/elements1.JPG" height="80%" width="80%">
 </p>
 <br />
+
+<p align="center">
+<table>
+    <thead>
+        <tr>
+            <th align="center">Element</th>
+            <th align="center">Concept</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td align="center">Registers</td>
+            <td align="Left"></td>
+        </tr>        
+        <tr>
+            <td align="center">Stack</td>
+            <td align="Left"></td>
+        </tr>
+        <tr>
+            <td align="center">Task</td>
+            <td align="Left"></td>
+        </tr>
+        <tr>
+            <td align="center">Context Switch</td>
+            <td align="Left"></td>
+        </tr>
+        <tr>
+            <td align="center">Exception</td>
+            <td align="Left"></td>
+        </tr>
+    </tbody>
+</table>
+</p>
