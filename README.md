@@ -65,7 +65,7 @@ The idea is basically the same as the first animation. Now, we add more detail i
         </tr>
         <tr>
             <td align="center">Stack</td>
-            <td align="Left">When exception happens, CPU would store some of the registers value into the stack. We assign a place in RAM as stack.</td>
+            <td align="Left">We assign a place in RAM as stack. When exception happens, CPU would store some of the registers value into the stack. After the CPU finish handling the exception, CPU can restore those data (stored in the stack) back to registers and keep doing on what the CPU has left. </td>
         </tr>
     </tbody>
 </table>
