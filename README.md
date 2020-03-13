@@ -44,3 +44,9 @@ Reference: [link](https://www.geeksforgeeks.org/preemptive-and-non-preemptive-sc
 
 # 3. Implement Preemptive Scheduling with Round Robin <br />
 The idea is basically the same as the first animation. 
+
+<p align="center">
+<img src="/img/RoundRobbin_Stack.png" height="80%" width="80%">
+</p>
+<br />
+
