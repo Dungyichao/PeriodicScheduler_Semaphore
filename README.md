@@ -1,5 +1,5 @@
 # Task Scheduler
-Task scheduling is an important concept in Real-Time Operating Systems (Task, thread, process are interchangeable). Take your daily life for example, when trying to listen music on your cellphone while surfing news website through the internet (reaceiving data from wi-fi router in the mean time). How does it work under only one core of CPU (CPU can only execute one command at a time)? Each task such as open the browser may requires hundred or thousand line of codes, then how can we listen music and open website at the same time? It comes to task scheduling. 
+Task scheduling is an important concept in Real-Time Operating Systems (Task, thread, process are interchangeable). Take your daily life for example, when trying to listen music on your cellphone while surfing news website through the internet (reaceiving data from wi-fi router in the mean time). How does it work under only one core of CPU (CPU can only execute one command at a time)? Each task such as open the browser may requires hundred or thousand line of codes, then how can we listen music and open website at the same time? It comes to task scheduling. We will use <b>STM32F411RE Nucleo64</b> and <b>ST7735S TFT LCD</b> to demonstrate the concept. 
 
 # 1. What is the Goal <br />
 Let's first take a look what are we going to achieve after this tutorial.
@@ -70,3 +70,6 @@ The idea is basically the same as the first animation. Now, we add more detail (
     </tbody>
 </table>
 </p>
+
+### 3.1 The Essential Elements of the Code
+There are some elements and concept (based on Cortex M4) require more elaboration before we start introducing the code. 
