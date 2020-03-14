@@ -121,7 +121,7 @@ There are some elements and concept (based on Cortex M4) require more elaboratio
         </tr>
 	<tr>
             <td align="center">Thread Control Block</th>
-            <td align="Left">Think of this as a summary of all the tasks. It should contain the information of where the current task's instruction and where is the next task instruction.</th>
+            <td align="Left">Think of this as a summary of all the tasks. It should contain the information of where the current task's information and where is the next task information.</th>
         </tr>
     </tbody>
 </table>
@@ -150,4 +150,23 @@ The visualization of the stack is in the following
 <img src="/img/stack_init.png" height="70%" width="70%">
 </p>
 
+#### 3.2.2 Thread Control Block <br />
 
+```c++
+struct tcb{
+  int32_t *stackPt;       
+  struct tcb *nextPt;  
+};
+
+typedef struct tcb tcbType;     //name tcb as tcbType
+tcbType tcbs[NUM_OF_THREADS];   //tcbs[0][0] stores task0 stack pointer, tcbs[0][1] stores task1 stack pointer
+tcbType *currentPt;             //point to the current running task's tcb
+
+tcbs[0].nextPt = &tcbs[1];      // after doing task0, next should do task1
+tcbs[1].nextPt = &tcbs[2];      // after doing task1, next should do task2 
+tcbs[2].nextPt = &tcbs[0];      // after doing task2, next should do task0
+
+tcbs[0].stackPt = &TCB_STACK[0][84]; //mimic R0~R15
+tcbs[1].stackPt = &TCB_STACK[1][84]; //mimic R0~R15
+tcbs[2].stackPt = &TCB_STACK[2][84]; //mimic R0~R15
+```
