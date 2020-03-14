@@ -262,3 +262,9 @@ The visualization of the SysTick_Handler and the stack is in the following
 <p align="center">
 <img src="/img/Process3.png" height="90%" width="90%">
 </p>
+
+#### 3.2.4 Result <br />
+Let's execute the code (provided in the folder Simple_code) and enter the debug view to monitor count0, count1, count2. You will see those 3 values are counting at the same time.
+<p align="center">
+<img src="/img/simple_result.gif" height="70%" width="70%">
+</p>
