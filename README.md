@@ -162,11 +162,13 @@ typedef struct tcb tcbType;     //name tcb as tcbType
 tcbType tcbs[NUM_OF_THREADS];   //tcbs[0][0] stores task0 stack pointer, tcbs[0][1] stores task1 stack pointer
 tcbType *currentPt;             //point to the current running task's tcb
 
-tcbs[0].nextPt = &tcbs[1];      // after doing task0, next should do task1
-tcbs[1].nextPt = &tcbs[2];      // after doing task1, next should do task2 
-tcbs[2].nextPt = &tcbs[0];      // after doing task2, next should do task0
+currentPt = &tcbs[0];      //We will first do task 0, so store the stack0 pointer
 
-tcbs[0].stackPt = &TCB_STACK[0][84]; //mimic R0~R15
-tcbs[1].stackPt = &TCB_STACK[1][84]; //mimic R0~R15
-tcbs[2].stackPt = &TCB_STACK[2][84]; //mimic R0~R15
+tcbs[0].nextPt = &tcbs[1];      // after doing task0, next should do task1, so store stack1 pointer
+tcbs[1].nextPt = &tcbs[2];      // after doing task1, next should do task2, so store stack2 pointer
+tcbs[2].nextPt = &tcbs[0];      // after doing task2, next should do task0, so store stack0 pointer
+
+tcbs[0].stackPt = &TCB_STACK[0][84]; //mimic R0~R12, R14, R15, xPSR   (we do this for context switch)
+tcbs[1].stackPt = &TCB_STACK[1][84]; //mimic R0~R12, R14, R15, xPSR   (we do this for context switch)
+tcbs[2].stackPt = &TCB_STACK[2][84]; //mimic R0~R12, R14, R15, xPSR   (we do this for context switch)
 ```
