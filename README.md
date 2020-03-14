@@ -100,17 +100,13 @@ There are some elements and concept (based on Cortex M4) require more elaboratio
         <tr>
             <td align="center">Task</td>
             <td align="Left">Keep doing some jobs in a task. Let's take a look at a simple task we are going to implement in our tutorial.<pre>
-c++
-  {
-    void Task0(void)
+ void TaskX(void)
     {
 	while(1)
 	{
-       		count = count + 1;
-	
+       		countX = countX + 1;	
 	}
     }
-}
 </pre></td>
         </tr>
         <tr>
