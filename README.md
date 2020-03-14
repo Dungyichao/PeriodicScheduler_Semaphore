@@ -279,11 +279,11 @@ SysTick->CTRL =0x00000007;
 ### 3.3 Result <br />
 Let's execute the code (provided in the folder Simple_code) and enter the debug view to monitor count0, count1, count2. You will see those 3 values are counting at the same time.
 <p align="center">
-<img src="/img/simple_result.gif" height="70%" width="70%">
+<img src="/img/simple_result.gif" height="60%" width="60%">
 </p>
 
 #### 3.3.1 (Optional) 
-If we add the following function in the task0 right after count0 = count0 + 1, the result will act a little bit different.
+If we add the following function in the task0 right after count0 = count0 + 1, the result will act a little bit different. count0 will add up more slowly than the other count value. What osThreadYeild does is to call the 
 ```c++
 #define INTCTRL         (*((volatile uint32_t *)0xE000ED04))
 void osThreadYield(void)
@@ -293,3 +293,6 @@ void osThreadYield(void)
 
 }
 ```
+<p align="center">
+<img src="/img/simple_result_yield.gif" height="60%" width="60%">
+</p>
