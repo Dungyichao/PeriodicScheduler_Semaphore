@@ -120,11 +120,11 @@ There are some elements and concept (based on Cortex M4) require more elaboratio
 		    </p><br />In this section, we only use <b>Systick</b> as a trigger to let us perform the context switch. A SysTick exception is an exception the system timer generates when it reaches zero. Software can also generate a SysTick exception. In an OS environment, the processor can use this exception as system tick.<br />Reading resource: https://interrupt.memfault.com/arm-cortex-m-exceptions-and-nvic#built-in-exceptions</td>
         </tr>
 	<tr>
-            <th align="center">Thread Control Block</th>
-            <th align="Left">Think of this as a summary of all the tasks. It should contain the information of where the current task's instruction and where is the next task instruction.</th>
+            <td align="center">Thread Control Block</th>
+            <td align="Left">Think of this as a summary of all the tasks. It should contain the information of where the current task's instruction and where is the next task instruction.</th>
         </tr>
     </tbody>
 </table>
 </p>
 
-### 3.2 Implement Stack and Context Switch
+### 3.2 Implement Stack, Thread Control Block and Context Switch
