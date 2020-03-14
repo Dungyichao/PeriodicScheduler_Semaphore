@@ -127,4 +127,27 @@ There are some elements and concept (based on Cortex M4) require more elaboratio
 </table>
 </p>
 
-### 3.2 Implement Stack, Thread Control Block and Context Switch
+### 3.2 Implement Stack, Thread Control Block and Context Switch <br />
+#### 3.2.1 Stack <br />
+We initialize a 2D array, and each element datatype is int32_t. 
+```c++
+#define NUM_OF_THREADS  3        
+#define STACKSIZE   100
+int32_t TCB_STACK[NUM_OF_THREADS][STACKSIZE];
+```
+We also put some information into the stack in advance.
+```c++
+TCB_STACK[0][99] = 0x01000000;   //xPSR will be reset
+TCB_STACK[1][99] = 0x01000000;   //xPSR will be reset
+TCB_STACK[2][99] = 0x01000000;   //xPSR will be reset
+
+TCB_STACK[0][98] = (int32_t)(task0); // The address where store the instruction of task0
+TCB_STACK[1][98] = (int32_t)(task1); // The address where store the instruction of task1
+TCB_STACK[2][98] = (int32_t)(task2); // The address where store the instruction of task2
+```
+The visualization of the stack is in the following
+<p align="center">
+<img src="/img/stack_init.png" height="70%" width="70%">
+</p>
+
+
