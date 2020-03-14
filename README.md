@@ -129,7 +129,7 @@ There are some elements and concept (based on Cortex M4) require more elaboratio
 
 ### 3.2 Implement Stack, Thread Control Block and Context Switch <br />
 #### 3.2.1 Stack <br />
-We initialize a 2D array, and each element datatype is int32_t. 
+We initialize a 2D array names TCB_STACK, and each element datatype is int32_t. 
 ```c++
 #define NUM_OF_THREADS  3        
 #define STACKSIZE   100
