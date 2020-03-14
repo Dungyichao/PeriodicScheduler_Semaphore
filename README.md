@@ -227,4 +227,7 @@ SysTick_Handler             ;save r0,r1,r2,r3,r12,lr,pc,psr
     CPSIE   I                  
     BX      LR 
 ```
-
+The visualization of the SysTick_Handler and the stack is in the following 
+<p align="center">
+<img src="/img/Process3.png" height="90%" width="90%">
+</p>
