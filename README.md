@@ -102,12 +102,12 @@ There are some elements and concept (based on Cortex M4) require more elaboratio
             <td align="Left">Keep doing some jobs in a task. Let's take a look at a simple task we are going to implement in our tutorial.<pre>
  void TaskX(void)
     {
-	while(1)
+	while(true)
 	{
        		countX = countX + 1;	
 	}
     }
-</pre></td>
+</pre>This is simply a function with no return value and no input parameter. Inside the function is a while loop which will never stop. We will have three tasks, Task0(keep counting count0), Task1(keep counting count1), Task2(keep counting count2). In normal condition, whenever you enter a while(true) loop, you will never go out this loop untill you close the program because the condition is always true. You can add more instructions inside the while loop. </td>
         </tr>
         <tr>
             <td align="center">Context Switch</td>
