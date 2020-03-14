@@ -181,6 +181,10 @@ The visualization of the Thread Control Block and the stack is in the following
 The assembly code in the following will only be executed once. This function brings the Task0 information stored in stack0 to the register. Most important of all is that it stored the task0 address into Link Register (R14) so that when processor exit this function, the processor will be led to task0 and do the task in task0. 
 
 ```c++
+		AREA |.text|, CODE, READONLY, ALIGN=2
+                THUMB
+		EXPORT  osSchedulerLaunch
+		
 osSchedulerLaunch
     LDR     R0, =currentPt         
     LDR     R2, [R0]       ; R2 =currentPt       
@@ -199,3 +203,24 @@ osSchedulerLaunch
 ```
 
 #### 3.2.3 Context Switch (Part II) <br />
+The assembly code in the following will be executed when the SysTick_Handler be called by the Systick Exception occured. When the Systick Exception occured, the processor will first store the data on the registers (R0~R3, R12, LR, PC, xPSR) into the stack (pointed by the current active SP which should be the current task's stack) and then executes the following code.
+```c++
+		AREA |.text|, CODE, READONLY, ALIGN=2
+                THUMB
+		EXTERN  currentPt
+		EXPORT	SysTick_Handler
+
+SysTick_Handler             ;save r0,r1,r2,r3,r12,lr,pc,psr      
+    CPSID   I                  
+    PUSH    {R4-R11}        ;save r4,r5,r6,r7,r8,r9,r10,r11   
+    LDR     R0, =currentPt  ; r0 points to currentPt       
+    LDR     R1, [R0]        ; r1= currentPt   
+    STR     SP, [R1]           
+    LDR     R1, [R1,#4]     ; r1 =currentPt->next   
+    STR     R1, [R0]        ;currentPt =r1   
+    LDR     SP, [R1]        ;SP= currentPt->stackPt   
+    POP     {R4-R11}           
+    CPSIE   I                  
+    BX      LR 
+```
+
