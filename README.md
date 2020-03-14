@@ -94,7 +94,8 @@ There are some elements and concept (based on Cortex M4) require more elaboratio
         <tr>
             <td align="center">Stack</td>
             <td align="Left">Think of the stack as a container which implement Last-In-First-Out(LIFO) rule. Take a look at the following animation to understand the stack operation rule.<br /><br /><p align="center">
-<img src="/img/stack.gif" height="50%" width="50%"></p><br />However, Cortex-M4 implements the stack in a different way. It implements a <b>full-descending stack</b>.<p><code>PUSH</code> stores registers on the stack, with the lowest numbered register using the lowest memory address and the highest numbered register using the highest memory address.</p></td>
+<img src="/img/stack.gif" height="50%" width="50%"></p><br />However, Cortex-M4 implements the stack in a different way. It implements a <b>full-descending stack</b>.<p><code>PUSH</code> stores registers on the stack, with the lowest numbered register using the lowest memory address and the highest numbered register using the highest memory address.<br /><br /><p align="center">
+<img src="/img/full-descend-stack.gif" height="70%" width="70%"></p><br /></p></td>
         </tr>
         <tr>
             <td align="center">Task</td>
