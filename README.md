@@ -263,7 +263,23 @@ The visualization of the SysTick_Handler and the stack is in the following
 <img src="/img/Process3.png" height="90%" width="90%">
 </p>
 
-#### 3.2.4 Result <br />
+#### 3.2.4 Configure SysTick <br />
+```c++
+#define BUS_FREQ   16000000
+#define QUANTA	1
+uint32_t MILLIS_PRESCALER;
+
+MILLIS_PRESCALER=(BUS_FREQ/1000);
+SysTick->CTRL =0;
+SysTick->VAL=0;
+NVIC_SetPriority(SysTick_IRQn, 0x0);   // This is not necessary because we don't implement other interrupt.
+SysTick->LOAD = (QUANTA * MILLIS_PRESCALER)-1;
+SysTick->CTRL =0x00000007;
+```
+
+
+
+### 3.3 Result <br />
 Let's execute the code (provided in the folder Simple_code) and enter the debug view to monitor count0, count1, count2. You will see those 3 values are counting at the same time.
 <p align="center">
 <img src="/img/simple_result.gif" height="70%" width="70%">
