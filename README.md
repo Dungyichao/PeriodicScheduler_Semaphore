@@ -201,6 +201,10 @@ osSchedulerLaunch
     ALIGN
     END
 ```
+The visualization of the osSchedulerLaunch and the stack is in the following 
+<p align="center">
+<img src="/img/Process2.png" height="100%" width="100%">
+</p>
 
 #### 3.2.3 Context Switch (Part II) <br />
 The assembly code in the following will be executed when the SysTick_Handler be called by the Systick Exception occured. When the Systick Exception occured, the processor will first store the data on the registers (R0~R3, R12, LR, PC, xPSR) into the stack (pointed by the current active SP which should be the current task's stack) and then executes the following code.
