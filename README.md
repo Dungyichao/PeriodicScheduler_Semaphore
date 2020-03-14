@@ -176,3 +176,26 @@ The visualization of the Thread Control Block and the stack is in the following
 <p align="center">
 <img src="/img/Stack_TCB.JPG" height="70%" width="70%">
 </p>
+
+#### 3.2.3 Context Switch (Part I) <br />
+The assembly code in the following will only be executed once. This function brings the Task0 information stored in stack0 to the register. Most important of all is that it stored the task0 address into Link Register (R14) so that when processor exit this function, the processor will be led to task0 and do the task in task0. 
+
+```c++
+osSchedulerLaunch
+    LDR     R0, =currentPt         
+    LDR     R2, [R0]       ; R2 =currentPt       
+    LDR     SP, [R2]       ;SP = currentPt->stackPt    
+    POP     {R4-R11}          
+    POP     {R0-R3}            
+    POP     {R12}
+    ADD     SP,SP,#4           
+    POP     {LR}               
+    ADD     SP,SP,#4         
+    CPSIE   I                 
+    BX      LR                 
+
+    ALIGN
+    END
+```
+
+#### 3.2.3 Context Switch (Part II) <br />
