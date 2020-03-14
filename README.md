@@ -127,7 +127,43 @@ There are some elements and concept (based on Cortex M4) require more elaboratio
 </table>
 </p>
 
-### 3.2 Implement Stack, Thread Control Block and Context Switch <br />
+### 3.2 Implement Task, Stack, Thread Control Block and Context Switch <br />
+#### 3.2.0 Task <br />
+We initialize 3 task functions. This is simply a function with no return value and no input parameter. Inside the function is a while loop which will never stop. 
+```c++
+uint32_t count0,count1,count2;
+
+void Task0(void)
+{
+	while(1)
+	{
+		count0++;
+	}
+	
+}
+
+
+void Task1(void)
+{
+	while(1)
+	{
+		count1++;
+	}
+	
+}
+
+
+void Task2(void)
+{
+	while(1)
+	{
+		count2++;
+	}
+	
+}
+
+```
+
 #### 3.2.1 Stack <br />
 We initialize a 2D array names TCB_STACK, and each element datatype is int32_t. 
 ```c++
