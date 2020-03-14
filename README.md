@@ -117,7 +117,7 @@ There are some elements and concept (based on Cortex M4) require more elaboratio
             <td align="center">Exception</td>
             <td align="Left">Exception is anything that breaks the normal program flow, and invokes a handler from the vector table, and Interrupts are a subset of Exceptions, coming from the peripherals outside the ARM core. Exceptions have an Exception Number, starting from 0. Interrupts have an IRQ Number, starting from 0. Because all Interrupts are Exceptions, they all get an Exception Number, which is 16 higher than the IRQ Number. Exceptions that are not Interrupts have IRQ Numbers too, which by extension fall into the range from -16 to -1. <p align="center">
 <img src="/img/exception_vector.JPG" height="70%" width="70%">
-</p></td>
+</p><br />In this section, we only use SysTick as a trigger to perform the context switch.</td>
         </tr>
     </tbody>
 </table>
