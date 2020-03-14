@@ -99,7 +99,19 @@ There are some elements and concept (based on Cortex M4) require more elaboratio
         </tr>
         <tr>
             <td align="center">Task</td>
-            <td align="Left"></td>
+            <td align="Left">Keep doing some jobs in a task. Let's take a look at a simple task we are going to implement in our tutorial. 
+    ```c++
+                void Task0(void)
+{
+	while(1)
+	{
+       count0 = count0 + 1;
+	
+	}
+}
+                
+    ```
+    </td>
         </tr>
         <tr>
             <td align="center">Context Switch</td>
