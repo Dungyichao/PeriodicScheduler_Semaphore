@@ -94,24 +94,24 @@ There are some elements and concept (based on Cortex M4) require more elaboratio
         <tr>
             <td align="center">Stack</td>
             <td align="Left">Think of the stack as a container which implement Last-In-First-Out(LIFO) rule. Take a look at the following animation to understand the stack operation rule.<br /><br /><p align="center">
-<img src="/img/stack.gif" height="50%" width="50%"></p><br />However, Cortex-M4 implements the stack in a different way. It implements a <b>full-descending stack</b>(http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0552a/BABIAJHJ.html) .<br /><p><code>PUSH</code> stores registers on the stack, with the lowest numbered register using the lowest memory address and the highest numbered register using the highest memory address.<br /><p><code>POP</code> loads registers from the stack, with the lowest numbered register using the lowest memory address and the highest numbered register using the highest memory address.</p><br /><p align="center">
+<img src="/img/stack.gif" height="50%" width="50%"></p><br />However, Cortex-M4 implements the stack in a different way. It implements a <b>full-descending stack</b>(http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.dui0552a/BABIAJHJ.html) .<br /><br /><p><code>PUSH</code> stores registers on the stack, with the lowest numbered register using the lowest memory address and the highest numbered register using the highest memory address.<br /><p><code>POP</code> loads registers from the stack, with the lowest numbered register using the lowest memory address and the highest numbered register using the highest memory address.</p><br /><p align="center">
 <img src="/img/full-descend-stack.gif" height="70%" width="70%"></p><br /></p></td>
         </tr>
         <tr>
             <td align="center">Task</td>
-            <td align="Left">Keep doing some jobs in a task. Let's take a look at a simple task we are going to implement in our tutorial. 
-    ```c++
-                void Task0(void)
-{
+            <td align="Left">Keep doing some jobs in a task. Let's take a look at a simple task we are going to implement in our tutorial.<pre>
+c++
+  {
+    void Task0(void)
+    {
 	while(1)
 	{
-       count0 = count0 + 1;
+       		count = count + 1;
 	
 	}
+    }
 }
-                
-    ```
-    </td>
+</pre></td>
         </tr>
         <tr>
             <td align="center">Context Switch</td>
