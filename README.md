@@ -276,6 +276,16 @@ NVIC_SetPriority(SysTick_IRQn, 0x0);   // This is not necessary because we don't
 SysTick->LOAD = (QUANTA * MILLIS_PRESCALER)-1;
 SysTick->CTRL =0x00000007;
 ```
+#### 3.2.5 (Optional)  <br />
+```c++
+#define INTCTRL         (*((volatile uint32_t *)0xE000ED04))
+void osThreadYield(void)
+{ 
+   SysTick->VAL=0;
+   INTCTRL = 0x04000000; // trigger SysTick
+
+}
+```
 
 
 
