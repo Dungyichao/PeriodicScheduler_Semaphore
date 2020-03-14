@@ -172,3 +172,7 @@ tcbs[0].stackPt = &TCB_STACK[0][84]; //mimic R0~R12, R14, R15, xPSR   (we do thi
 tcbs[1].stackPt = &TCB_STACK[1][84]; //mimic R0~R12, R14, R15, xPSR   (we do this for context switch)
 tcbs[2].stackPt = &TCB_STACK[2][84]; //mimic R0~R12, R14, R15, xPSR   (we do this for context switch)
 ```
+The visualization of the Thread Control Block and the stack is in the following
+<p align="center">
+<img src="/img/Stack_TCB.JPG" height="70%" width="70%">
+</p>
