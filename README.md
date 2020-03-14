@@ -111,7 +111,7 @@ There are some elements and concept (based on Cortex M4) require more elaboratio
         </tr>
         <tr>
             <td align="center">Context Switch</td>
-            <td align="Left">The operation of switching from one task to another is known as a context switch. A Real Time Operating System (RTOS) will typically provide this functionality.link: (https://interrupt.memfault.com/blog/cortex-m-rtos-context-switching) <br /></td>
+            <td align="Left">The operation of switching from one task to another is known as a context switch. A Real Time Operating System (RTOS) will typically provide this functionality.Reference link: (https://interrupt.memfault.com/blog/cortex-m-rtos-context-switching) <br /> We have three tasks and each task keep doing their own job without breaking the loop, then how can we do task0, task1, task2? Context switch comes to the place and will switch task to another and then after visiting all the tasks, it will come back loop through all the tasks again and again.</td>
         </tr>
         <tr>
             <td align="center">Exception</td>
