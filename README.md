@@ -93,7 +93,9 @@ There are some elements and concept (based on Cortex M4) require more elaboratio
         </tr>        
         <tr>
             <td align="center">Stack</td>
-            <td align="Left"></td>
+            <td align="Left">Think of the stack as a container which implement Last-In-First-Out(LIFO) rule. <br /><p align="center">
+<img src="/img/stack.gif" height="70%" width="70%"> 
+</p></td>
         </tr>
         <tr>
             <td align="center">Task</td>
