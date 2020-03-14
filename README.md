@@ -111,7 +111,7 @@ There are some elements and concept (based on Cortex M4) require more elaboratio
         </tr>
         <tr>
             <td align="center">Context Switch</td>
-            <td align="Left"></td>
+            <td align="Left">The operation of switching from one task to another is known as a context switch. A Real Time Operating System (RTOS) will typically provide this functionality.link: (https://interrupt.memfault.com/blog/cortex-m-rtos-context-switching) <br /></td>
         </tr>
         <tr>
             <td align="center">Exception</td>
