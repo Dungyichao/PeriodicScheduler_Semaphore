@@ -89,7 +89,7 @@ There are some elements and concept (based on Cortex M4) require more elaboratio
     <tbody>
         <tr>
             <td align="center">Registers</td>
-            <td align="Left"></td>
+            <td align="Left"><b>R0~R12</b>: general-purpose registers<br /><b>R13(SP)</b>: Stack Pointer. There are 2 kinds, Main Stack Pointer(MSP) and Process Stack Pointer(PSP). When an exception happens, a stack frame (R0~R3, R12, R14, R15, xPSR) gets pushed to the currently active stack pointer.</td>
         </tr>        
         <tr>
             <td align="center">Stack</td>
