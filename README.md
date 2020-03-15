@@ -306,5 +306,5 @@ void osThreadYield(void)
 
 The information of the ICSR pleas refer to the Cortex-M4 Generic User Guide pdf file or the following image.
 <p align="center">
-<img src="/img/ICSR.png" height="80%" width="80%">
+<img src="/img/ICSR.png" height="100%" width="100%">
 </p>
