@@ -315,7 +315,7 @@ The information of the ICSR pleas refer to the Cortex-M4 Generic User Guide pdf 
 
 # 4. Process Synchronization
 We are using <b>Semaphore</b> to achieve process synchronization in the multiprocessing environment. It is like passing one token around these tasks. Only the task with the token can be executed. Please refer to the following link for more information of the Semaphore.
-[Semaphores in Process Synchronization](https://www.geeksforgeeks.org/semaphores-in-process-synchronization/)
+[Semaphores in Process Synchronization](https://www.geeksforgeeks.org/semaphores-in-process-synchronization/),
 [Process Synchronization](https://www.geeksforgeeks.org/introduction-of-process-synchronization/)
 
 # 5. Implement on LCD
