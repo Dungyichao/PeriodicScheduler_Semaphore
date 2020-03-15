@@ -281,7 +281,11 @@ Since the SysTick timer counts down to 0, if you want to set the SysTick interva
 you should set the reload value (SysTick->LOAD) to 999
 */
 ```
-For more SysTick configure, please refer to the following link: https://www.sciencedirect.com/topics/engineering/systick-interrupt
+For more SysTick configure, please refer to the Cortex-M4 Devices Generic Use Guide (page 4-33) or the following link: https://www.sciencedirect.com/topics/engineering/systick-interrupt
+
+<p align="center">
+<img src="/img/Systick_ctrl.png" height="100%" width="100%">
+</p>
 
 ### 3.3 Result <br />
 Let's execute the code (provided in the folder Simple_code) and enter the debug view to monitor count0, count1, count2. You will see those 3 values are counting at the same time.
