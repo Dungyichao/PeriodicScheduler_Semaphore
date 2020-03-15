@@ -270,12 +270,16 @@ The visualization of the SysTick_Handler and the stack is in the following
 uint32_t MILLIS_PRESCALER;
 
 MILLIS_PRESCALER=(BUS_FREQ/1000);
-SysTick->CTRL =0;
-SysTick->VAL=0;
+SysTick->CTRL =0;   //Offset: 0x000 (R/W)  SysTick Control and Status Register
+SysTick->VAL=0;     //Offset: 0x008 (R/W)  SysTick Current Value Register
 NVIC_SetPriority(SysTick_IRQn, 0x0);   // This is not necessary because we don't implement other interrupt.
-SysTick->LOAD = (QUANTA * MILLIS_PRESCALER)-1;
+SysTick->LOAD = (QUANTA * MILLIS_PRESCALER)-1;   //Offset: 0x004 (R/W)  SysTick Reload Value Register
 SysTick->CTRL =0x00000007;
 ```
+Let's talk about clock. 
+
+
+
 ### 3.3 Result <br />
 Let's execute the code (provided in the folder Simple_code) and enter the debug view to monitor count0, count1, count2. You will see those 3 values are counting at the same time.
 <p align="center">
