@@ -277,8 +277,8 @@ SysTick->LOAD = (QUANTA * MILLIS_PRESCALER)-1;   //Offset: 0x004 (R/W)  SysTick 
 SysTick->CTRL =0x00000007;
 
 /*
-Since the SysTick timer counts down to 0, if you want to set the SysTick interval to 1000, you should set the reload value 
-(SysTick->LOAD) to 999
+Since the SysTick timer counts down to 0, if you want to set the SysTick interval to 1000, 
+you should set the reload value (SysTick->LOAD) to 999
 */
 ```
 For more SysTick configure, please refer to the following link: https://www.sciencedirect.com/topics/engineering/systick-interrupt
