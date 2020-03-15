@@ -292,11 +292,11 @@ Let's execute the code (provided in the folder Simple_code) and enter the debug 
 #### 3.3.1 (Optional) 
 If we add the following function in the task0 right after count0 = count0 + 1, the result will act a little bit different. count0 will add up more slowly than the other count value. What osThreadYeild does is to call the 
 ```c++
-#define INTCTRL         (*((volatile uint32_t *)0xE000ED04))
+#define ICSR         (*((volatile uint32_t *)0xE000ED04))   //(ICSR: Interrupt control and state register)
 void osThreadYield(void)
 { 
    SysTick->VAL=0;
-   INTCTRL = 0x04000000; // trigger SysTick
+   ICSR = 0x04000000; //  Bit26. Change SysTick exception state to pending. trigger SysTick  
 
 }
 ```
