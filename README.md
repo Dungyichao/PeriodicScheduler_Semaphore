@@ -313,7 +313,12 @@ The information of the ICSR pleas refer to the Cortex-M4 Generic User Guide pdf 
 <img src="/img/ICSR.png" height="100%" width="100%">
 </p>
 
-# 4. Implement on LCD
+# 4. Process Synchronization
+We are using <b>Semaphore</b> to achieve process synchronization in the multiprocessing environment. It is like passing one token around these tasks. Only the task with the token can be executed. Please refer to the following link for more information of the Semaphore.
+[Semaphores in Process Synchronization](https://www.geeksforgeeks.org/semaphores-in-process-synchronization/)
+[Process Synchronization](https://www.geeksforgeeks.org/introduction-of-process-synchronization/)
+
+# 5. Implement on LCD
 We are approaching the goal. However, we cannot not directly apply the same code from the previous LCD tutorial ( [link](https://github.com/Dungyichao/STM32F4-LCD_ST7735s) ) to the code here. The LCD tutorial use SysTick_Handler() to trigger the countdown of the HAL_Delay(). In this Task Scheduler, we are using SysTick_Handler() to do the context switch, thus, we need to use other timer to trigger the countdown for the HAL_Delay(). We will show you how to achieve it now.
 
 ### 4.1 Configure CubeMX
