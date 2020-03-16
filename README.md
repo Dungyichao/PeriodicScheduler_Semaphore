@@ -294,7 +294,7 @@ Let's execute the code (provided in the folder Simple_code) and enter the debug 
 </p>
 
 #### 3.3.1 (Optional) 
-If we add the following function in the task0 right after count0 = count0 + 1, the result will act a little bit different. count0 will add up more slowly than the other count value. What osThreadYeild does is to make the SysTick timer current value to 0 and set the SysTick exception state to pending. Therefore, the SysTick_Handler will be called and performs the context switching to the next task. 
+If we add the following function in every task right after countX = countX + 1, the result will act a little bit different. Each countX will be add up only once and then the counting resource will be handed to the next task. What osThreadYeild does is to make the SysTick timer current value to 0 and set the SysTick exception state to pending. Therefore, the SysTick_Handler will be called and performs the context switching to the next task. 
 ```c++
 #define ICSR         (*((volatile uint32_t *)0xE000ED04))   //(ICSR: Interrupt control and state register)
 void osThreadYield(void)
@@ -305,7 +305,7 @@ void osThreadYield(void)
 }
 ```
 <p align="center">
-<img src="/img/simple_result_yield.gif" height="60%" width="60%">
+<img src="/img/simple_yield_result.gif" height="60%" width="60%">
 </p>
 
 The information of the ICSR pleas refer to the Cortex-M4 Generic User Guide pdf file or the following image.
