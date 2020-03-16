@@ -320,6 +320,7 @@ We are using <b>Semaphore</b> to achieve process synchronization in the multipro
 
 In the following, we will introduce Cooperative spin-lock semaphore.
 [reference link](http://users.ece.utexas.edu/~valvano/EE345M/view06_semaphores.pdf)
+(please see page 7).
 
 
 # 5. Implement on LCD
