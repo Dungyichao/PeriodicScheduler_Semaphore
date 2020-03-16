@@ -318,8 +318,12 @@ We are using <b>Semaphore</b> to achieve process synchronization in the multipro
 [Semaphores](https://www.geeksforgeeks.org/semaphores-in-process-synchronization/),
 [Process Synchronization](https://www.geeksforgeeks.org/introduction-of-process-synchronization/)
 
+In the following, we will introduce Cooperative spin-lock semaphore.
+[reference link](http://users.ece.utexas.edu/~valvano/EE345M/view06_semaphores.pdf)
+
+
 # 5. Implement on LCD
-We are approaching the goal. However, we cannot not directly apply the same code from the previous LCD tutorial ( [link](https://github.com/Dungyichao/STM32F4-LCD_ST7735s) ) to the code here. The LCD tutorial use SysTick_Handler() to trigger the countdown of the HAL_Delay(). In this Task Scheduler, we are using SysTick_Handler() to do the context switch, thus, we need to use other timer to trigger the countdown for the HAL_Delay(). We will show you how to achieve it now.
+We are approaching the goal. However, we cannot not directly apply the same code from the previous LCD tutorial ( [link](https://github.com/Dungyichao/STM32F4-LCD_ST7735s) ) to the code here. The LCD tutorial use SysTick_Handler() to trigger the countdown of the HAL_Delay(). In this Task Scheduler, we are using SysTick_Handler() to do the context switch, thus, we need to use other timer to trigger the countdown for the HAL_Delay(). We will show you how to achieve it now. 
 
 ### 4.1 Configure CubeMX
 
