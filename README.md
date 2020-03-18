@@ -4,11 +4,11 @@ Task scheduling is an important concept in Real-Time Operating Systems (Task, th
 1. [What is the Goal](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#1-what-is-the-goal-)
 2. [Basic Knowledge](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#2-basic-knowledge-)
 3. [Code Concept of Preemptive Scheduling with Round Robin](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#3-code-concept-of-preemptive-scheduling-with-round-robin-)
-  * 3.1 [The Essential Elements of the Code](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#31-the-essential-elements-of-the-code)
-  * 3.2 [Implement Task, Stack, Thread Control Block and Context Switch](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#32-implement-task-stack-thread-control-block-and-context-switch-)
+    * 3.1 [The Essential Elements of the Code](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#31-the-essential-elements-of-the-code)
+    * 3.2 [Implement Task, Stack, Thread Control Block and Context Switch](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#32-implement-task-stack-thread-control-block-and-context-switch-)
 
-    * 3.2.1 [Task](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#321-task-)
-    * 3.2.2 [Stack](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#322-stack-)
+       * 3.2.1 [Task](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#321-task-)
+       * 3.2.2 [Stack](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#322-stack-)
 
 # 1. What is the Goal <br />
 Let's first take a look at what are we going to achieve after this tutorial.
