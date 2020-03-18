@@ -500,4 +500,9 @@ Lastly compile the code and download the code to the board. Make sure all the wi
 [tutorial](https://github.com/Dungyichao/STM32F4-LCD_ST7735s)
 ). You can modify the variable QUANTA (in the top of main.c) to 30 or even larger to make your LCD more stable.
 
+You can play around the Initialization of semaphore by changing the 1 to the other semaphore and inspect what happens on the LCD.
+
+# 6. Reference and conclusion
+
+
 
