@@ -487,9 +487,9 @@ void Task2(void)
 
 int main(void)
 {
+  osSemaphoreInit(&semaphore0,0);
   osSemaphoreInit(&semaphore1,0);
   osSemaphoreInit(&semaphore2,0);
-  osSemaphoreInit(&semaphore3,0);
   ...... Tasks, tcbs, TCB_STACK initialize 
   ......
 }
