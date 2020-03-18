@@ -31,8 +31,7 @@ Let's first take a look at what are we going to achieve after this tutorial.
 <img src="/img/semaphore.gif" height="80%" width="80%"> 
 </p>  
 That is really simple!!! You can see 3 lines of string Task0, Task1, Task2 with a different colors. Totally we have three tasks, and each task keeps displaying their own string. Please refer to the following link to read the tutorial of displaying color and character on LCD display:
-
-[link](https://github.com/Dungyichao/STM32F4-LCD_ST7735s)
+[https://github.com/Dungyichao/STM32F4-LCD_ST7735s](https://github.com/Dungyichao/STM32F4-LCD_ST7735s)
 
 
 # 2. Basic Knowledge <br />
