@@ -418,7 +418,7 @@ int main(void)
   osSemaphoreInit(&semaphore1,1);
   osSemaphoreInit(&semaphore2,0);
   osSemaphoreInit(&semaphore3,0);
-  ...... Tasks, tcbs, TCB_STACK initialize 
+  ...... Task0/1/2, tcbs, TCB_STACK initialize 
   ......
 }
 ```
@@ -449,8 +449,9 @@ The osThreadYield() function is inserted in the while loop. That's great, we can
 
 ### 4.3 Rendezvous (Optional) 
 
+We only use 2 task to do the example. 
 ```c++
-uint32_t count0,count1,count2;
+uint32_t count0,count1;
 
 void Task0(void)
 {
@@ -458,7 +459,6 @@ void Task0(void)
 	{
 		osSignalSet(&semaphore0);
 		osSignalWait(&semaphore1);
-		osSignalWait(&semaphore2);
 		count0++;
 	}	
 }
@@ -469,28 +469,17 @@ void Task1(void)
 	{
 		osSignalSet(&semaphore1);
 		osSignalWait(&semaphore0);
-		osSignalWait(&semaphore2);
 		count1++;
 	}	
 }
 
-void Task2(void)
-{
-	while(1)
-	{
-		osSignalSet(&semaphore2);
-		osSignalWait(&semaphore0);
-		osSignalWait(&semaphore1);
-		count2++;
-	}
-}
+
 
 int main(void)
 {
   osSemaphoreInit(&semaphore0,0);
   osSemaphoreInit(&semaphore1,0);
-  osSemaphoreInit(&semaphore2,0);
-  ...... Tasks, tcbs, TCB_STACK initialize 
+  ...... Task0/1, tcbs, TCB_STACK initialize 
   ......
 }
 
