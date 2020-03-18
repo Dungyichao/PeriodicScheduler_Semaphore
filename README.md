@@ -431,7 +431,7 @@ We are approaching the goal. However, we cannot not directly apply the same code
 </p>  
 
 
-### 5.2 Download code and include in our project <br />
+### 5.2 Download code and Copy to our project <br />
 Download the code from the following link. 
 [https://github.com/Dungyichao/PeriodicScheduler_Semaphore/tree/master/BSP](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/tree/master/BSP)
 
