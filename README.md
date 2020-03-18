@@ -264,7 +264,7 @@ The visualization of the osSchedulerLaunch and the stack is in the following
 </p>
 
 #### 3.2.5 Context Switch (Part II) <br />
-The assembly code in the following will be executed when the SysTick_Handler is called by the Systick Exception occurred. When the Systick Exception occured, the processor will first store the data on the registers (R0~R3, R12, LR, PC, xPSR) into the stack (pointed by the current active SP which should be the current task's stack) and then execute the following code.
+The assembly code in the following will be executed when the SysTick_Handler is called by the Systick Exception occurred. When the Systick Exception occured, the processor will first store the data on the registers (R0~R3, R12, LR, PC, xPSR) into the stack (pointed by the current active SP which should be the current task's stack) and then execute the following code. Make sure the <b>Floating Point Hardware</b> is not used (In the Configure Flash Tools, Target tab). 
 ```c++
 		AREA |.text|, CODE, READONLY, ALIGN=2
                 THUMB
