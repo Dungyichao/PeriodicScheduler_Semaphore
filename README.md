@@ -448,7 +448,14 @@ Copy these files (except main.c) into the MDK-ARM folder under your Project fold
 
 You will find 1 error after compiling it. That is caused by the duplicate SysTick_Handler function defined in both stm32f4xx_it.c and our new copied osKernel.c (for context switching). 
 
-### 5.2 Modify the code <br />
- 
+### 5.2 Fix the duplicate SysTick_Handler problem in the code <br />
+We than move the HAL_IncTick function (for HAL_Delay function usage) into TIM2_IRQHandler in the stm32f4xx_it.c file. Comment out the SysTick_Handler in stm32f4xx_it.c file and stm32f4xx_it.h file. Compile again and the error will disappear.
+<p align="center">
+<img src="/img/modify_code.gif" height="100%" width="100%"> 
+</p>  
+
+### 5.3 Include header file and clear out comment in main.c <br />
+
+
 
 
