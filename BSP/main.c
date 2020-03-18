@@ -18,10 +18,10 @@ void Task0(void)
 {
 	while(1)
 	{
-    osSignalWait(&semaphore1);
+    		osSignalWait(&semaphore1);
 		//count0++;
 		ST7735_DrawString(3,5,"Task0",ST7735_GREEN);
-    osSignalSet(&semaphore2);
+    		osSignalSet(&semaphore2);
 	
 	}
 }
@@ -45,14 +45,14 @@ void Task2(void)
 		osSignalWait(&semaphore3);
 		//count2++;
 		ST7735_DrawString(3,9,"Task2",ST7735_RED);
-    osSignalSet(&semaphore1);
+    		osSignalSet(&semaphore1);
 	}
 }
 
 int main(void)
 {
 	osSemaphoreInit(&semaphore1,1);
-  osSemaphoreInit(&semaphore2,0);
+  	osSemaphoreInit(&semaphore2,0);
 	osSemaphoreInit(&semaphore3,0);
   
   HAL_Init();
@@ -66,17 +66,17 @@ int main(void)
   MX_SPI1_Init();
   MX_TIM2_Init();
 	
-	HAL_TIM_Base_Start_IT(&htim2);
+  HAL_TIM_Base_Start_IT(&htim2);  // start the TIM2 timer
 	
-	SysTick->CTRL =0;
+  SysTick->CTRL =0;  //disable SysTick Exception, or the TIM2 will be disturbed, LCD could not be initialized
 	
-	ST7735_Init();
-	ST7735_FillScreen(ST7735_BLACK);
-	ST7735_DrawString(1, 0, "CPU=", ST7735_ORANGE);
+  ST7735_Init();
+  ST7735_FillScreen(ST7735_BLACK);
+  ST7735_DrawString(1, 0, "CPU=", ST7735_ORANGE);
 	
-	osKernelInit();
-	osKernelAddThreads(&Task0,&Task1,&Task2);
-	osKernelLaunch(QUANTA);
+  osKernelInit();
+  osKernelAddThreads(&Task0,&Task1,&Task2);
+  osKernelLaunch(QUANTA);
   
   while (1)
   {
