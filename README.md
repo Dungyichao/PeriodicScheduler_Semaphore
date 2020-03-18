@@ -427,6 +427,31 @@ We are approaching the goal. However, we cannot not directly apply the same code
 ### 5.1 Configure CubeMX <br />
 
 <p align="center">
+<table>
+    <thead>
+        <tr>
+            <th align="center">Configure</th>
+            <th align="center">Detail</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td align="center">Timers: TIM2</td>
+            <td align="Left"></td>
+        </tr>
+        <tr>
+            <td align="center">Connectivity: SPI1</td>
+            <td align="Left"></td>
+        </tr>
+	 <tr>
+            <td align="center">Clock Configure</td>
+            <td align="Left"></td>
+        </tr>
+    </tbody>
+</table>
+</p>
+
+<p align="center">
 <img src="/img/cubemx_setup.gif" height="100%" width="100%"> 
 </p>  
 
@@ -458,12 +483,18 @@ We than move the HAL_IncTick function (for HAL_Delay function usage) into TIM2_I
 We first clear some comment (automatic generated from CubeMX). Add the header file (let the main.c use function in osKernel.c, st7735.c, and fonts.c) in the main.c file. We than add some code in main.c, please follow the following process.
 
 <p align="center">
-<img src="/img/process_add_code.JPG" height="100%" width="100%">
+<img src="/img/process_add_code1.JPG" height="100%" width="100%">
 </p>
 <br />
+
+The sequence is important especially for <b>E,F,G</b>. Before Initialize LCD (F), we need to first disable SysTick Exception (make sure the HAL_Delay can function properly). G will need to have SysTick exception for context switching, so it is placed at the last position.
 
 <p align="center">
 <img src="/img/include_header_main.gif" height="100%" width="100%"> 
 </p>  
+
+Lastly compile the code and download the code to the board. Make sure all the wire connection of LCD with your board are correct (see 
+[tutorial](https://github.com/Dungyichao/STM32F4-LCD_ST7735s)
+). You can modify the variable QUANTA (in the top of main.c) to 30 or even larger to make your LCD more stable.
 
 
