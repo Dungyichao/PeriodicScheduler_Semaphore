@@ -56,12 +56,9 @@ int main(void)
 	osSemaphoreInit(&semaphore3,0);
   
   HAL_Init();
-	
+ 
+  SystemClock_Config();
 
-  
-  //SystemClock_Config();
-
-  
   MX_GPIO_Init();
   MX_SPI1_Init();
   MX_TIM2_Init();
