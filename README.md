@@ -21,7 +21,8 @@ Task scheduling is an important concept in Real-Time Operating Systems (Task, th
 5. [Implement on LCD](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#5-implement-on-lcd-)
      * 5.1 [Configure CubeMX](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#51-configure-cubemx-)
      * 5.2 [Download code and Copy to our project](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#52-download-code-and-copy-to-our-project-)
-     * 5.3 [Fix the duplicate SysTick_Handler problem in the code]()
+     * 5.3 [Fix the duplicate SysTick_Handler problem in the code](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#53-fix-the-duplicate-systick_handler-problem-in-the-code-)
+     * 5.4 [Include header file and clear out comment in main.c](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#54-include-header-file-and-clear-out-comment-in-mainc-)
 
 # 1. What is the Goal <br />
 Let's first take a look at what are we going to achieve after this tutorial.
@@ -524,6 +525,7 @@ The sequence is important especially for <b>E,F,G, H</b>. Before Initialize LCD 
 <img src="/img/include_header_main.gif" height="100%" width="100%"> 
 </p>  
 
+### 5.5 Compile and Download to the board
 Lastly, compile the code and download the code to the board. Make sure all the wire connection of LCD with your board are correct (see 
 [tutorial](https://github.com/Dungyichao/STM32F4-LCD_ST7735s)
 ). You can modify the variable QUANTA (in the top of main.c) to 30 or even larger to make your LCD more stable.
