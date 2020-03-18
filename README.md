@@ -440,5 +440,5 @@ Download the code from the following link.
 </p>
 <br />
 
-Copy these files into the MDK-ARM folder under your Project folder.
+Copy these files (except main.c) into the MDK-ARM folder under your Project folder.
 
