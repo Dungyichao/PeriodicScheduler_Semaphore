@@ -449,7 +449,8 @@ The osThreadYield() function is inserted in the while loop. That's great, we can
 
 ### 4.3 Rendezvous (Optional) 
 
-We only use 2 task to do the example. 
+This is a bilateral synchronisation so we only use 2 task to do the example. Both the tasks need to wait another task to get the token (semaphore > 0) so that they can do the counting job.
+
 ```c++
 uint32_t count0,count1;
 
@@ -484,7 +485,11 @@ int main(void)
 }
 
 ```
-Notice that all the semaphore are initialized with 0.
+Notice that both the semaphore are initialized with 0. Look at the following result, you can see both count number are adding number at almost the same time. The difference between these two count number is almost 1. 
+
+<p align="center">
+<img src="/img/Rendezvous.gif" height="70%" width="70%"> 
+</p>
 
 
 # 5. Implement on LCD <br />
