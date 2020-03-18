@@ -455,7 +455,9 @@ We than move the HAL_IncTick function (for HAL_Delay function usage) into TIM2_I
 </p>  
 
 ### 5.3 Include header file and clear out comment in main.c <br />
-
-
+We first clear some comment (automatic generated from CubeMX). Add the header file (let the main.c use function in osKernel.c, st7735.c, and fonts.c) in the main.c file. 
+<p align="center">
+<img src="/img/includeheader_main.gif" height="100%" width="100%"> 
+</p>  
 
 
