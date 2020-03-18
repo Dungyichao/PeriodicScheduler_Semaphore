@@ -418,6 +418,8 @@ int main(void)
   osSemaphoreInit(&semaphore1,1);
   osSemaphoreInit(&semaphore2,0);
   osSemaphoreInit(&semaphore3,0);
+  ...... Tasks, tcbs, TCB_STACK initialize 
+  ......
 }
 ```
 So what does it mean? In the main function, we first initialize the semaphore (token) value. Each task has its own token. In the main function, only one token can be initialized with value larger than 0 (to make sure only one task can access the CPU until it completes the task). We first set the Task0's semaphore0 (token) larger than 0. When first enter the task0 function, the osSinalWait function will examine the semaphore0, if the token is larger than 0, skip the while loop and set the token to 0, and then do the job count0 = count0 + 1. After completing the job, it will pass the token to the next task (Task1) by using the function osSignalSet to set the semaphore1 to 1. Thus the Task1 can be processed. 
@@ -488,6 +490,8 @@ int main(void)
   osSemaphoreInit(&semaphore1,0);
   osSemaphoreInit(&semaphore2,0);
   osSemaphoreInit(&semaphore3,0);
+  ...... Tasks, tcbs, TCB_STACK initialize 
+  ......
 }
 
 ```
