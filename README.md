@@ -420,15 +420,25 @@ void osSignalWait(volatile int32_t *semaphore)
 
 The osThreadYield() function is inserted in the while loop. That's great, we can hand the resources to the next task right away while the current task (semaphore < 0) is waiting. 
 
-# 5. Implement on LCD
+# 5. Implement on LCD <br />
 We are approaching the goal. However, we cannot not directly apply the same code from the previous LCD tutorial ( [link](https://github.com/Dungyichao/STM32F4-LCD_ST7735s) ) to the code here. The LCD tutorial use SysTick_Handler() to trigger the countdown of the HAL_Delay(). In this Task Scheduler, we are using SysTick_Handler() to do the context switch, thus, we need to use other timer to trigger the countdown for the HAL_Delay(). Why the HAL_Delay is important to us, that is for the LCD initialization. We will show you how to achieve it now. 
 
 
-### 4.1 Configure CubeMX
+### 5.1 Configure CubeMX <br />
 
 <p align="center">
 <img src="/img/cubemx_setup.gif" height="100%" width="100%"> 
 </p>  
 
 
+### 5.2 Download code and include in our project <br />
+Download the code from the following link. 
+[https://github.com/Dungyichao/PeriodicScheduler_Semaphore/tree/master/BSP](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/tree/master/BSP)
+
+<p align="center">
+<img src="/img/download_code.JPG" height="80%" width="80%">
+</p>
+<br />
+
+Copy these files into the MDK-ARM folder under your Project folder.
 
