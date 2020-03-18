@@ -354,14 +354,14 @@ void osSignalWait(volatile int32_t *semaphore)
 
 The task will look like the following (from section 4.3.1)
 ```c++
-int32_t semaphore1,semaphore2,semaphore3;
+int32_t semaphore0,semaphore1,semaphore2;
 void Task0(void)
 {
 	while(1)
 	{
-    		osSignalWait(&semaphore1);
-		count0++;
-    		osSignalSet(&semaphore2);
+    		osSignalWait(&semaphore0);
+		count0 = count0 + 1;
+    		osSignalSet(&semaphore1);
 	
 	}
 }
@@ -370,9 +370,9 @@ void Task1(void)
 {
 	while(1)
 	{
-		osSignalWait(&semaphore2);
-		count1++;
-   		osSignalSet(&semaphore3);
+		osSignalWait(&semaphore1);
+		count1 = count1 + 1;
+   		osSignalSet(&semaphore2);
 	}
 }
 
@@ -380,12 +380,24 @@ void Task2(void)
 {
 	while(1)
 	{
-		osSignalWait(&semaphore3);
-		count2++;
-    		osSignalSet(&semaphore1);
+		osSignalWait(&semaphore2);
+		count2 = count2 + 1;
+    		osSignalSet(&semaphore0);
 	}
 }
+
+int main(void)
+{
+  osSemaphoreInit(&semaphore1,1);
+  osSemaphoreInit(&semaphore2,0);
+  osSemaphoreInit(&semaphore3,0);
+}
 ```
+So what does it mean? In the main function, we first initialize the semaphore (token) value. Each task has its own token. In the main function, only one token can be initialized with value larger than 0 (to make sure only one task can access the cpu untill it complete the task). We first set the Task0's semaphore0 (token) larger than 0. When first enter the task0 function, the osSinalWait function will examine the semaphore0, if the token is larger than 0, skip the while loop and set the token to 0, and then do the job count0 = count0 + 1. After completing the job, it will pass the token to the next task (Task1) by using the function osSignalSet to set the semaphore1 to 1. Thus the Task1 can be processed. 
+
+I was stuck in the while loop of function osSinalWait when I first learning it, the following link is my question on Stack Overflow: 
+[link](https://stackoverflow.com/questions/60724667/stm32-same-while-loop-code-but-compiled-to-different-assembly-code)
+.
 
 ### 4.2 Cooperative spin-lock semaphore <br />
 One major disadventage of spin-lock semaphore is that resources are being held and doing nothing if the current task's semaphore's value is 0 (stuck in the while loop in the waiting function until the SysTick_Handler exception occured). To solve this problem, we introduce Cooperative spin-lock semaphore. Actually, it require only one line of code added to the waiting function. 
