@@ -440,5 +440,8 @@ Download the code from the following link.
 </p>
 <br />
 
-Copy these files (except main.c) into the MDK-ARM folder under your Project folder.
+Copy these files (except main.c) into the MDK-ARM folder under your Project folder. Configure the <b>Include Paths</b>
 
+<p align="center">
+<img src="/img/download_copy.gif" height="100%" width="100%"> 
+</p>  
