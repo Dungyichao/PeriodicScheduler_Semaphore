@@ -12,16 +12,16 @@ void SystemClock_Config(void);
 
 #define		QUANTA		10   //10 ms
 
-int32_t semaphore1,semaphore2,semaphore3;
+int32_t semaphore0,semaphore1,semaphore2;
 int32_t count0, count1, count2;
 void Task0(void)
 {
 	while(1)
 	{
-    		osSignalWait(&semaphore1);
+    		osSignalWait(&semaphore0);
 		//count0++;
 		ST7735_DrawString(3,5,"Task0",ST7735_GREEN);
-    		osSignalSet(&semaphore2);
+    		osSignalSet(&semaphore1);
 	
 	}
 }
@@ -31,10 +31,10 @@ void Task1(void)
 	while(1)
 	{
 		
-		osSignalWait(&semaphore2);
+		osSignalWait(&semaphore1);
 		//count1++;
 		ST7735_DrawString(3,7,"Task1",ST7735_BLUE);
-		osSignalSet(&semaphore3);
+		osSignalSet(&semaphore2);
 	}
 }
 
@@ -42,18 +42,18 @@ void Task2(void)
 {
 	while(1)
 	{
-		osSignalWait(&semaphore3);
+		osSignalWait(&semaphore2);
 		//count2++;
 		ST7735_DrawString(3,9,"Task2",ST7735_RED);
-    		osSignalSet(&semaphore1);
+    		osSignalSet(&semaphore0);
 	}
 }
 
 int main(void)
 {
-  osSemaphoreInit(&semaphore1,1);
+  osSemaphoreInit(&semaphore0,1);
+  osSemaphoreInit(&semaphore1,0);
   osSemaphoreInit(&semaphore2,0);
-  osSemaphoreInit(&semaphore3,0);
   
   HAL_Init();
  
