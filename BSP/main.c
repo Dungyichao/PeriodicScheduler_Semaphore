@@ -8,7 +8,7 @@
 #include "osKernel.h"
 
 
-//void SystemClock_Config(void);
+void SystemClock_Config(void);
 
 #define		QUANTA		10   //10 ms
 
