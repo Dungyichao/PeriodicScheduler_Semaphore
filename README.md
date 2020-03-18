@@ -295,8 +295,8 @@ Let's execute the code (provided in the folder Simple_code) and enter the debug 
 <img src="/img/simple_result.gif" height="60%" width="60%">
 </p>
 
-#### 3.4 Non-preemptive method (Optional) 
-If we add the following function in every task right after countX = countX + 1, the result will act a little bit differently. Each countX will add up only once and then the counting resource will be handed to the next task. What osThreadYeild does is to make the SysTick timer current value to 0 and set the SysTick exception state to pending. Therefore, the SysTick_Handler will be called and performs the context switching to the next task. 
+### 3.4 Non-preemptive method (Optional) 
+Non-preemptive means the context switching mechanism not trigger by the exception. Only when the task reach any specified point that the context switch can be executed. If we add the following function in every task right after countX = countX + 1, the result will act a little bit differently. Each countX will add up only once and then the counting resource will be handed to the next task. What osThreadYeild does is to make the SysTick timer current value to 0 and set the SysTick exception state to pending. Therefore, the SysTick_Handler will be called and performs the context switching to the next task. 
 ```c++
 #define ICSR         (*((volatile uint32_t *)0xE000ED04))   //(ICSR: Interrupt control and state register)
 void osThreadYield(void)
