@@ -454,6 +454,8 @@ We are approaching the goal. However, we cannot directly apply the same code fro
 <br />
 <br />
 
+Why do we set the prescaler of TIM2 to 16000? First you see we set the HCLK (MHz) to 16MHz. This means the clock will now tick 16000000 times in 1 second. We want TIM2 to tick every 1 milisecond (ms), but the clock source is 16MHz, how do we do that? We use the prescaler, so now 16MHz / prescaler = 1000. It means the TIM2 now only ticks once for every 1 ms. 
+
 <p align="center">
 <img src="/img/cubemx_setup.gif" height="100%" width="100%"> 
 </p>  
