@@ -426,5 +426,9 @@ We are approaching the goal. However, we cannot not directly apply the same code
 
 ### 4.1 Configure CubeMX
 
+<p align="center">
+<img src="/img/cubemx_setup.gif" height="100%" width="100%"> 
+</p>  
+
 
 
