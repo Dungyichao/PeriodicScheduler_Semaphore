@@ -437,11 +437,11 @@ We are approaching the goal. However, we cannot directly apply the same code fro
     <tbody>
         <tr>
             <td align="center">Timers: TIM2</td>
-	    <td align="Left"><b>Clock Source:</b> Internal Clock <br /> <b>Prescaler:</b> 16000 <br /> <b>Counter Period:</b> 1 <br /> <b>Trigger Event Selection:</b> Update Event <br /> </td>
+	    <td align="Left"><b>Clock Source:</b> Internal Clock <br /> <b>Prescaler:</b> 16000 <br /> <b>Counter Period:</b> 1 <br /> <b>Trigger Event Selection:</b> Update Event <br /><b>NVIC Settings:</b> click enabled <br /> </td>
         </tr>
         <tr>
             <td align="center">Connectivity: SPI1</td>
-            <td align="Left"><b>Mode:</b> Transmit Only Master <br /> <b>Prescaler:</b> 32 <br /> <b>NVIC Settings:</b> click enabled <br /></td>
+            <td align="Left"><b>Mode:</b> Transmit Only Master <br /> <b>Prescaler:</b> 32 <br /> </td>
         </tr>
 	 <tr>
             <td align="center">Clock Configure</td>
