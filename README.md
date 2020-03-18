@@ -488,7 +488,7 @@ We than move the HAL_IncTick function (for HAL_Delay function usage) into TIM2_I
 We first clear some comments (automatically generated from CubeMX). Add the header file (let the main.c use function in osKernel.c, st7735.c, and fonts.c) in the main.c file. We then add some code in main.c, please follow the following process.
 
 <p align="center">
-<img src="/img/process_add_code2.PNG" height="100%" width="100%">
+<img src="/img/process_add_code2.png" height="100%" width="100%">
 </p>
 <br />
 
