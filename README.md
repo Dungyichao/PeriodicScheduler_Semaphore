@@ -1,6 +1,14 @@
 # Task Scheduler
 Task scheduling is an important concept in Real-Time Operating Systems (Task, thread, process are interchangeable). Take your daily life for example, when trying to listen to music on your cellphone while surfing news websites through the internet (receiving data from wi-fi router in the meantime). How does it work under only one core of CPU (CPU can only execute one command at a time)? Each task such as open the browser may require hundred or thousand lines of codes, then how can we listen to music and open websites at the same time? It comes to task scheduling. We will use <b>STM32F411RE Nucleo64</b> and <b>ST7735S TFT LCD</b> to demonstrate the concept. If any reference link in this tutorial cannot be accessed, please refer to the Reference folder above.
 
+1. [What is the Goal](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#1-what-is-the-goal-)
+2. [Basic Knowledge](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#2-basic-knowledge-)
+3. [Code Concept of Preemptive Scheduling with Round Robin](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#3-code-concept-of-preemptive-scheduling-with-round-robin-)
+* 3.1 [The Essential Elements of the Code](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#31-the-essential-elements-of-the-code)
+* 3.2 [Implement Task, Stack, Thread Control Block and Context Switch](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#32-implement-task-stack-thread-control-block-and-context-switch-)
+** 3.2.1 [Task](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#321-task-)
+** 3.2.2 [Stack](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#322-stack-)
+
 # 1. What is the Goal <br />
 Let's first take a look at what are we going to achieve after this tutorial.
 <p align="center">
