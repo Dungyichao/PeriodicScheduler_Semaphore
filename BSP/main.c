@@ -66,13 +66,13 @@ int main(void)
   MX_SPI1_Init();
   MX_TIM2_Init();
 	
-  HAL_TIM_Base_Start_IT(&htim2);  // start the TIM2 timer
-	
   SysTick->CTRL =0;  //disable SysTick Exception, or the TIM2 will be disturbed, LCD could not be initialized
 	
-  ST7735_Init();
-  ST7735_FillScreen(ST7735_BLACK);
-  ST7735_DrawString(1, 0, "CPU=", ST7735_ORANGE);
+  HAL_TIM_Base_Start_IT(&htim2);  // start the TIM2 timer
+	
+  ST7735_Init();  // Initialize LCD
+  ST7735_FillScreen(ST7735_BLACK);   // Make all the screen black
+  ST7735_DrawString(1, 0, "CPU=", ST7735_ORANGE);  //Write some string on LCD
 	
   osKernelInit();
   osKernelAddThreads(&Task0,&Task1,&Task2);
