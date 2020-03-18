@@ -395,7 +395,7 @@ int main(void)
 ```
 So what does it mean? In the main function, we first initialize the semaphore (token) value. Each task has its own token. In the main function, only one token can be initialized with value larger than 0 (to make sure only one task can access the cpu untill it complete the task). We first set the Task0's semaphore0 (token) larger than 0. When first enter the task0 function, the osSinalWait function will examine the semaphore0, if the token is larger than 0, skip the while loop and set the token to 0, and then do the job count0 = count0 + 1. After completing the job, it will pass the token to the next task (Task1) by using the function osSignalSet to set the semaphore1 to 1. Thus the Task1 can be processed. 
 
-I was stuck in the while loop of function osSinalWait when I first learning it, the following link is my question on Stack Overflow: 
+I was stuck in the while loop of function osSinalWait when I first learning it, the following link is my question and answer on Stack Overflow: 
 [link](https://stackoverflow.com/questions/60724667/stm32-same-while-loop-code-but-compiled-to-different-assembly-code)
 .
 
