@@ -128,7 +128,7 @@ There are some elements and concept (based on Cortex M4) require more elaboratio
 </p>
 
 ### 3.2 Implement Task, Stack, Thread Control Block and Context Switch <br />
-#### 3.2.0 Task <br />
+#### 3.2.1 Task <br />
 We initialize 3 task functions. This is simply a function with no return value and no input parameter. Inside the function is a while loop which will never stop. 
 ```c++
 uint32_t count0,count1,count2;
@@ -159,7 +159,7 @@ void Task2(void)
 
 ```
 
-#### 3.2.1 Stack <br />
+#### 3.2.2 Stack <br />
 We initialize a 2D array names TCB_STACK, and each element datatype is int32_t. 
 ```c++
 #define NUM_OF_THREADS  3        
@@ -181,7 +181,7 @@ The visualization of the stack is in the following
 <img src="/img/stack_init.png" height="70%" width="70%">
 </p>
 
-#### 3.2.2 Thread Control Block <br />
+#### 3.2.3 Thread Control Block <br />
 
 ```c++
 struct tcb{
@@ -208,7 +208,7 @@ The visualization of the Thread Control Block and the stack is in the following
 <img src="/img/Stack_TCB.JPG" height="70%" width="70%">
 </p>
 
-#### 3.2.3 Context Switch (Part I) <br />
+#### 3.2.4 Context Switch (Part I) <br />
 The assembly code in the following will only be executed once. This function brings the Task0 information stored in stack0 to the register. Most important of all is that it stored the task0 address into Link Register (R14) so that when processor exit this function, the processor will be led to task0 and do the task in task0. 
 
 ```c++
@@ -237,7 +237,7 @@ The visualization of the osSchedulerLaunch and the stack is in the following
 <img src="/img/Process2.png" height="100%" width="100%">
 </p>
 
-#### 3.2.3 Context Switch (Part II) <br />
+#### 3.2.5 Context Switch (Part II) <br />
 The assembly code in the following will be executed when the SysTick_Handler be called by the Systick Exception occured. When the Systick Exception occured, the processor will first store the data on the registers (R0~R3, R12, LR, PC, xPSR) into the stack (pointed by the current active SP which should be the current task's stack) and then executes the following code.
 ```c++
 		AREA |.text|, CODE, READONLY, ALIGN=2
@@ -263,7 +263,7 @@ The visualization of the SysTick_Handler and the stack is in the following
 <img src="/img/Process3.png" height="90%" width="90%">
 </p>
 
-#### 3.2.4 Configure SysTick <br />
+#### 3.2.6 Configure SysTick <br />
 ```c++
 #define BUS_FREQ   16000000
 #define QUANTA	1
@@ -352,10 +352,9 @@ void osSignalWait(volatile int32_t *semaphore)
 }
 ```
 
-The task will look like the following
+The task will look like the following (from section 4.3.1)
 ```c++
 int32_t semaphore1,semaphore2,semaphore3;
-int32_t count0, count1, count2;
 void Task0(void)
 {
 	while(1)
