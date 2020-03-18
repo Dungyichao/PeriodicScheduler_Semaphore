@@ -1,12 +1,12 @@
 # Task Scheduler
-Task scheduling is an important concept in Real-Time Operating Systems (Task, thread, process are interchangeable). Take your daily life for example, when trying to listen music on your cellphone while surfing news website through the internet (reaceiving data from wi-fi router in the mean time). How does it work under only one core of CPU (CPU can only execute one command at a time)? Each task such as open the browser may requires hundred or thousand line of codes, then how can we listen music and open website at the same time? It comes to task scheduling. We will use <b>STM32F411RE Nucleo64</b> and <b>ST7735S TFT LCD</b> to demonstrate the concept. 
+Task scheduling is an important concept in Real-Time Operating Systems (Task, thread, process are interchangeable). Take your daily life for example, when trying to listen to music on your cellphone while surfing news websites through the internet (receiving data from wi-fi router in the meantime). How does it work under only one core of CPU (CPU can only execute one command at a time)? Each task such as open the browser may require hundred or thousand lines of codes, then how can we listen to music and open websites at the same time? It comes to task scheduling. We will use <b>STM32F411RE Nucleo64</b> and <b>ST7735S TFT LCD</b> to demonstrate the concept. If any reference link in this tutorial cannot be accessed, please refer to the Reference folder above.
 
 # 1. What is the Goal <br />
-Let's first take a look what are we going to achieve after this tutorial.
+Let's first take a look at what are we going to achieve after this tutorial.
 <p align="center">
 <img src="/img/semaphore.gif" height="80%" width="80%"> 
 </p>  
-That is really simple!!! You can see 3 line of string Task0, Task1, Task2 with different color. Totally we have three tasks, and each task keep displaying their own string. Please refer to the following link to read the tutorial of displaying color and character on LCD display:
+That is really simple!!! You can see 3 lines of string Task0, Task1, Task2 with a different colors. Totally we have three tasks, and each task keeps displaying their own string. Please refer to the following link to read the tutorial of displaying color and character on LCD display:
 
 [link](https://github.com/Dungyichao/STM32F4-LCD_ST7735s)
 
@@ -43,9 +43,9 @@ Reference: [link](https://www.geeksforgeeks.org/preemptive-and-non-preemptive-sc
 </p>
 
 # 3. Code Concept of Preemptive Scheduling with Round Robin <br />
-The idea is basically the same as the first animation. Now, we add more detail (<b>registers</b> and <b>stack</b>) in the animation. We all know CPU use <b>registers</b> to store computing data or fetch computing data for temporary. When you are calculating some complicated math problem, you write down the value on sticky note (registers), when you read the equation and calculate the equation in your mind (CPU) and then write down the result back to the sticky note. While you are solving math problem, your Mom calls you, then you quickly write down the lastest calculation result (in registers) onto a paper (<b>stack</b>). You can now write down what your Mom tells you on the sticky note. After finishing the call, you can go back to solve your math problem by restoring what you left on the paper (stack) to the sticky note (registers) and keep going on. 
+The idea is basically the same as the first animation. Now, we add more detail (<b>registers</b> and <b>stack</b>) in the animation. We all know CPU use <b>registers</b> to store computing data or fetch computing data for temporary. When you are calculating some complicated math problem, you write down the value on a sticky note (registers), when you read the equation and calculate the equation in your mind (CPU) and then write down the result back to the sticky note. While you are solving a math problem, your Mom calls you, then you quickly write down the lastest calculation result (in registers) onto a paper (<b>stack</b>). You can now write down what your Mom tells you on the sticky note. After finishing the call, you can go back to solve your math problem by restoring what you left on the paper (stack) to the sticky note (registers) and keep going on. 
 
-We explain the concept and some part of the code in this section. To make the code run successfully, please see the section 5. (Some code will be modified and put into some functions for better code management) 
+We explain the concept and some parts of the code in this section. To make the code run successfully, please see section 5. (Some code will be modified and put into some functions for better code management) 
 
 <p align="center">
 <img src="/img/RoundRobbin_Stack.png" height="70%" width="70%">
@@ -109,15 +109,15 @@ There are some elements and concept (based on Cortex M4) require more elaboratio
        		countX = countX + 1;	
 	}
     }
-</pre>This is simply a function with no return value and no input parameter. Inside the function is a while loop which will never stop. We will have three tasks, Task0(keep counting count0), Task1(keep counting count1), Task2(keep counting count2). In normal condition, whenever you enter a while(true) loop, you will never go out this loop untill you close the program because the condition is always true. You can add more instructions inside the while loop. </td>
+</pre>This is simply a function with no return value and no input parameter. Inside the function is a while loop which will never stop. We will have three tasks, Task0(keep counting count0), Task1(keep counting count1), Task2(keep counting count2). In normal conditions, whenever you enter a while(true) loop, you will never go out this loop until you close the program because the condition is always true. You can add more instructions inside the while loop. </td>
         </tr>
         <tr>
             <td align="center">Context Switch</td>
-            <td align="Left">The operation of switching from one task to another is known as a context switch. A Real Time Operating System (RTOS) will typically provide this functionality.Reference link: (https://interrupt.memfault.com/blog/cortex-m-rtos-context-switching) <br /> We have three tasks and each task keep doing their own job without breaking the loop, then how can we do task0, task1, task2? Context switch comes to the place and will switch task to another and then after visiting all the tasks, it will come back loop through all the tasks again and again.</td>
+            <td align="Left">The operation of switching from one task to another is known as a context switch. A Real Time Operating System (RTOS) will typically provide this functionality. Reference link: (https://interrupt.memfault.com/blog/cortex-m-rtos-context-switching) <br /> We have three tasks and each task keep doing their own job without breaking the loop, then how can we do task0, task1, task2? Context switch comes to the place and will switch the task to another and then after visiting all the tasks, it will come back loop through all the tasks again and again.</td>
         </tr>
         <tr>
             <td align="center">Exception</td>
-            <td align="Left">Exception is anything that breaks the normal program flow, and invokes a handler from the vector table, and Interrupts are a subset of Exceptions, coming from the peripherals outside the ARM core. Exceptions have an Exception Number, starting from 0. Interrupt(IRQ) have an IRQ Number, starting from 0. Because all Interrupts are Exceptions, they all get an Exception Number, which is 16 higher than the IRQ Number. Exceptions that are not Interrupts have IRQ Numbers too, which by extension fall into the range from -16 to -1. <p align="center">
+            <td align="Left">Exception is anything that breaks the normal program flow, and invokes a handler from the vector table, and Interrupts are a subset of Exceptions, coming from the peripherals outside the ARM core. Exceptions have an Exception Number, starting from 0. Interrupts (IRQ) have an IRQ Number, starting from 0. Because all Interrupts are Exceptions, they all get an Exception Number, which is 16 higher than the IRQ Number. Exceptions that are not Interrupts have IRQ Numbers too, which by extension fall into the range from -16 to -1. <p align="center">
 <img src="/img/exception_vector.JPG" height="60%" width="60%">
 		    </p><br />In this section, we only use <b>Systick</b> as a trigger to let us perform the context switch. A SysTick exception is an exception the system timer generates when it reaches zero. Software can also generate a SysTick exception. In an OS environment, the processor can use this exception as system tick.<br />Reading resource: https://interrupt.memfault.com/arm-cortex-m-exceptions-and-nvic#built-in-exceptions</td>
         </tr>
@@ -211,7 +211,7 @@ The visualization of the Thread Control Block and the stack is in the following
 </p>
 
 #### 3.2.4 Context Switch (Part I) <br />
-The assembly code in the following will only be executed once. This function brings the Task0 information stored in stack0 to the register. Most important of all is that it stored the task0 address into Link Register (R14) so that when processor exit this function, the processor will be led to task0 and do the task in task0. 
+The assembly code in the following will only be executed once. This function brings the Task0 information stored in stack0 to the register. Most important of all is that it stored the task0 address into Link Register (R14) so that when the processor exit this function, the processor will be led to task0 and do the task in task0. 
 
 ```c++
 		AREA |.text|, CODE, READONLY, ALIGN=2
@@ -240,7 +240,7 @@ The visualization of the osSchedulerLaunch and the stack is in the following
 </p>
 
 #### 3.2.5 Context Switch (Part II) <br />
-The assembly code in the following will be executed when the SysTick_Handler be called by the Systick Exception occured. When the Systick Exception occured, the processor will first store the data on the registers (R0~R3, R12, LR, PC, xPSR) into the stack (pointed by the current active SP which should be the current task's stack) and then executes the following code.
+The assembly code in the following will be executed when the SysTick_Handler is called by the Systick Exception occurred. When the Systick Exception occured, the processor will first store the data on the registers (R0~R3, R12, LR, PC, xPSR) into the stack (pointed by the current active SP which should be the current task's stack) and then execute the following code.
 ```c++
 		AREA |.text|, CODE, READONLY, ALIGN=2
                 THUMB
@@ -296,7 +296,7 @@ Let's execute the code (provided in the folder Simple_code) and enter the debug 
 </p>
 
 #### 3.4 Non-preemptive method (Optional) 
-If we add the following function in every task right after countX = countX + 1, the result will act a little bit different. Each countX will be add up only once and then the counting resource will be handed to the next task. What osThreadYeild does is to make the SysTick timer current value to 0 and set the SysTick exception state to pending. Therefore, the SysTick_Handler will be called and performs the context switching to the next task. 
+If we add the following function in every task right after countX = countX + 1, the result will act a little bit differently. Each countX will add up only once and then the counting resource will be handed to the next task. What osThreadYeild does is to make the SysTick timer current value to 0 and set the SysTick exception state to pending. Therefore, the SysTick_Handler will be called and performs the context switching to the next task. 
 ```c++
 #define ICSR         (*((volatile uint32_t *)0xE000ED04))   //(ICSR: Interrupt control and state register)
 void osThreadYield(void)
@@ -395,14 +395,14 @@ int main(void)
   osSemaphoreInit(&semaphore3,0);
 }
 ```
-So what does it mean? In the main function, we first initialize the semaphore (token) value. Each task has its own token. In the main function, only one token can be initialized with value larger than 0 (to make sure only one task can access the cpu untill it complete the task). We first set the Task0's semaphore0 (token) larger than 0. When first enter the task0 function, the osSinalWait function will examine the semaphore0, if the token is larger than 0, skip the while loop and set the token to 0, and then do the job count0 = count0 + 1. After completing the job, it will pass the token to the next task (Task1) by using the function osSignalSet to set the semaphore1 to 1. Thus the Task1 can be processed. 
+So what does it mean? In the main function, we first initialize the semaphore (token) value. Each task has its own token. In the main function, only one token can be initialized with value larger than 0 (to make sure only one task can access the CPU until it completes the task). We first set the Task0's semaphore0 (token) larger than 0. When first enter the task0 function, the osSinalWait function will examine the semaphore0, if the token is larger than 0, skip the while loop and set the token to 0, and then do the job count0 = count0 + 1. After completing the job, it will pass the token to the next task (Task1) by using the function osSignalSet to set the semaphore1 to 1. Thus the Task1 can be processed. 
 
 I was stuck in the while loop of function osSinalWait when I first learning it, the following link is my question and answer on Stack Overflow: 
 [link](https://stackoverflow.com/questions/60724667/stm32-same-while-loop-code-but-compiled-to-different-assembly-code)
 .
 
 ### 4.2 Cooperative spin-lock semaphore <br />
-One major disadventage of spin-lock semaphore is that resources are being held and doing nothing if the current task's semaphore's value is 0 (stuck in the while loop in the waiting function until the SysTick_Handler exception occured). To solve this problem, we introduce Cooperative spin-lock semaphore. Actually, it require only one line of code added to the waiting function. 
+One major disadvantage of spin-lock semaphore is that resources are being held and doing nothing if the current task's semaphore's value is 0 (stuck in the while loop in the waiting function until the SysTick_Handler exception occurred). To solve this problem, we introduce the Cooperative spin-lock semaphore. Actually, it requires only one line of code added to the waiting function. 
 
 ```c++
 void osSignalWait(volatile int32_t *semaphore)
@@ -421,7 +421,7 @@ void osSignalWait(volatile int32_t *semaphore)
 The osThreadYield() function is inserted in the while loop. That's great, we can hand the resources to the next task right away while the current task (semaphore < 0) is waiting. 
 
 # 5. Implement on LCD <br />
-We are approaching the goal. However, we cannot not directly apply the same code from the previous LCD tutorial ( [link](https://github.com/Dungyichao/STM32F4-LCD_ST7735s) ) to the code here. The LCD tutorial use SysTick_Handler() to trigger the countdown of the HAL_Delay(). In this Task Scheduler, we are using SysTick_Handler() to do the context switch, thus, we need to use other timer to trigger the countdown for the HAL_Delay(). Why the HAL_Delay is important to us, that is for the LCD initialization. We will show you how to achieve it now. 
+We are approaching the goal. However, we cannot directly apply the same code from the previous LCD tutorial ( [link](https://github.com/Dungyichao/STM32F4-LCD_ST7735s) ) to the code here. The LCD tutorial uses SysTick_Handler() to trigger the countdown of the HAL_Delay(). In this Task Scheduler, we are using SysTick_Handler() to do the context switch, thus, we need to use another timer to trigger the countdown for the HAL_Delay(). Why the HAL_Delay is important to us, that is for the LCD initialization. We will show you how to achieve it now. 
 
 
 ### 5.1 Configure CubeMX <br />
@@ -483,20 +483,20 @@ We than move the HAL_IncTick function (for HAL_Delay function usage) into TIM2_I
 </p>  
 
 ### 5.3 Include header file and clear out comment in main.c <br />
-We first clear some comment (automatic generated from CubeMX). Add the header file (let the main.c use function in osKernel.c, st7735.c, and fonts.c) in the main.c file. We than add some code in main.c, please follow the following process.
+We first clear some comments (automatically generated from CubeMX). Add the header file (let the main.c use function in osKernel.c, st7735.c, and fonts.c) in the main.c file. We then add some code in main.c, please follow the following process.
 
 <p align="center">
 <img src="/img/process_add_code1.JPG" height="100%" width="100%">
 </p>
 <br />
 
-The sequence is important especially for <b>E,F,G</b>. Before Initialize LCD (F), we need to first disable SysTick Exception (make sure the HAL_Delay can function properly). G will need to have SysTick exception for context switching, so it is placed at the last position.
+The sequence is important especially for <b>E,F,G</b>. Before Initialize LCD (F), we need to first disable the SysTick Exception (make sure the HAL_Delay can function properly). G will need to have the SysTick exception for context switching, so it is placed at the last position.
 
 <p align="center">
 <img src="/img/include_header_main.gif" height="100%" width="100%"> 
 </p>  
 
-Lastly compile the code and download the code to the board. Make sure all the wire connection of LCD with your board are correct (see 
+Lastly, compile the code and download the code to the board. Make sure all the wire connection of LCD with your board are correct (see 
 [tutorial](https://github.com/Dungyichao/STM32F4-LCD_ST7735s)
 ). You can modify the variable QUANTA (in the top of main.c) to 30 or even larger to make your LCD more stable.
 
