@@ -437,7 +437,7 @@ We are approaching the goal. However, we cannot not directly apply the same code
     <tbody>
         <tr>
             <td align="center">Timers: TIM2</td>
-	    <td align="Left"><b>Clock Source:</b> Internal Clock <br /> <b>CPrescaler:</b> 16000 <br /> <b>Counter Period:</b> 1 <br /> <b>Trigger Event Selection:</b> Update Event <br /> </td>
+	    <td align="Left"><b>Clock Source:</b> Internal Clock <br /> <b>Prescaler:</b> 16000 <br /> <b>Counter Period:</b> 1 <br /> <b>Trigger Event Selection:</b> Update Event <br /> </td>
         </tr>
         <tr>
             <td align="center">Connectivity: SPI1</td>
@@ -450,6 +450,9 @@ We are approaching the goal. However, we cannot not directly apply the same code
     </tbody>
 </table>
 </p>
+
+<br />
+<br />
 
 <p align="center">
 <img src="/img/cubemx_setup.gif" height="100%" width="100%"> 
