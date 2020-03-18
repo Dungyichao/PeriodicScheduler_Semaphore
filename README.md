@@ -340,6 +340,7 @@ For more information of the ICSR pleas refer to the Cortex-M4 Generic User Guide
 <img src="/img/ICSR.png" height="100%" width="100%">
 </p>
 
+
 # 4. Process Synchronization
 We are using <b>Semaphore</b> to achieve process synchronization in the multiprocessing environment. It is like passing one token around these tasks. Only the task with the token can be executed. Please refer to the following link for more information of the Semaphore.
 [Semaphores](https://www.geeksforgeeks.org/semaphores-in-process-synchronization/),
@@ -443,6 +444,55 @@ void osSignalWait(volatile int32_t *semaphore)
 ```
 
 The osThreadYield() function is inserted in the while loop. That's great, we can hand the resources to the next task right away while the current task (semaphore < 0) is waiting. 
+
+### 4.3 Rendevous (Optional) 
+
+```c++
+uint32_t count0,count1,count2;
+
+void Task0(void)
+{
+	while(1)
+	{
+		osSignalSet(&semaphore0);
+		osSignalWait(&semaphore1);
+		osSignalWait(&semaphore2);
+		count0++;
+	}	
+}
+
+void Task1(void)
+{
+	while(1)
+	{
+		osSignalSet(&semaphore1);
+		osSignalWait(&semaphore0);
+		osSignalWait(&semaphore2);
+		count1++;
+	}	
+}
+
+void Task2(void)
+{
+	while(1)
+	{
+		osSignalSet(&semaphore2);
+		osSignalWait(&semaphore0);
+		osSignalWait(&semaphore1);
+		count2++;
+	}
+}
+
+int main(void)
+{
+  osSemaphoreInit(&semaphore1,0);
+  osSemaphoreInit(&semaphore2,0);
+  osSemaphoreInit(&semaphore3,0);
+}
+
+```
+Notice that all the semaphore are initialized with 0.
+
 
 # 5. Implement on LCD <br />
 We are approaching the goal. However, we cannot directly apply the same code from the previous LCD tutorial ( [link](https://github.com/Dungyichao/STM32F4-LCD_ST7735s) ) to the code here. The LCD tutorial uses SysTick_Handler() to trigger the countdown of the HAL_Delay(). In this Task Scheduler, we are using SysTick_Handler() to do the context switch, thus, we need to use another timer to trigger the countdown for the HAL_Delay(). Why the HAL_Delay is important to us, that is for the LCD initialization. We will show you how to achieve it now. 
