@@ -509,6 +509,8 @@ Lastly, compile the code and download the code to the board. Make sure all the w
 You can play around the Initialization of semaphore by changing the 1 to the other semaphore and inspect what happens on the LCD.
 
 # 6. Reference and conclusion
+* Udemy course: Build Your Own RealTime OS (RTOS) From Ground Up on ARM 1. Instructor: Israel Gbati
 
+The reason of making this tutorial is that the code provided from instructor of the Udemy course is not working at all and the instructor didn't reply to any student at all. This tutorial is to guide those people who want to get some knowledge of multitasking.
 
 
