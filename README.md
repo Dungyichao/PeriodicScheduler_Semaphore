@@ -23,6 +23,8 @@ Task scheduling is an important concept in Real-Time Operating Systems (Task, th
      * 5.2 [Download code and Copy to our project](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#52-download-code-and-copy-to-our-project-)
      * 5.3 [Fix the duplicate SysTick_Handler problem in the code](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#53-fix-the-duplicate-systick_handler-problem-in-the-code-)
      * 5.4 [Include header file and clear out comment in main.c](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#54-include-header-file-and-clear-out-comment-in-mainc-)
+     * 5.5 [Compile and Download to the board](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#55-compile-and-download-to-the-board)
+6. [Reference and conclusion](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#6-reference-and-conclusion)
 
 # 1. What is the Goal <br />
 Let's first take a look at what are we going to achieve after this tutorial.
