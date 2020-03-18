@@ -473,7 +473,7 @@ We are approaching the goal. However, we cannot directly apply the same code fro
 	<tr>
             <td align="center">GPIO_OUT</td>
             <td align="Left"><b>PB15: </b> Name it to LCD_CS <br /> <b>PB14: </b> Name it to LCD_RS <br /> <b>PB12: </b>Name it to LCD_RST<br /></td>
-	    <td align="Left">For STM32F411 Nucleo64 board sending data to LCD</td>
+	    <td align="Left">For assisting STM32F411 Nucleo64 board sending data to LCD</td>
         </tr>
 	 <tr>
             <td align="center">Clock Configure</td>
