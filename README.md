@@ -293,7 +293,7 @@ Let's execute the code (provided in the folder Simple_code) and enter the debug 
 <img src="/img/simple_result.gif" height="60%" width="60%">
 </p>
 
-#### 3.3.1 (Optional) 
+#### 3.4 Non-preemptive method (Optional) 
 If we add the following function in every task right after countX = countX + 1, the result will act a little bit different. Each countX will be add up only once and then the counting resource will be handed to the next task. What osThreadYeild does is to make the SysTick timer current value to 0 and set the SysTick exception state to pending. Therefore, the SysTick_Handler will be called and performs the context switching to the next task. 
 ```c++
 #define ICSR         (*((volatile uint32_t *)0xE000ED04))   //(ICSR: Interrupt control and state register)
@@ -307,8 +307,9 @@ void osThreadYield(void)
 <p align="center">
 <img src="/img/simple_yield_result.gif" height="60%" width="60%">
 </p>
+The above result is the slow down motion in the debug view. 
 
-The information of the ICSR pleas refer to the Cortex-M4 Generic User Guide pdf file or the following image.
+For more information of the ICSR pleas refer to the Cortex-M4 Generic User Guide pdf file or the following image.
 <p align="center">
 <img src="/img/ICSR.png" height="100%" width="100%">
 </p>
@@ -318,13 +319,58 @@ We are using <b>Semaphore</b> to achieve process synchronization in the multipro
 [Semaphores](https://www.geeksforgeeks.org/semaphores-in-process-synchronization/),
 [Process Synchronization](https://www.geeksforgeeks.org/introduction-of-process-synchronization/)
 
-In the following, we will introduce Cooperative spin-lock semaphore.
+### 4.1 Spin-lock semaphore <br />
+In the following, we will implement spin-lock semaphore.
 [reference link](http://users.ece.utexas.edu/~valvano/EE345M/view06_semaphores.pdf)
-(please see page 7).
+(please see page 7). There are three critical elements: Initial function, semaphore value setting, and waiting function.
 
+```c++
+//Initial function
+void osSemaphoreInit(int32_t *semaphore, int32_t value)
+{
+	*semaphore = value;
+}
+
+//Semaphore value setting
+void osSignalSet(int32_t *semaphore)
+{
+	__disable_irq();
+	*semaphore += 0x01;
+	__enable_irq();
+}
+
+//waiting function
+void osSignalWait(volatile int32_t *semaphore)
+{
+	while(*semaphore <=0)
+	{		
+			__disable_irq();		
+			__enable_irq();
+	}
+	*semaphore -= 0x01;
+	__enable_irq();
+}
+```
+### 4.2 Cooperative spin-lock semaphore <br />
+One major disadventage of spin-lock semaphore is that resources are being held and doing nothing if the current task's semaphore's value is 0 (stuck in the while loop in the waiting function until the SysTick_Handler exception occured). To solve this problem, we introduce Cooperative spin-lock semaphore. Actually, it require only one line of code added to the waiting function 
+
+```c++
+void osSignalWait(volatile int32_t *semaphore)
+{
+	while(*semaphore <=0)
+	{		
+		__disable_irq();
+		osThreadYield();
+		__enable_irq();
+	}
+	*semaphore -= 0x01;
+	__enable_irq();
+}
+```
 
 # 5. Implement on LCD
 We are approaching the goal. However, we cannot not directly apply the same code from the previous LCD tutorial ( [link](https://github.com/Dungyichao/STM32F4-LCD_ST7735s) ) to the code here. The LCD tutorial use SysTick_Handler() to trigger the countdown of the HAL_Delay(). In this Task Scheduler, we are using SysTick_Handler() to do the context switch, thus, we need to use other timer to trigger the countdown for the HAL_Delay(). We will show you how to achieve it now. 
+
 
 ### 4.1 Configure CubeMX
 
