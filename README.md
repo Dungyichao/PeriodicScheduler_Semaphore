@@ -496,7 +496,7 @@ We first clear some comments (automatically generated from CubeMX). Add the head
 </p>
 <br />
 
-The sequence is important especially for <b>E,F,G, H</b>. Before Initialize LCD (F), we need to first disable the SysTick Exception (make sure the HAL_Delay can function properly) and start the TIM2. G will need to have the SysTick exception for context switching, so it is placed at the last position.
+The sequence is important especially for <b>E,F,G, H</b>. Before Initialize LCD (G step), we need to first disable the SysTick Exception (E step, make sure the HAL_Delay can function properly) and start the TIM2 (F step). H step requires the SysTick exception for context switching, so it is placed at the last position.
 
 <p align="center">
 <img src="/img/include_header_main.gif" height="100%" width="100%"> 
