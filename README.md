@@ -447,7 +447,7 @@ void osSignalWait(volatile int32_t *semaphore)
 
 The osThreadYield() function is inserted in the while loop. That's great, we can hand the resources to the next task right away while the current task (semaphore < 0) is waiting. 
 
-### 4.3 Rendevous (Optional) 
+### 4.3 Rendezvous (Optional) 
 
 ```c++
 uint32_t count0,count1,count2;
