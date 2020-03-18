@@ -488,7 +488,7 @@ int main(void)
 Notice that both the semaphore are initialized with 0. Look at the following result, you can see both count number are adding number at almost the same time. The difference between these two count number is almost 1. 
 
 <p align="center">
-<img src="/img/Rendezvous.gif" height="70%" width="70%"> 
+<img src="/img/Rendezvous .gif" height="70%" width="70%"> 
 </p>
 
 
