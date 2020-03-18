@@ -100,12 +100,12 @@ void osSignalSet(int32_t *semaphore)
 
 void osSignalWait(volatile int32_t *semaphore)
 {
-	//__disable_irq();
+	__disable_irq();
 	while(*semaphore <=0)
-	{		
-		__disable_irq();
-		//osThreadYield();  // Non-preemptive method
+	{	
 		__enable_irq();
+		//osThreadYield();  // Non-preemptive method
+		__disable_irq();			
 	}
 	*semaphore -= 0x01;
 	__enable_irq();
