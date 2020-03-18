@@ -488,11 +488,11 @@ We than move the HAL_IncTick function (for HAL_Delay function usage) into TIM2_I
 We first clear some comments (automatically generated from CubeMX). Add the header file (let the main.c use function in osKernel.c, st7735.c, and fonts.c) in the main.c file. We then add some code in main.c, please follow the following process.
 
 <p align="center">
-<img src="/img/process_add_code1.JPG" height="100%" width="100%">
+<img src="/img/process_add_code2.png" height="100%" width="100%">
 </p>
 <br />
 
-The sequence is important especially for <b>E,F,G</b>. Before Initialize LCD (F), we need to first disable the SysTick Exception (make sure the HAL_Delay can function properly). G will need to have the SysTick exception for context switching, so it is placed at the last position.
+The sequence is important especially for <b>E,F,G, H</b>. Before Initialize LCD (F), we need to first disable the SysTick Exception (make sure the HAL_Delay can function properly) and start the TIM2. G will need to have the SysTick exception for context switching, so it is placed at the last position.
 
 <p align="center">
 <img src="/img/include_header_main.gif" height="100%" width="100%"> 
