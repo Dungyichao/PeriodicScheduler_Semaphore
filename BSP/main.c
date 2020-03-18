@@ -51,9 +51,9 @@ void Task2(void)
 
 int main(void)
 {
-	osSemaphoreInit(&semaphore1,1);
-  	osSemaphoreInit(&semaphore2,0);
-	osSemaphoreInit(&semaphore3,0);
+  osSemaphoreInit(&semaphore1,1);
+  osSemaphoreInit(&semaphore2,0);
+  osSemaphoreInit(&semaphore3,0);
   
   HAL_Init();
  
