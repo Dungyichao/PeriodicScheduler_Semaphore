@@ -6,7 +6,6 @@ Task scheduling is an important concept in Real-Time Operating Systems (Task, th
 3. [Code Concept of Preemptive Scheduling with Round Robin](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#3-code-concept-of-preemptive-scheduling-with-round-robin-)
     * 3.1 [The Essential Elements of the Code](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#31-the-essential-elements-of-the-code)
     * 3.2 [Implement Task, Stack, Thread Control Block and Context Switch](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#32-implement-task-stack-thread-control-block-and-context-switch-)
-
        * 3.2.1 [Task](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#321-task-)
        * 3.2.2 [Stack](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#322-stack-)
        * 3.2.3 [Thread Control Block](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#323-thread-control-block-)
