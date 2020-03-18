@@ -322,7 +322,7 @@ We are using <b>Semaphore</b> to achieve process synchronization in the multipro
 ### 4.1 Spin-lock semaphore <br />
 In the following, we will implement spin-lock semaphore.
 [reference link](http://users.ece.utexas.edu/~valvano/EE345M/view06_semaphores.pdf)
-(please see page 7). There are three critical elements: Initial function, semaphore value setting, and waiting function.
+(please see page 7). The semaphore just like the token. There are three critical elements: Initial function, semaphore value setting, and waiting function.
 
 ```c++
 //Initial function
@@ -344,15 +344,52 @@ void osSignalWait(volatile int32_t *semaphore)
 {
 	while(*semaphore <=0)
 	{		
-			__disable_irq();		
-			__enable_irq();
+		__disable_irq();		
+		__enable_irq();
 	}
 	*semaphore -= 0x01;
 	__enable_irq();
 }
 ```
+
+The task will look like the following
+```c++
+int32_t semaphore1,semaphore2,semaphore3;
+int32_t count0, count1, count2;
+void Task0(void)
+{
+	while(1)
+	{
+    		osSignalWait(&semaphore1);
+		count0++;
+    		osSignalSet(&semaphore2);
+	
+	}
+}
+
+void Task1(void)
+{
+	while(1)
+	{
+		osSignalWait(&semaphore2);
+		count1++;
+   		osSignalSet(&semaphore3);
+	}
+}
+
+void Task2(void)
+{
+	while(1)
+	{
+		osSignalWait(&semaphore3);
+		count2++;
+    		osSignalSet(&semaphore1);
+	}
+}
+```
+
 ### 4.2 Cooperative spin-lock semaphore <br />
-One major disadventage of spin-lock semaphore is that resources are being held and doing nothing if the current task's semaphore's value is 0 (stuck in the while loop in the waiting function until the SysTick_Handler exception occured). To solve this problem, we introduce Cooperative spin-lock semaphore. Actually, it require only one line of code added to the waiting function 
+One major disadventage of spin-lock semaphore is that resources are being held and doing nothing if the current task's semaphore's value is 0 (stuck in the while loop in the waiting function until the SysTick_Handler exception occured). To solve this problem, we introduce Cooperative spin-lock semaphore. Actually, it require only one line of code added to the waiting function. 
 
 ```c++
 void osSignalWait(volatile int32_t *semaphore)
@@ -360,13 +397,15 @@ void osSignalWait(volatile int32_t *semaphore)
 	while(*semaphore <=0)
 	{		
 		__disable_irq();
-		osThreadYield();
+		osThreadYield();  // see section 3.4 in this tutorial
 		__enable_irq();
 	}
 	*semaphore -= 0x01;
 	__enable_irq();
 }
 ```
+
+The osThreadYield() function is inserted in the while loop. That's great, we can hand the resources to the next task right away while the current task (semaphore < 0) is waiting. 
 
 # 5. Implement on LCD
 We are approaching the goal. However, we cannot not directly apply the same code from the previous LCD tutorial ( [link](https://github.com/Dungyichao/STM32F4-LCD_ST7735s) ) to the code here. The LCD tutorial use SysTick_Handler() to trigger the countdown of the HAL_Delay(). In this Task Scheduler, we are using SysTick_Handler() to do the context switch, thus, we need to use other timer to trigger the countdown for the HAL_Delay(). We will show you how to achieve it now. 
