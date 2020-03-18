@@ -440,8 +440,15 @@ Download the code from the following link.
 </p>
 <br />
 
-Copy these files (except main.c) into the MDK-ARM folder under your Project folder. Configure the <b>Include Paths</b>
+Copy these files (except main.c) into the MDK-ARM folder under your Project folder. Configure the <b>Include Paths</b>. Add the existing file to the project. 
 
 <p align="center">
 <img src="/img/download_copy.gif" height="100%" width="100%"> 
 </p>  
+
+You will find 1 error after compiling it. That is caused by the duplicate SysTick_Handler function defined in both stm32f4xx_it.c and our new copied osKernel.c (for context switching). 
+
+### 5.2 Modify the code <br />
+ 
+
+
