@@ -17,6 +17,7 @@ Task scheduling is an important concept in Real-Time Operating Systems (Task, th
 4. [Process Synchronization](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#4-process-synchronization)
      * 4.1 [Spin-lock semaphore](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#41-spin-lock-semaphore-)
      * 4.2 [Cooperative spin-lock semaphore](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#42-cooperative-spin-lock-semaphore-)
+     * 4.3 [Rendezvous (Optional)](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#43-rendezvous-optional)
 5. [Implement on LCD](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#5-implement-on-lcd-)
      * 5.1 [Configure CubeMX](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#51-configure-cubemx-)
      * 5.2 [Download code and Copy to our project](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#52-download-code-and-copy-to-our-project-)
