@@ -380,7 +380,7 @@ void osSignalWait(volatile int32_t *semaphore)
 }
 ```
 
-The task will look like the following (from section 4.3.1)
+The task will look like the following (from section 3.2.1)
 ```c++
 int32_t semaphore0,semaphore1,semaphore2;
 void Task0(void)
