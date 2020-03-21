@@ -587,7 +587,43 @@ Lastly, compile the code and download the code to the board. Make sure all the w
 
 You can play around the Initialization of semaphore by changing the 1 to the other semaphore and inspect what happens on the LCD.
 
-# 6. Reference and conclusion
+# 6. Using PendSV Thread Switcher
+In order to free up the SysTick timer, we will use SysTick_Handler to trigger PendSV to perform the context switching. It requires only a little modification.
+In osKernel.s, we change the SysTick_Handler to PendSV_Handler.
+
+```c++
+		AREA |.text|, CODE, READONLY, ALIGN=2
+                THUMB
+		EXTERN  currentPt
+		EXPORT	PendSV_Handler
+
+PendSV_Handler             ;save r0,r1,r2,r3,r12,lr,pc,psr      
+    CPSID   I                  
+    PUSH    {R4-R11}        ;save r4,r5,r6,r7,r8,r9,r10,r11   
+    LDR     R0, =currentPt  ; r0 points to currentPt       
+    LDR     R1, [R0]        ; r1= currentPt   
+    STR     SP, [R1]           
+    LDR     R1, [R1,#4]     ; r1 =currentPt->next   
+    STR     R1, [R0]        ;currentPt =r1   
+    LDR     SP, [R1]        ;SP= currentPt->stackPt   
+    POP     {R4-R11}           
+    CPSIE   I                  
+    BX      LR 
+```
+
+In the osKernel.c, we add
+
+```c++
+//(ICSR: Interrupt control and state register)
+void SysTick_Handler(void)
+{ 
+   //Trigger PendSV
+   ICSR = 0x10000000; //  Bit26. Change SysTick exception state to pending. trigger SysTick  
+}
+```
+
+
+# 7. Reference and conclusion
 * Udemy course: Build Your Own RealTime OS (RTOS) From Ground Up on ARM 1. Instructor: Israel Gbati
 
 The reason of making this tutorial is that the code provided from instructor of the Udemy course is not working at all and the instructor didn't reply to any student at all. This tutorial is to guide those people who want to get some knowledge of multitasking.
