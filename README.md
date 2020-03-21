@@ -588,8 +588,9 @@ Lastly, compile the code and download the code to the board. Make sure all the w
 You can play around the Initialization of semaphore by changing the 1 to the other semaphore and inspect what happens on the LCD.
 
 # 6. Using PendSV Thread Switcher
-In order to free up the SysTick timer (so that we can do more important thing in SysTick_Handler), we will use SysTick_Handler to trigger PendSV to perform the context switching. It requires only a little modification.
-In osKernel.s, we change the SysTick_Handler to PendSV_Handler.
+In order to free up the SysTick timer (so that we can do more important thing in SysTick_Handler), we will use SysTick_Handler to trigger PendSV to perform the context switching. FreeRTOS and Micrium also use PendSV to perform context switching.
+
+It requires only a little modification. In osKernel.s, we change the SysTick_Handler to PendSV_Handler.
 
 ```c++
 		AREA |.text|, CODE, READONLY, ALIGN=2
