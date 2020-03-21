@@ -24,8 +24,10 @@ Task scheduling is an important concept in Real-Time Operating Systems (Task, th
      * 5.3 [Fix the duplicate SysTick_Handler problem in the code](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#53-fix-the-duplicate-systick_handler-problem-in-the-code-)
      * 5.4 [Include header file and clear out comment in main.c](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#54-include-header-file-and-clear-out-comment-in-mainc-)
      * 5.5 [Compile and Download to the board](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#55-compile-and-download-to-the-board)
+------------------------------------Advance (Optional)-------------------------------------------
 6. [Using PendSV Thread Switcher](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#6-using-pendsv-thread-switcher)
-7. [Reference and conclusion](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#7-reference-and-conclusion)
+7. Period Scheduling
+8. [Reference and conclusion](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#7-reference-and-conclusion)
 
 # 1. What is the Goal <br />
 Let's first take a look at what are we going to achieve after this tutorial.
@@ -623,9 +625,78 @@ void SysTick_Handler(void)
    ICSR = 0x10000000; //  Bit28. Change PendSV exception state to pending. trigger PendSV  
 }
 ```
+# 7. Period Scheduling
+In this section, we will introduce 3 method to achieve period scheduling. Please disable all the semaphore and LCD related elements.
 
+### 7.1 Periodic Threads
 
-# 7. Reference and conclusion
+In the osKernel.c, we add the following code. periodicTask1 and periodicTask2 only get executed when certain condition matches.
+
+```c++
+uint32_t period_tick;
+
+void osSchedulerRoundRobin(void)
+{
+	 period_tick++;
+	
+	if((period_tick%100)== 1){
+	  (*periodicTask1)();   //periodicTask1 is defined in main.c
+	}
+	if((period_tick%200)== 1){
+	  (*periodicTask2)();   //periodicTask2 is defined in main.c
+	}
+	currentPt =  currentPt->nextPt;
+}
+```
+
+In osKernel.s, we modify the PendSV_Handler so it will branch to the function in above.
+```c++
+			AREA |.text|,CODE,READONLY,ALIGN=2
+			THUMB
+			PRESERVE8
+			EXTERN currentPt
+		    	EXPORT PendSV_Handler
+			IMPORT osSchedulerRoundRobin
+
+PendSV_Handler   ;save r0,r1,r2,r3,r12,lr,pc,psr  
+	CPSID	  I
+	PUSH 	  {R4-R11}
+	LDR 	  R0,=currentPt
+	LDR	  R1,[R0]
+	
+	STR 	  SP,[R1]
+
+    	PUSH	  {R0,LR}
+	BL	  osSchedulerRoundRobin
+	POP	  {R0,LR}
+	LDR 	  R1,[R0]     ;R1 = currentPt i.e New thread. currentPt was changed in osSchedulerRoundRobin()
+	LDR 	  SP,[R1]
+	
+	POP	  {R4-R11}
+	CPSIE	  I
+	BX	  LR
+```
+
+In main.c, we add tasks (see section 3.2.1)
+```c++
+uint32_t pcount1,pcount2;
+
+void periodicTask1(void){	
+	pcount1++;
+}
+
+void periodicTask2(void){	
+	pcount2++;
+}
+```
+
+### 7.2 Hardware Interrupts
+
+### 7.3 Thread Control Blocks (TCB)
+
+### 7.4 TCB + Hardware Interrupts
+
+# 8. Reference and conclusion
 * Udemy course: Build Your Own RealTime OS (RTOS) From Ground Up on ARM 1. Instructor: Israel Gbati
 
 The reason of making this tutorial is that the code provided from instructor of the Udemy course is not working at all and the instructor didn't reply to any student at all. This tutorial is to guide those people who want to get some knowledge of multitasking.
