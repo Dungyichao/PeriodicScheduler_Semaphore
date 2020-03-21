@@ -650,7 +650,7 @@ void osSchedulerRoundRobin(void)
 }
 ```
 
-In osKernel.s, we modify the PendSV_Handler so it will branch to the function in above.
+In osKernel.s, we modify the PendSV_Handler so it will branch to the function in above. 
 ```c++
 			AREA |.text|,CODE,READONLY,ALIGN=2
 			THUMB
@@ -677,6 +677,8 @@ PendSV_Handler   ;save r0,r1,r2,r3,r12,lr,pc,psr
 	CPSIE	  I
 	BX	  LR
 ```
+* PRESERVE8 info: 
+[http://www.keil.com/support/man/docs/armasm/armasm_dom1361290021571.htm](http://www.keil.com/support/man/docs/armasm/armasm_dom1361290021571.htm)
 
 In main.c, we add tasks (in section 3.2.1). Don't forget to put the following 2 task in the osKernel.h header file.
 ```c++
