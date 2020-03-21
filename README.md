@@ -591,7 +591,7 @@ You can play around the Initialization of semaphore by changing the 1 to the oth
 # 6. Using PendSV Thread Switcher
 In order to free up the SysTick timer (so that we can do more important thing in SysTick_Handler), we will use SysTick_Handler to trigger PendSV to perform the context switching. FreeRTOS and Micrium also use PendSV to perform context switching.
 
-It requires only a little modification. In osKernel.s, we change the SysTick_Handler to PendSV_Handler.
+It requires only a little modification. Please disable all semaphore elements. In osKernel.s, we change the SysTick_Handler to PendSV_Handler.
 
 ```c++
 		AREA |.text|, CODE, READONLY, ALIGN=2
