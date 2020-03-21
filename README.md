@@ -618,7 +618,7 @@ In the osKernel.c, we add
 void SysTick_Handler(void)
 { 
    //Trigger PendSV
-   ICSR = 0x10000000; //  Bit26. Change SysTick exception state to pending. trigger SysTick  
+   ICSR = 0x10000000; //  Bit28. Change PendSV exception state to pending. trigger PendSV  
 }
 ```
 
