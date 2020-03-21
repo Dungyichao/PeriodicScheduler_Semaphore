@@ -678,7 +678,7 @@ PendSV_Handler   ;save r0,r1,r2,r3,r12,lr,pc,psr
 	BX	  LR
 ```
 
-In main.c, we add tasks (in section 3.2.1)
+In main.c, we add tasks (in section 3.2.1). Don't forget to put the following 2 task in the osKernel.h header file.
 ```c++
 uint32_t pcount1,pcount2;
 
