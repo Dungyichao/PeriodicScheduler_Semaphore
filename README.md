@@ -698,11 +698,14 @@ The result will be like the following
 <img src="/img/periodic1.gif" height="50%" width="50%"> 
 </p>  
 
-### 7.2 Hardware Interrupts
+### 7.2 Timer Interrupts
+We will enable another timer TIM3 to trigger the task
+
+
 
 ### 7.3 Thread Control Blocks (TCB)
 
-### 7.4 TCB + Hardware Interrupts
+### 7.4 TCB + Timer Interrupts
 
 # 8. Reference and conclusion
 * Udemy course: Build Your Own RealTime OS (RTOS) From Ground Up on ARM 1. Instructor: Israel Gbati
