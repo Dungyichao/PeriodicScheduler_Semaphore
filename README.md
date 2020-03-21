@@ -633,6 +633,7 @@ In this section, we will introduce 3 method to achieve period scheduling. Please
 In the osKernel.c, we add the following code. periodicTask1 and periodicTask2 only get executed when certain condition matches.
 
 ```c++
+#define		PERIOD		100
 uint32_t period_tick;
 
 void osSchedulerRoundRobin(void)
