@@ -695,7 +695,7 @@ void periodicTask2(void){
 The result will be like the following
 
 <p align="center">
-<img src="/img/periodic1.gif" height="80%" width="80%"> 
+<img src="/img/periodic1.gif" height="50%" width="50%"> 
 </p>  
 
 ### 7.2 Hardware Interrupts
