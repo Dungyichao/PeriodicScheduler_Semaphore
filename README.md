@@ -801,8 +801,10 @@ The result will be the following
 ### 7.3 Thread Control Blocks (TCB)
 Like the section 3.2.3 
 [(link)](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#323-thread-control-block-)
-. We create another thread control block (TCB) for periodic tasks, however, what being stored in the periodic tasks TCB is a little bit different
-
+. We create another thread control block (TCB) for periodic tasks, however, what being stored in the periodic tasks TCB is a little bit different. Please refer to the following image.
+<p align="center">
+<img src="/img/periodic_tasks_tcb.JPG" height="70%" width="70%">
+</p>
 
 ### 7.4 TCB + Timer Interrupts
 
