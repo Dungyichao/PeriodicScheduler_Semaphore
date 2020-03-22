@@ -1156,7 +1156,9 @@ int main(void)
 The osKernel.s file is same as section 7.3.
 
 The result will be the following.
-
+<p align="center">
+<img src="/img/periodic4.gif" height="50%" width="50%">
+</p>
 
 
 # 8. Reference and conclusion
