@@ -629,7 +629,7 @@ void SysTick_Handler(void)
 }
 ```
 # 7. Period Scheduling
-In this section, we will introduce 3 method to achieve period scheduling. Please disable all the semaphore and LCD related elements.
+In this section, we will introduce 3 method to achieve period scheduling. Please disable all the semaphore and LCD related elements. Why do we need period scheduling? Some tasks require being executed every SysTick exception while some tasks don't need to be executed so frequently. Thus, for those tasks only need longer period, we can adobt the following methods.
 
 ### 7.1 Periodic Threads
 
