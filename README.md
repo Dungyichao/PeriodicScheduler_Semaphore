@@ -733,20 +733,22 @@ For the following information, please refer to STM32F411xC/E advanced Arm®-base
         <tr>
             <td align="center">RCC Register</td>
 	    <td align="Left">To enable the clock of TIM3, we need to set the bit1 of RCC_APB1ENR to 1 <br /><p align="center">
-<img src="/img/TIM3_1.JPG" height="90%" width="90%"></p><br /> page 118  </td>
+<img src="/img/TIM3_1.JPG" height="90%" width="90%"></p>page 118  </td>
         </tr>
         <tr>
             <td align="center">TIMx->PSC</td>
             <td align="Left">TIMx prescaler<br /><p align="center">
-<img src="/img/TIM3_2.JPG" height="90%" width="90%"></p><br /> page 367 </td>
+<img src="/img/TIM3_2.JPG" height="90%" width="90%"></p>page 367 </td>
         </tr>
 	<tr>
             <td align="center">TIMx->ARR</td>
-            <td align="Left">TIMx auto-reload register</td>
+            <td align="Left">TIMx auto-reload register<br /><p align="center">
+<img src="/img/TIM3_3.JPG" height="90%" width="90%"></p>page 367</td>
         </tr>
 	 <tr>
             <td align="center">TIMx->CR1</td>
-            <td align="Left">TIMx control register 1</td>
+            <td align="Left">TIMx control register 1<br /><p align="center">
+<img src="/img/TIM3_4.JPG" height="90%" width="90%"></p>page 352</td>
         </tr>
 	<tr>
             <td align="center">TIMx->DIER</td>
