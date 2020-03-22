@@ -790,6 +790,10 @@ https://www.keil.com/pack/doc/CMSIS/Core/html/group__NVIC__gr.html
 </table>
 </p>
 
+The result will be the following
+<p align="center">
+<img src="/img/periodic2.gif" height="50%" width="50%">
+</p>
 
 
 
