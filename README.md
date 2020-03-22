@@ -719,7 +719,26 @@ void TIM3_Init(void){
 	
 }
 ```
-For the following information, please refer to STM32F411xC/E advanced Arm®-based 32-bit MCUs Manual 
+
+In <b>main.c</b>, add the following interrupt handler, variable, and the initialization command.
+```c++
+uint32_t ipcount1;
+
+int main(void)
+{
+	TIM3_Init();
+	osKernelInit();
+	osKernelAddThreads(&Task0,&Task1,&Task2);
+	osKernelLaunch(QUANTA);
+}
+
+void TIM3_IRQHandler(void){
+	TIM3->SR =0;
+	ipcount1++;
+}
+```
+
+For the above TIM3 related register information, please refer to STM32F411xC/E advanced Arm®-based 32-bit MCUs Manual and the following table.
 [https://www.st.com/resource/en/reference_manual/dm00119316-stm32f411xc-e-advanced-arm-based-32-bit-mcus-stmicroelectronics.pdf](https://www.st.com/resource/en/reference_manual/dm00119316-stm32f411xc-e-advanced-arm-based-32-bit-mcus-stmicroelectronics.pdf)
 <p align="center">
 <table>
@@ -757,30 +776,21 @@ For the following information, please refer to STM32F411xC/E advanced Arm®-base
         </tr>
 	<tr>
             <td align="center">NVIC_EnableIRQ</td>
-            <td align="Left">Functions to access the Nested Vector Interrupt Controller (NVIC). To enable certain interrupt according it's IRQ number.<br /><p align="center">
+            <td align="Left">Functions to access the Nested Vector Interrupt Controller (NVIC). To enable certain interrupt according it's IRQ number.
+		    [https://www.keil.com/pack/doc/CMSIS/Core/html/group__NVIC__gr.html](https://www.keil.com/pack/doc/CMSIS/Core/html/group__NVIC__gr.html)
+		    <br /><p align="center">
 <img src="/img/irq_n.JPG" height="100%" width="100%"></p></td>
+        </tr>
+	<tr>
+            <td align="center">TIMx->SR</td>
+            <td align="Left">TIMx status register<br /><p align="center">
+<img src="/img/TIM3_6.JPG" height="90%" width="90%"></p>page 358</td>
         </tr>
     </tbody>
 </table>
 </p>
 
-In <b>main.c</b>, add the following interrupt handler, variable, and the initialization command.
-```c++
-uint32_t ipcount1;
 
-int main(void)
-{
-	TIM3_Init();
-	osKernelInit();
-	osKernelAddThreads(&Task0,&Task1,&Task2);
-	osKernelLaunch(QUANTA);
-}
-
-void TIM3_IRQHandler(void){
-	TIM3->SR =0;
-	ipcount1++;
-}
-```
 
 
 ### 7.3 Thread Control Blocks (TCB)
