@@ -918,8 +918,6 @@ uint8_t osKernelAddPeriodThreads( void(*thread1)(void),
 
 In <b>osKernel.c</b>, we add the following function to execute periodic tasks when the PendSV handler branch to here.
 ```c++
-uint32_t period_tick;
-
 void osSchedulerPeriodicRR(void)
 {
 	 if(TimeMsec < MaxPeriod)
