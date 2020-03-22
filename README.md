@@ -253,10 +253,6 @@ currentPt = &tcbs[0];      //We will first do task 0, so store the stack0 pointe
 void osKernelStackInit(int i){
   tcbs[i].stackPt = &TCB_STACK[i][STACKSIZE-16]; //-16
   TCB_STACK[i][STACKSIZE-1] = 0x01000000;  
-	for(int j = 0; j < 92; j++)
-	{
-		TCB_STACK[i][j] = (int32_t)&TCB_STACK[i][j];
-	}
 }
 
 uint8_t osKernelAddThreads(void(*task0)(void),void(*task1)(void),void(*task2)(void))
@@ -265,6 +261,7 @@ uint8_t osKernelAddThreads(void(*task0)(void),void(*task1)(void),void(*task2)(vo
 	tcbs[0].nextPt = &tcbs[1]; 
 	tcbs[1].nextPt = &tcbs[2]; 
 	tcbs[2].nextPt = &tcbs[0]; 
+	
 	osKernelStackInit(0);
 	TCB_STACK[0][STACKSIZE-2] = (int32_t)(task0); 
   
@@ -273,8 +270,10 @@ uint8_t osKernelAddThreads(void(*task0)(void),void(*task1)(void),void(*task2)(vo
   
 	osKernelStackInit(2);
 	TCB_STACK[2][STACKSIZE-2] = (int32_t)(task2); 
+	
 	currentPt = &tcbs[0];
 	 __enable_irq();
+	 
 	return 1;              
 }
 ```
