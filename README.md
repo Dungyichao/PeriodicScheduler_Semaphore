@@ -757,7 +757,8 @@ For the following information, please refer to STM32F411xC/E advanced Arm®-base
         </tr>
 	<tr>
             <td align="center">NVIC_EnableIRQ</td>
-            <td align="Left"></td>
+            <td align="Left">Functions to access the Nested Vector Interrupt Controller (NVIC). To enable certain interrupt according it's IRQ number.<br /><p align="center">
+<img src="/img/irq_n.JPG" height="100%" width="100%"></p></td>
         </tr>
     </tbody>
 </table>
