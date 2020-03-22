@@ -28,7 +28,7 @@ Task scheduling is an important concept in Real-Time Operating Systems (Task, th
 
 ------------------------------------Advance (Optional)------------------------------------------- <br />
 
-6. [Using PendSV Thread Switcher](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#6-using-pendsv-thread-switcher)
+6. [Using PendSV for Context Switch](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#6-using-pendsv-thread-switcher)
 7. Period Scheduling
 8. [Reference and conclusion](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#7-reference-and-conclusion)
 
@@ -593,7 +593,7 @@ Lastly, compile the code and download the code to the board. Make sure all the w
 
 You can play around the Initialization of semaphore by changing the 1 to the other semaphore and inspect what happens on the LCD.
 
-# 6. Using PendSV Thread Switcher
+# 6. Using PendSV for Context Switch
 In order to free up the SysTick timer (so that we can do more important thing in SysTick_Handler), we will use SysTick_Handler to trigger PendSV to perform the context switching. FreeRTOS and Micrium also use PendSV to perform context switching.
 
 It requires only a little modification. Please disable all semaphore elements. In osKernel.s, we change the SysTick_Handler to PendSV_Handler.
@@ -798,11 +798,15 @@ The result will be the following
 <img src="/img/periodic2.gif" height="50%" width="50%">
 </p>
 
-
-
 ### 7.3 Thread Control Blocks (TCB)
+Like the section 3.2.3 
+[(link)](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#323-thread-control-block-)
+. We create another thread control block (TCB) for periodic tasks, however, what being stored in the periodic tasks TCB is a little bit different
+
 
 ### 7.4 TCB + Timer Interrupts
+
+
 
 # 8. Reference and conclusion
 * Udemy course: Build Your Own RealTime OS (RTOS) From Ground Up on ARM 1. Instructor: Israel Gbati
