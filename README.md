@@ -1153,6 +1153,8 @@ int main(void)
 }
 ```
 
+The osKernel.s file is same as section 7.3.
+
 The result will be the following.
 
 
