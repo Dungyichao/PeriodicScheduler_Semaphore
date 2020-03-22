@@ -886,7 +886,9 @@ uint32_t MaxPeriod;
 uint32_t TimeMsec;
 
 uint8_t osKernelAddPeriodThreads( void(*thread1)(void),
-				uint32_t period1,															void(*thread2)(void),															uint32_t period2
+				uint32_t period1,
+				void(*thread2)(void),
+				uint32_t period2
 				)
 {
 	MaxPeriod  = period1 > period2 ? period1 : period2;
