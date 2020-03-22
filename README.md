@@ -806,6 +806,38 @@ Like the section 3.2.3
 <img src="/img/periodic_tasks_tcb.JPG" height="70%" width="70%">
 </p>
 
+In <b>osKernel.c</b>, we add the following codes
+```c++
+#define NUM_PERIODIC_TASKS 2
+
+typedef void(*taskT)(void);
+
+//Following is the TCBs for periodic tasks
+typedef struct{
+  taskT task;
+  uint32_t period;
+}periodicTaskT;
+
+static periodicTaskT	PeriodicTasks[NUM_PERIODIC_TASKS];
+static uint32_t MaxPeriod;
+static uint32_t TimeMsec;
+
+```
+
+In <b>main.c</b>, we define 2 periodic tasks: periodicTask1 and periodicTask2
+```c++
+uint32_t pcount1,pcount2;
+
+void periodicTask1(void){
+	pcount1++;
+}
+
+void periodicTask2(void){
+	pcount2++;
+}
+```
+
+
 ### 7.4 TCB + Timer Interrupts
 
 
