@@ -30,6 +30,10 @@ Task scheduling is an important concept in Real-Time Operating Systems (Task, th
 
 6. [Using PendSV for Context Switch](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#6-using-pendsv-thread-switcher)
 7. Period Scheduling
+	* 7.1 
+	* 7.2
+	* 7.3
+	* 7.4
 8. [Reference and conclusion](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#7-reference-and-conclusion)
 
 # 1. What is the Goal <br />
@@ -699,7 +703,7 @@ We will follow the code and function in section 3.2
  [(Using PendSV for Context Switch)](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#6-using-pendsv-for-context-switch)
 .
 
-### 7.1 Periodic Threads
+### 7.1 Method 1 - Multiple Periodic Threads
 
 In the osKernel.c, we add the following code. periodicTask1 and periodicTask2 only get executed when certain condition matches.
 
@@ -769,7 +773,7 @@ The result will be like the following
 <img src="/img/periodic1.gif" height="50%" width="50%"> 
 </p>  
 
-### 7.2 Timer Interrupts
+### 7.2 Method 2 - Timer Interrupts
 We will enable another timer TIM3 to trigger the task. Let's configure TIM3 manually and see how to trigger it. (In the previous section, we configure TIM2 using CubeMX and it generates code for us)
 
 Create timer.c and timer.h (header file for timer.c) file for TIM3 configuration.
@@ -866,7 +870,7 @@ The result will be the following
 <img src="/img/periodic2.gif" height="50%" width="50%">
 </p>
 
-### 7.3 Thread Control Blocks (TCB)
+### 7.3 Method 3 - Thread Control Blocks (TCB)
 Like the section 3.2.3 
 [(link)](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#323-thread-control-block-)
 . We create another thread control block (TCB) for periodic tasks, however, what being stored in the periodic tasks TCB is a little bit different. Please refer to the following image.
