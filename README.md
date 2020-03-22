@@ -1020,15 +1020,14 @@ This will be a little complicated. Let's first take a look at the following imag
 <img src="/img/Periodic_timer_tcbs1.png" height="100%" width="100%">
 </p>
 We make both TIM2 and SysTick exception handler do tasks for us. SysTick handler will trigger the context switch (see section 
+
 [3.2.4](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#324-context-switch-part-i-)
 and
 [3.2.5](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#325-context-switch-part-ii-)
-). TIM2 IRQ handler will trigger the execution of perodic tasks. Please see the following code.
+ ). TIM2 IRQ handler will trigger the execution of perodic tasks. Please see the following code.
 
 In osKernel.c file (following the code in section
-
 [3.2.3](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#323-thread-control-block-)
-
 ).
 
 ```c++
