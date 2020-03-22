@@ -932,7 +932,7 @@ void osSchedulerPeriodicRR(void)
 	 }
 		
 	 int i;
-	 for(i=0;i<NUM_OF_THREADS;i++)
+	 for(i=0;i<NUM_PERIODIC_TASKS;i++)
 	 {
 	      if((TimeMsec % PeriodicTasks[i].period)==0 && PeriodicTasks[i].task !=NULL)
 	        {
