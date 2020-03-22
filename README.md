@@ -1015,6 +1015,10 @@ The result is the in following
 </p>
 
 ### 7.4 TCB + Timer Interrupts
+This will be a little complicated. Let's first take a look at the following image so that we can explain the detail more easily.
+<p align="center">
+<img src="/img/Periodic_timer_tcbs.png" height="100%" width="100%">
+</p>
 
 
 
