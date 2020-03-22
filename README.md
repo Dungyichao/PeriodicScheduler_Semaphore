@@ -25,7 +25,7 @@ Task scheduling is an important concept in Real-Time Operating Systems (Task, th
      * 5.4 [Include header file and clear out comment in main.c](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#54-include-header-file-and-clear-out-comment-in-mainc-)
      * 5.5 [Compile and Download to the board](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#55-compile-and-download-to-the-board)
 <br />
-------------------------------------Advance (Optional)-------------------------------------------
+------------------------------------Advance (Optional)------------------------------------------- <br />
 6. [Using PendSV Thread Switcher](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#6-using-pendsv-thread-switcher)
 7. Period Scheduling
 8. [Reference and conclusion](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#7-reference-and-conclusion)
