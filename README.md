@@ -1019,7 +1019,140 @@ This will be a little complicated. Let's first take a look at the following imag
 <p align="center">
 <img src="/img/Periodic_timer_tcbs1.png" height="100%" width="100%">
 </p>
-We make both TIM2 and SysTick exception handler do tasks for us. SysTick handler will trigger the Conte
+We make both TIM2 and SysTick exception handler do tasks for us. SysTick handler will trigger the context switch (see section 
+[3.2.4](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#324-context-switch-part-i-)
+and
+[3.2.5](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#325-context-switch-part-ii-)
+). TIM2 IRQ handler will trigger the execution of perodic tasks. Please see the following code.
+
+In osKernel.c file (following the code in section 
+[3.2.3](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#323-thread-control-block-)
+).
+
+```c++
+#define NUM_PERIODIC_TASKS 5
+
+typedef void(*taskT)(void);
+#define NULL (void*)0
+
+typedef struct{
+  	taskT task;
+	uint32_t period;
+	uint32_t  timeLeft;
+
+}periodicTaskT;
+
+periodicTaskT	PeriodicTasks[NUM_PERIODIC_TASKS];
+uint32_t TimeMsec;
+uint32_t MaxPeriod;
+int32_t NumPeriodicThreads =0;
+
+uint8_t osKernelAddPeriod_Thread(void (*task)(void), uint32_t period)
+{
+  if(NumPeriodicThreads ==  NUM_PERIODIC_TASKS || period == 0){
+	  return 0;
+	}
+	
+	PeriodicTasks[NumPeriodicThreads].task = task;
+	PeriodicTasks[NumPeriodicThreads].period =  period;
+	PeriodicTasks[NumPeriodicThreads].timeLeft =  period -1;
+	
+	NumPeriodicThreads++;
+	return 1;
+	
+}
+
+
+void periodic_events_execute(void){
+ 
+	int i;
+	 for(i=0;i<NumPeriodicThreads;i++){
+	   if(PeriodicTasks[i].timeLeft ==0){
+			 PeriodicTasks[i].task();
+			 PeriodicTasks[i].timeLeft = PeriodicTasks[i].period -1;
+	    }
+	    else{
+		  PeriodicTasks[i].timeLeft--;
+	     }
+	 }	 
+}
+
+void osSchedulerPeriodicRR(void)
+{		 
+		 currentPt  =  currentPt->nextPt;
+}
+
+void (*PeriodicTask)(void);
+
+void osPeriodicTask_Init(void(*task)(void), uint32_t freq, uint8_t priority)
+{
+
+	 //__disable_irq();
+	 PeriodicTask = task;
+
+   	 RCC->APB1ENR |=1;
+   	 TIM2->PSC =  16-1;    /* 16 000 000 / 16 = 1 000 000*/
+	 TIM2->ARR =  (1000000/freq)-1;
+  	 TIM2->CR1 =1;
+	 
+	 TIM2->DIER |=1;
+	 NVIC_SetPriority(TIM2_IRQn,priority);
+	 NVIC_EnableIRQ(TIM2_IRQn);
+}
+
+
+void TIM2_IRQHandler(void){
+  TIM2->SR  =0;
+	(*PeriodicTask)();
+}
+
+```
+In the osKernelInit() function, we add osPeriodicTask_Init(periodic_events_execute,1000,6);
+```c++
+void osKernelInit(void)
+{
+     __disable_irq();
+     MILLIS_PRESCALER=(BUS_FREQ/1000);
+     osPeriodicTask_Init(periodic_events_execute,1000,6);
+
+}
+```
+
+In the main.c file, we add the following
+```c++
+uint32_t pcount1,pcount2, pcount3;
+
+void periodicTask1(void){
+	
+	pcount1++;
+}
+
+void periodicTask2(void){
+	
+	pcount2++;
+}
+
+void periodicTask3(void){
+	
+	pcount3++;
+}
+
+
+int main(void)
+{
+	osKernelInit();
+	osKernelAddThreads(&Task0,&Task1,&Task2);
+	
+	osKernelAddPeriod_Thread(&periodicTask1,10);
+	osKernelAddPeriod_Thread(&periodicTask2,100);
+	osKernelAddPeriod_Thread(&periodicTask3,200);
+	
+	osKernelLaunch(QUANTA);
+}
+```
+
+The result will be the following.
+
 
 
 # 8. Reference and conclusion
