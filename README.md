@@ -1027,7 +1027,7 @@ and
 [3.2.5](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#325-context-switch-part-ii-)
  ). TIM2 IRQ handler will trigger the execution of perodic tasks. Please see the following code.
 
-In osKernel.c file (following the code in section
+In osKernel.c file, we add the following (following the code in section
 [3.2.3](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#323-thread-control-block-)
 ).
 
