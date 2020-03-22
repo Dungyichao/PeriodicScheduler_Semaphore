@@ -699,8 +699,56 @@ The result will be like the following
 </p>  
 
 ### 7.2 Timer Interrupts
-We will enable another timer TIM3 to trigger the task
+We will enable another timer TIM3 to trigger the task. Let's configure TIM3 manually and see how to trigger it. (In the previous section, we configure TIM2 using CubeMX and it generates code for us)
 
+Create timer.c and timer.h (header file for timer.c) file for TIM3 configuration.
+
+timer.c
+```c++
+#include "stm32f4xx.h"                  // Device header
+
+void TIM3_Init(void){
+	
+   RCC->APB1ENR |= 2;
+   TIM3->PSC  = 16000-1;    /*divide system clock by 16000*/
+   TIM3->ARR  = 1000-1;     /*divide by 1000*/
+   TIM3->CR1	=  1;
+  
+   TIM3->DIER |=1;					/*Enable UIE */	
+   NVIC_EnableIRQ(TIM3_IRQn);
+	
+}
+```
+<p align="center">
+<table>
+    <thead>
+        <tr>
+            <th align="center">Configure</th>
+            <th align="center">Detail</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td align="center">RCC Register</td>
+	    <td align="Left">To enable the clock of TIM3, we need to set the bit1 of RCC_APB1ENR to 1 <br /><p align="center">
+<img src="/img/TIM3_1.JPG" height="70%" width="70%"> 
+</p>  </td>
+        </tr>
+        <tr>
+            <td align="center">Connectivity: SPI1</td>
+            <td align="Left"></td>
+        </tr>
+	<tr>
+            <td align="center">GPIO_Output</td>
+            <td align="Left"></td>
+        </tr>
+	 <tr>
+            <td align="center">Clock Configure</td>
+            <td align="Left"></td>
+        </tr>
+    </tbody>
+</table>
+</p>
 
 
 ### 7.3 Thread Control Blocks (TCB)
