@@ -703,7 +703,7 @@ We will enable another timer TIM3 to trigger the task. Let's configure TIM3 manu
 
 Create timer.c and timer.h (header file for timer.c) file for TIM3 configuration.
 
-timer.c
+in <b>timer.c</b>
 ```c++
 #include "stm32f4xx.h"                  // Device header
 
@@ -763,6 +763,24 @@ For the following information, please refer to STM32F411xC/E advanced Arm®-base
     </tbody>
 </table>
 </p>
+
+In <b>main.c</b>, add the following interrupt handler, variable, and the initialization command.
+```c++
+uint32_t ipcount1;
+
+int main(void)
+{
+	TIM3_Init();
+	osKernelInit();
+	osKernelAddThreads(&Task0,&Task1,&Task2);
+	osKernelLaunch(QUANTA);
+}
+
+void TIM3_IRQHandler(void){
+	TIM3->SR =0;
+	ipcount1++;
+}
+```
 
 
 ### 7.3 Thread Control Blocks (TCB)
