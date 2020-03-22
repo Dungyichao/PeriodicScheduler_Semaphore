@@ -1017,9 +1017,9 @@ The result is the in following
 ### 7.4 TCB + Timer Interrupts
 This will be a little complicated. Let's first take a look at the following image so that we can explain the detail more easily.
 <p align="center">
-<img src="/img/Periodic_timer_tcbs.png" height="100%" width="100%">
+<img src="/img/Periodic_timer_tcbs1.png" height="100%" width="100%">
 </p>
-
+We make both TIM2 and SysTick exception handler do tasks for us. SysTick handler will trigger the Conte
 
 
 # 8. Reference and conclusion
