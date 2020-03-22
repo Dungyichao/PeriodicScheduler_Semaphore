@@ -714,7 +714,7 @@ void TIM3_Init(void){
 	
    RCC->APB1ENR |= 2;
    TIM3->PSC  = 16000-1;    /*divide system clock by 16000*/
-   TIM3->ARR  = 1000-1;     /*divide by 1000*/
+   TIM3->ARR  = 1000-1;     /*divide by 1000*/  //be executed every 1000 ms = 1 s
    TIM3->CR1	=  1;
   
    TIM3->DIER |=1;					/*Enable UIE */	
