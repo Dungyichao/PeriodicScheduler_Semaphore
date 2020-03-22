@@ -868,7 +868,7 @@ Like the section 3.2.3
 <img src="/img/periodic_tasks_tcb.JPG" height="70%" width="70%">
 </p>
 
-In <b>osKernel.c</b>, we add the following codes
+In <b>osKernel.c</b>, we add the following codes to manage periodic tasks thread control blocks.
 ```c++
 #define NUM_PERIODIC_TASKS 2
 
@@ -885,6 +885,33 @@ static periodicTaskT	PeriodicTasks[NUM_PERIODIC_TASKS];
 uint32_t MaxPeriod;
 uint32_t TimeMsec;
 
+```
+
+In <b>osKernel.c</b>, we add the following function to execute periodic tasks when the PendSV handler branch to here.
+```c++
+uint32_t period_tick;
+
+void osSchedulerPeriodicRR(void)
+{
+	 if(TimeMsec < MaxPeriod)
+	 {
+		 TimeMsec++;
+	 }
+	 else
+	 {
+			TimeMsec = 1;
+	 }
+		
+	 int i;
+	 for(i=0;i<NUM_OF_THREADS;i++)
+	 {
+	      if((TimeMsec % PeriodicTasks[i].period)==0 && PeriodicTasks[i].task !=NULL)
+	        {
+			PeriodicTasks[i].task();
+		}
+	  } 
+	  currentPt  =  currentPt->nextPt;
+}
 ```
 
 In <b>main.c</b>, we define 2 periodic tasks: periodicTask1 and periodicTask2
