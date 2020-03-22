@@ -1019,7 +1019,7 @@ This will be a little complicated. Let's first take a look at the following imag
 <p align="center">
 <img src="/img/Periodic_timer_tcbs1.png" height="100%" width="100%">
 </p>
-We make both TIM2 and SysTick exception handler do tasks for us. SysTick handler will trigger the context switch (see section  
+We make both TIM2 and SysTick exception handler do tasks for us. SysTick handler will trigger the context switch (see section
 [3.2.4](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#324-context-switch-part-i-)
 and
 [3.2.5](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#325-context-switch-part-ii-)
