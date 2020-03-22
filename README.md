@@ -236,6 +236,63 @@ tcbs[0].nextPt = &tcbs[1];      // after doing task0, next should do task1, so s
 tcbs[1].nextPt = &tcbs[2];      // after doing task1, next should do task2, so store stack2 pointer
 tcbs[2].nextPt = &tcbs[0];      // after doing task2, next should do task0, so store stack0 pointer
 ```
+
+Let's use function to better manage the code. The following codes and function do the exactly same thing in above code.
+```c++
+int32_t TCB_STACK[NUM_OF_THREADS][STACKSIZE];
+
+struct tcb{
+  int32_t *stackPt;       
+  struct tcb *nextPt;  
+};
+
+typedef struct tcb tcbType;     //name tcb as tcbType
+tcbType tcbs[NUM_OF_THREADS];   //tcbs[0][0] stores task0 stack pointer, tcbs[0][1] stores task1 stack pointer
+tcbType *currentPt;             //point to the current running task's tcb
+
+currentPt = &tcbs[0];      //We will first do task 0, so store the stack0 pointer
+
+void osKernelStackInit(int i){
+  tcbs[i].stackPt = &TCB_STACK[i][STACKSIZE-16]; //-16
+  TCB_STACK[i][STACKSIZE-1] = 0x01000000;  
+	for(int j = 0; j < 92; j++)
+	{
+		TCB_STACK[i][j] = (int32_t)&TCB_STACK[i][j];
+	}
+}
+
+uint8_t osKernelAddThreads(void(*task0)(void),void(*task1)(void),void(*task2)(void))
+{ 
+	__disable_irq();
+	tcbs[0].nextPt = &tcbs[1]; 
+	tcbs[1].nextPt = &tcbs[2]; 
+	tcbs[2].nextPt = &tcbs[0]; 
+	osKernelStackInit(0);
+	TCB_STACK[0][STACKSIZE-2] = (int32_t)(task0); 
+  
+	osKernelStackInit(1);
+	TCB_STACK[1][STACKSIZE-2] = (int32_t)(task1); 
+  
+	osKernelStackInit(2);
+	TCB_STACK[2][STACKSIZE-2] = (int32_t)(task2); 
+	currentPt = &tcbs[0];
+	 __enable_irq();
+	return 1;              
+}
+```
+
+In the main.c, we can call the above function to initialize the stack and thread
+```c++
+#define QUANTA	1
+
+int main(void)
+{
+	osKernelInit();
+	osKernelAddThreads(&Task0,&Task1,&Task2);	
+	osKernelLaunch(QUANTA);
+}
+```
+
 The visualization of the Thread Control Block and the stack is in the following
 <p align="center">
 <img src="/img/Stack_TCB.JPG" height="70%" width="70%">
@@ -820,8 +877,8 @@ typedef struct{
 }periodicTaskT;
 
 static periodicTaskT	PeriodicTasks[NUM_PERIODIC_TASKS];
-static uint32_t MaxPeriod;
-static uint32_t TimeMsec;
+uint32_t MaxPeriod;
+uint32_t TimeMsec;
 
 ```
 
@@ -835,6 +892,15 @@ void periodicTask1(void){
 
 void periodicTask2(void){
 	pcount2++;
+}
+
+int main(void)
+{
+	osKernelInit();
+	osKernelAddThreads(&Task0,&Task1,&Task2);
+	osKernelAddPeriodThreads(&periodicTask1,10,&periodicTask2,100);
+	
+	osKernelLaunch(QUANTA);
 }
 ```
 
