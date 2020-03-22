@@ -811,6 +811,7 @@ In <b>osKernel.c</b>, we add the following codes
 #define NUM_PERIODIC_TASKS 2
 
 typedef void(*taskT)(void);
+#define NULL (void*)0
 
 //Following is the TCBs for periodic tasks
 typedef struct{
