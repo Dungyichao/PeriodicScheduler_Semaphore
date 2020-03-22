@@ -239,8 +239,6 @@ tcbs[2].nextPt = &tcbs[0];      // after doing task2, next should do task0, so s
 
 Let's use function to better manage the code. The following codes and function do the exactly same thing in above code.
 ```c++
-int32_t TCB_STACK[NUM_OF_THREADS][STACKSIZE];
-
 struct tcb{
   int32_t *stackPt;       
   struct tcb *nextPt;  
@@ -280,19 +278,6 @@ uint8_t osKernelAddThreads(void(*task0)(void),void(*task1)(void),void(*task2)(vo
 	return 1;              
 }
 ```
-
-In the main.c, we can call the above function to initialize the stack and thread
-```c++
-#define QUANTA	1
-
-int main(void)
-{
-	osKernelInit();
-	osKernelAddThreads(&Task0,&Task1,&Task2);	
-	osKernelLaunch(QUANTA);
-}
-```
-
 The visualization of the Thread Control Block and the stack is in the following
 <p align="center">
 <img src="/img/Stack_TCB.JPG" height="70%" width="70%">
@@ -359,17 +344,26 @@ The visualization of the SysTick_Handler and the stack is in the following
 #define QUANTA	1
 uint32_t MILLIS_PRESCALER;
 
-MILLIS_PRESCALER=(BUS_FREQ/1000);
-SysTick->CTRL =0;   //Disable the SysTick timer; Offset: 0x000 (R/W)  SysTick Control and Status Register
-SysTick->VAL=0;     //Clear current value to 0; Offset: 0x008 (R/W)  SysTick Current Value Register
-NVIC_SetPriority(SysTick_IRQn, 0x0);   // This is not necessary because we don't implement other interrupt.
-SysTick->LOAD = (QUANTA * MILLIS_PRESCALER)-1;   //Offset: 0x004 (R/W)  SysTick Reload Value Register
-SysTick->CTRL =0x00000007;
+void osKernelInit(void)
+{
+	 __disable_irq();
+	MILLIS_PRESCALER=(BUS_FREQ/1000);
+}
 
-/*
-Since the SysTick timer counts down to 0, if you want to set the SysTick interval to 1000, 
-you should set the reload value (SysTick->LOAD) to 999
-*/
+void osKernelLaunch(uint32_t quanta)
+{
+  SysTick->CTRL =0;   //Disable the SysTick timer; Offset: 0x000 (R/W)  SysTick Control and Status Register
+  SysTick->VAL=0;     //Clear current value to 0; Offset: 0x008 (R/W)  SysTick Current Value Register
+  NVIC_SetPriority(SysTick_IRQn, 0x0);   // This is not necessary because we don't implement other interrupt.
+  SysTick->LOAD = (QUANTA * MILLIS_PRESCALER)-1;   //Offset: 0x004 (R/W)  SysTick Reload Value Register
+  SysTick->CTRL =0x00000007;
+  osSchedulerLaunch();  //in osKernel.s assembly code
+
+  /*
+  Since the SysTick timer counts down to 0, if you want to set the SysTick interval to 1000, 
+  you should set the reload value (SysTick->LOAD) to 999
+  */
+}
 ```
 For more SysTick configure, please refer to the Cortex-M4 Devices Generic Use Guide (page 4-33) or the following link: https://www.sciencedirect.com/topics/engineering/systick-interrupt
 
@@ -378,7 +372,19 @@ For more SysTick configure, please refer to the Cortex-M4 Devices Generic Use Gu
 </p>
 
 ### 3.3 Result <br />
-Let's execute the code (provided in the folder Simple_code) and enter the debug view to monitor count0, count1, count2. You will see those 3 values are counting at the same time.
+In the main.c, we can call the above function to initialize the stack and thread
+```c++
+#define QUANTA	1
+
+int main(void)
+{
+	osKernelInit();
+	osKernelAddThreads(&Task0,&Task1,&Task2);	
+	osKernelLaunch(QUANTA);
+}
+```
+
+Let's execute the code (provided in the folder BSP) and enter the debug view to monitor count0, count1, count2. You will see those 3 values are counting at the same time.
 <p align="center">
 <img src="/img/simple_result.gif" height="60%" width="60%">
 </p>
