@@ -962,7 +962,9 @@ int main(void)
 ```
 
 The result is the in following
-
+<p align="center">
+<img src="/img/periodic3.gif" height="50%" width="50%">
+</p>
 
 ### 7.4 TCB + Timer Interrupts
 
