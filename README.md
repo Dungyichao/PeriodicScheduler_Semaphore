@@ -719,6 +719,8 @@ void TIM3_Init(void){
 	
 }
 ```
+For the following information, please refer to STM32F411xC/E advanced Arm®-based 32-bit MCUs Manual 
+[https://www.st.com/resource/en/reference_manual/dm00119316-stm32f411xc-e-advanced-arm-based-32-bit-mcus-stmicroelectronics.pdf](https://www.st.com/resource/en/reference_manual/dm00119316-stm32f411xc-e-advanced-arm-based-32-bit-mcus-stmicroelectronics.pdf)
 <p align="center">
 <table>
     <thead>
@@ -731,19 +733,27 @@ void TIM3_Init(void){
         <tr>
             <td align="center">RCC Register</td>
 	    <td align="Left">To enable the clock of TIM3, we need to set the bit1 of RCC_APB1ENR to 1 <br /><p align="center">
-<img src="/img/TIM3_1.JPG" height="70%" width="70%"> 
-</p>  </td>
+<img src="/img/TIM3_1.JPG" height="90%" width="90%"></p><br /> page 118  </td>
         </tr>
         <tr>
-            <td align="center">Connectivity: SPI1</td>
-            <td align="Left"></td>
+            <td align="center">TIMx->PSC</td>
+            <td align="Left">TIMx prescaler<br /><p align="center">
+<img src="/img/TIM3_2.JPG" height="90%" width="90%"></p><br /> page 367 </td>
         </tr>
 	<tr>
-            <td align="center">GPIO_Output</td>
-            <td align="Left"></td>
+            <td align="center">TIMx->ARR</td>
+            <td align="Left">TIMx auto-reload register</td>
         </tr>
 	 <tr>
-            <td align="center">Clock Configure</td>
+            <td align="center">TIMx->CR1</td>
+            <td align="Left">TIMx control register 1</td>
+        </tr>
+	<tr>
+            <td align="center">TIMx->DIER</td>
+            <td align="Left">TIMx DMA/Interrupt enable register</td>
+        </tr>
+	<tr>
+            <td align="center">NVIC_EnableIRQ</td>
             <td align="Left"></td>
         </tr>
     </tbody>
