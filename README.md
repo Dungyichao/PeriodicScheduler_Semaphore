@@ -29,11 +29,11 @@ Task scheduling is an important concept in Real-Time Operating Systems (Task, th
 ------------------------------------Advance (Optional)------------------------------------------- <br />
 
 6. [Using PendSV for Context Switch](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#6-using-pendsv-thread-switcher)
-7. Period Scheduling
-	* 7.1 
-	* 7.2
-	* 7.3
-	* 7.4
+7. [Period Scheduling](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#7-period-scheduling)
+	* 7.1 [Method 1 - Multiple Periodic Threads](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#71-method-1---multiple-periodic-threads)
+	* 7.2 [Method 2 - Timer Interrupts](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#72-method-2---timer-interrupts)
+	* 7.3 [Method 3 - Thread Control Blocks (TCB)](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#73-method-3---thread-control-blocks-tcb)
+	* 7.4 [TCB + Timer Interrupts](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#74-tcb--timer-interrupts)
 8. [Reference and conclusion](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#7-reference-and-conclusion)
 
 # 1. What is the Goal <br />
