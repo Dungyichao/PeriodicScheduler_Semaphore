@@ -752,7 +752,8 @@ For the following information, please refer to STM32F411xC/E advanced Arm®-base
         </tr>
 	<tr>
             <td align="center">TIMx->DIER</td>
-            <td align="Left">TIMx DMA/Interrupt enable register</td>
+            <td align="Left">TIMx DMA/Interrupt enable register<br /><p align="center">
+<img src="/img/TIM3_5.JPG" height="90%" width="90%"></p>page 357</td>
         </tr>
 	<tr>
             <td align="center">NVIC_EnableIRQ</td>
