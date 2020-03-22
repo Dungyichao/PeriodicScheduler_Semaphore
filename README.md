@@ -693,6 +693,12 @@ void SysTick_Handler(void)
 # 7. Period Scheduling
 In this section, we will introduce 3 method to achieve period scheduling. Please disable all the semaphore and LCD related elements. Why do we need period scheduling? Some tasks require being executed every SysTick exception while some tasks don't need to be executed so frequently. Thus, for those tasks only need longer period, we can adobt the following methods.
 
+We will follow the code and function in section 3.2 
+[(Implement Task, Stack, Thread Control Block and Context Switch)](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#32-implement-task-stack-thread-control-block-and-context-switch-)
+ and section 6
+ [(Using PendSV for Context Switch)](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#6-using-pendsv-for-context-switch)
+.
+
 ### 7.1 Periodic Threads
 
 In the osKernel.c, we add the following code. periodicTask1 and periodicTask2 only get executed when certain condition matches.
@@ -933,7 +939,7 @@ void osSchedulerPeriodicRR(void)
 }
 ```
 
-In <b>main.c</b>, we define 2 periodic tasks: periodicTask1 and periodicTask2
+In <b>main.c</b>, we define 2 periodic tasks: periodicTask1 and periodicTask2.
 ```c++
 uint32_t pcount1,pcount2;
 
@@ -954,6 +960,8 @@ int main(void)
 	osKernelLaunch(QUANTA);
 }
 ```
+
+The result is the in following
 
 
 ### 7.4 TCB + Timer Interrupts
