@@ -1,0 +1,716 @@
+Welcome to the Modern Embedded Systems Programming course.
+My name is Miro Samek and in this second lesson on RTOS
+(that is: Real-Time Operating System) I'll show you how to
+automate the context switch process. Specifically, in this
+lesson you will start building your own minimal RTOS that
+will implement the manual context switch procedure that you
+worked out in the previous lesson 22.
+
+As usual, let's get started by making a copy of the
+previous lesson 22 directory and renaming it to lesson 23.
+Get inside the new lesson 23 directory and double-click on
+the uVision project "lesson" to open it.
+
+To remind you quickly what happened so far, in the last
+lesson you've been posed a challenge to blink both green
+and blue LEDs on your LaunchPad board, but do it
+independently. After finding out that you cannot easily do
+this in a single loop, you've explored the idea of running
+two background loops simultaneously. Specifically, you've
+created two such loops, called main_blinky1 and
+main_blinky2 and then you tried to figure out how to switch
+the CPU between executing one to executing the other.
+
+This turned out to be the central idea behind a Real-Time
+Operating System -- RTOS, whose main job is exactly to
+extend the foreground/background architecture by allowing
+you to run multiple background loops on a single CPU and to
+create an illusion of concurrent execution by frequently
+switching the CPU among all these loops.
+
+You also learned the new terminology, in which the
+background loops managed by the RTOS are called "threads"
+or "tasks" and the switching from one such thread to
+another is called "context-switch".
+
+Finally, in the last lesson 22, you've worked out an
+algorithm to performed the context-switch manually. In this
+lesson, you will write the actual code to *automate* it.
+Specifically, today you will start building your own
+"MInimal Real-time Operating System, which I abbreviated to
+MIROS.
+
+As I am a strong believer in learning by doing, I think
+that that the process of building a minimal, but functional
+RTOS kernel from scratch, will offer you a deeper learning
+experience than trying to learn by reverse-engineering an
+existing product, such as FreeRTOS. This is because any
+real-life kernel is necessarily much more complex with
+features that will only make sense to you later, so it is
+just too easy to lose the big picture for the minutia.
+
+So, let's get started by adding a new project group called
+MiROS, in which you create just two files.
+First is the header file that will contain the Application
+Programming Interface (API) of your RTOS
+and second is the C file that will contain the complete
+implementation of the RTOS.
+
+In the header file, you place the usual inclusion guards.
+
+But also, as this piece of code has a potential of being
+used more widely, it is a good idea to provide a comment
+with a brief description, copyright, and licensing terms.
+
+I say here that this code is intended as a teaching aid and
+is not recommended for commercial applications. I decided
+to use the GPL open source license and include the standard
+language from the GPL that declines any warranties.
+
+Finally, the comment contains the contact information.
+The first thing you need in the header file is a way to
+represent your threads.
+
+For this, you can look in your main.c file, where you see
+that each thread requires a private stack pointer SP, and
+perhaps some other information.
+
+You can capture this, by providing a struct OSThread, that
+contains the SP pointer and can be extended in the future,
+as your RTOS grows. In the standard RTOS implementations,
+the data structure associated with a thread is
+traditionally called a Thread Control Block (TCB).
+
+As far as the prefix "OS" is concerned, similar prefixes
+are used in many RTOSes, where they serve two purposes.
+
+First, is to clearly indicate which elements are parts of
+the operating system--OS. And the second purpose is that
+such prefix reduces the possibility of name collisions in
+larger projects, where someone might also choose the same
+name "Thread", but for something entirely different.
+
+With the OSThread typedef provided, you can now use it in
+main.c. You need to include "miros.h" header file, and
+replace the stack pointers with the OSThread type.
+
+The next RTOS API you need is a function to fabricate the
+register context on each thread's stack. Traditionally such
+an RTOS service is called thread-create or thread-start.
+
+Here I will use the name OSThread underscore start.
+The function needs to take the following parameters:
+a pointer to the TCB. I will call this pointer "me", which
+is a coding convention that I will explain in a future
+lesson about object-oriented programming in C.
+a pointer-to-function to the thread handler, which is a bit
+tricky to define in C and the best way is to provide a
+typedef for it. For now, let's call this type
+OSThreadHandler.
+
+And finally, the thread-start function needs the memory for
+the private stack and the size of that stack.
+This signature will be augmented with additional
+parameters, as your MiROS RTOS grows, but this is all for
+now.
+
+Regarding the pointer to the thread-function, you need to
+typedef it obviously before the thread-start signature as
+follows:
+
+It is a pointer to a function taking no arguments (for now)
+and returning void.
+
+As far as the implementation is concerned, you start your
+miros.c file with the same comment as in miros.h and you
+include both stdint.h and miros.h header files.
+
+You copy the OSThread_start() signature from miros.h and
+the body from main.c.
+
+To stitch the two pieces together, you need to establish
+the initial stack pointer, from which to build the stack
+frame.
+
+As I mentioned in lesson 22, on ARM Cortex-M the stack
+grows from hi- to low-memory, so you need to start from the
+end of the provided stack memory.
+
+As I also mentioned, the Cortex-M stack needs to be aligned
+at the 8-byte boundary. But obviously the user of the
+function might not be aware of these requirements, so it is
+unwise to assume that the end of the provided stack memory
+will be properly aligned.
+
+But, you can ensure the proper alignment by rounding-down
+the end-address. One way to achieve it is to apply integer
+division by 8 followed by integer multiplication by 8.
+
+Next, you simply replace the sp_blinky1 identifier with sp.
+
+You also change the main_blink1 thread-handler with the
+threadHandler parameter of your OSThread_start() function.
+And finally, after the stack frame is built, you save the
+top of the stack frame into the sp member of your OSThread
+structure.
+
+At this point, you can add some extra features, such as
+pre-filling the remaining stack with a known bit pattern,
+like 0xDEADBEEF here. This will make it easier for you to
+see the stack in memory, and will help you to determine the
+worst-case stack use. You will see this later in the
+debugger view.
+
+Your OSThread_start() function is ready now, so you can
+call right away inside main.c.
+
+You first call it for the blinky1 thread.
+
+And then simply replicate the code for the blinky2 thread.
+
+As you can see, the code still builds error-free.
+The next feature is the actual code for the context-switch
+algorithm.
+
+As you saw in the last lesson, the context switch must
+happen during the return from an interrupt, such as
+SysTick, and in principle you could code it right there.
+But the main drawback would be that the context-switch code
+would need to be added to every interrupt service routine
+(ISR) in the system. This would not only be repetitious,
+but it would defeat one of the main benefits of ARM Cortex-
+M, which is that ISRs can be pure C functions. I hope you
+realize from the last lesson that the context switch cannot
+be coded in standard C, but rather will require some CPU-
+specific assembly code to build the very specific stack
+frames as well as to manipulate the CPU stack pointer
+register.
+
+However, it turns out that ARM Cortex-M offers a solution
+that allows you to code the context-switch in only one
+interrupt, which will be then efficiently triggered from
+other interrupts or even from the thread-level code, if
+need be.
+
+The trick of triggering an interrupt has been already
+introduced back in lesson 18, where you triggered SysTick
+by setting a bit in a special register inside the System
+Control Block module.
+
+Today, you will use the same exact trick again, but with
+respect to a different exception called PendSV,
+which exists for this specific purpose and virtually all
+RTOSes for Cortex-M use it for context-switching. I'd like
+you to remember, however, that PendSV is not that special
+and in principle you could use any other asynchronous
+exception or interrupt for the purpose of context-
+switching.
+
+To see how it will work, let's add an empty PendSV_Handler
+() implementation at the end of miros.c file, build, and
+open the debugger.
+
+First, let's check that your OSThread_start() function
+calls fabricate the expected stack content in the memory
+view.
+
+And indeed you can easily see the stack for blinky1 and the
+stack for blinky2.
+Next, set a breakpoint in your SysTick_Handler and run the
+program.
+
+When the breakpoint is hit, scroll your memory view to the
+address 0xE000ED04, which is the Interrupt Control and
+State Register in the System Control Block.
+As you can check in the datasheet, the PendSV exception is
+triggered by setting the bit number 28, which is 0x1
+followed by seven zeroes,
+you write this value into the ICSR register to trigger
+PendSV.
+
+Before running the program, move the original breakpoint in
+SysTick to the next instruction and set another breakpoint
+in your empty PendSV_Handler(). This setup has been already
+used in lesson 18, because it allows you to determine
+precisely the order of preemption.
+
+When you run the program now, it turns out that the first
+breakpoint hit is inside PendSV. This confirms that you
+have successfully triggered the PendSV exception.
+
+But this is also interesting, because apparently the PendSV
+exception has preempted the still active SysTick exception.
+Indeed, when you continue, you hit the breakpoint in
+SysTick, and only when you continue again you end up in the
+main function.
+
+Unfortunately, this order of preemption is not what you
+want.
+
+Instead, you want the SysTick_Handler to complete, and only
+after it's done, you want the PendSV_Handler to run and
+switch the context.
+Luckily, the ARM Cortex-M core lets you control how
+exceptions and interrupts preempt each other by means of
+the adjustable interrupt priority associated with each
+exception.
+
+Specifically, priorities of SysTick and PendSV are
+controlled by the SYSPRI3 register at address 0xE000ED20.
+You can actually view this register in memory, where you
+can see that the SysTick priority is 0xE0 and PendSV
+priority is 0. These priorities work "backwards" meaning
+that a higher priority number means really lower priority
+for preemption. That's why the PendSV with priority zero
+preempts SysTick with priority E0.
+
+If you flip it, that is you give SysTick priority 0 and
+PendSV the lowest priority E0, you will revert the order of
+preemption.
+
+To prove it, lets setup the breakpoints exactly as before
+and manually trigger PendSV again.
+When you run the code now, you can see that the first
+breakpoint hit is inside SysTick, which means that SysTick
+has not been preempted by PendSV.
+But PendSV still was triggered and runs just as you wanted
+it and it finally returns to main.
+Please also note that you even if you write FF into the
+priority byte associated with PendSV, the value reads back
+as E0.
+
+This is because ARM Cortex-M cores implement interrupt
+priority only in the highest-order bits of the priority
+byte. TivaC MCU implements only three interrupt priority
+bits. Other Cortex-M MCUs might implement more bits, for
+example STM32 implements 4 priority bits, so if you wrote
+FF to an ST chip, it would read back as F0.
+
+If you think that ARM Cortex-M interrupt priority numbering
+scheme is a bit complicated, you are not alone. To get it
+all clarified, in the notes for this video I provide a link
+to my ARM Community blog post "Cutting Through the
+Confusion with Arm Cortex-M Interrupt Priorities".
+
+For today, however, you only need to remember that PendSV
+needs to have the lowest interrupt priority of all
+exceptions and interrupts, which you can set by writing FF
+into the priority byte for PendSV. This would cover all
+possible versions of the ARM Cortex-M cores.
+
+The PendSV priority setting needs to happen during the
+system initialization, so let's put it in the OS_init()
+function.
+
+Please note that inside the RTOS implementation, I decided
+use raw memory address of the SYSPRI3 register instead of
+the CMSIS interface, because I don't want to commit to any
+specific ARM Cortex-M core, such as Cortex-M0, M3, M4, or
+M7. The PendSV priority is at the same address in all of
+them, so this code will be more universal.
+
+Of course, you need to put the OS_init() prototype in the
+miros.h header file,
+and you need to call OS_init() from main.
+
+Inside the application-level code, you should generally
+avoid interrupts with the lowest priority, because the
+lowest level should be reserved for PendSV. Therefore, in
+bsp.c, you need to raise the priority of SysTick from the
+lowest level, to zero, for example.
+
+Here, you commit to a specific TivaC MCU anyway, so you can
+use the CMIS function NVIC_SetPriority() to set the
+priority of the SysTick exception.
+
+With the interrupt priorities in place, you now need a
+function to trigger PendSV. As it will become clearer later
+in this lesson, the triggering of a context-switch will be
+closely related to the decision about which thread to
+schedule next. Therefore, the name of this function will be
+OS_sched().
+
+To implement this scheduling service, you first need to
+decide how to keep track of the current thread and the next
+thread to execute. This you can simply codify as two
+pointers to OSThread objects. The OS_curr pointer, will
+point to the current thread and OS_next will point to the
+next thread to run.
+
+As these pointers will be used inside interrupts, you
+should make them volatile. Please note that you need to
+place the "volatile" keyword after the asterisk, because
+you want your pointer to be volatile. If you placed
+"volatile" before the asterisk, you will get a non-volatile
+pointer pointing to volatile OSThread struct, which is not
+what you want.
+
+Going back to the implementation of the OS_sched()
+function, it needs to decide how to set the OS_next
+pointer, but let's initially skip this step.
+You will see a couple of popular scheduling strategies in
+the upcoming lessons.
+
+For now, let's simply codify how to trigger the PendSV
+exception, but only when the next thread is actually
+different from the current thread.
+
+At this point, as with all RTOS services, you should be
+very carefully about race conditions, which I introduced
+back in lesson 20. This is actually the most difficult
+aspect of building an RTOS in the first place. With
+OS_sched() you have of course plenty of opportunities for
+race conditions around the current and next pointers, so
+you need to prevent them by disabling interrupts.
+You have two options: either disable interrupts inside the
+function, like this.
+
+Or, you can demand that the whole function must be always
+called from within an already established critical section.
+
+I prefer the second option, because it turns out that the
+scheduler often needs to be called when you already have
+disabled interrupts, so disabling and re-enabling them
+again inside OS_sched() could be problematic.
+
+With this, you can now call the scheduler at the end of
+your SysTick_Hanlder, but you need to surround the with a
+critical section, like this.
+
+So now, finally, you have everything in place to implement
+the context switch inside the PendSV_Handler.
+
+As I mentioned earlier, PendSV will necessarily need to be
+coded in assembly, but you can get a big help from the
+compiler by writing some code in C and then copying the
+compiler-generated code from the disassembly view as a
+convenient starting point for your actual implementation.
+
+The first thing you need in PendSV is to disable
+interrupts.
+
+Next, you need to save the stack context of the current
+thread. But you need to be careful, because the first time
+around there will be no threads running, and the OS_curr
+pointer will be zero out of reset. Therefore you need to
+check for it in the if statement.
+
+Inside the if, you want to push the registers r4 through
+r11 onto the current stack, but you cannot code it in C, so
+you just leave a comment.
+
+After pushing the registers, you need to save the SP
+register into the private sp data member of the current
+thread. Again, you cannot easily access the real SP
+register, but you can at least fake it by introducing a
+local variable sp that the compiler will allocate in a some
+register. You will be able then to replace that register
+with the real SP in the actual code.
+
+After saving the context of the current thread, you need to
+restore the context of the next thread to run. So, you set
+the SP register to the value of the private sp from the
+OS_next thread.
+
+As you are now changing the current thread, you set the
+OS_curr pointer to OS_next.
+
+And finally, you pop the registers r4 through r11 from the
+new stack, you re-enable interrupts and you happily return
+to the next thread.
+
+So, let's build and test all this.
+
+First, step over BSP_init() and OS_init() and verify that
+the priorities of SysTick and PendSV are 0 - the highest
+level and E0 -- the lowest level, respectively.
+
+Next, set a breakpoint in your SysTick_Handler and run the
+code.
+
+When the breakpoint is hit, verify that interrupts are
+being disabled with the "CPSID I" instruction.
+
+Keep stepping through the code into OS_sched().
+And once inside OS_sched, update the watch1 view to see the
+OS_curr and OS_next pointers, which are both zero at this
+point.
+
+Manually set the OS_next pointer to the address of your
+blinky1 object from main.c. This simulates scheduling the
+blinky1 thread to run next.
+
+In the call stack view, verify that OS_sched is called from
+SysTick, which is preempting main.
+
+Step out of OS_sched back to SysTick and verify that
+interrupts are getting re-enabled with the "CPSIE I"
+instruction.
+
+Next, set a breakpoint in your PendSV_Handler and run the
+code.
+
+The breakpoint is hit, which means that OS_sched has
+triggered PendSV. Also, verify that PendSV is now directly
+preempting main, so your mechanism is working.
+
+At this point, you might be concerned about the combined
+overhead of exiting one interrupt (SysTick in this case)
+and entering another (the PendSV exception here). After
+all, typically an interrupt-exit involves popping the 8
+registers from the stack, and an interrupt-entry typically
+involves pushing 8 registers on the stack.
+
+But in this case of back-to-back interrupt processing, the
+ARM Cortex-M core skips the popping and pushing registers
+in the hardware optimization called "tail-chaining". So,
+the overhead is comparable to a simple function call.
+
+So, finally you reach PendSV with your temporary code ready
+for stealing from the disassembly view.
+
+You select all the machine code for PendSV, exit the debugger,
+and paste the code into your PendSV_Handler.
+
+This is the starting point for your final code in assembly.
+
+The first thing you need to change is to tell the compiler
+that the code inside your PendSV_Handler function will be
+in assembly rather than in C. The Keil compiler version 5
+supports the __asm extended keyword applied to a function.
+
+Obviously, this is a non-standard extension to the C
+language and you would need to do this differently in other
+embedded C compilers, but many will actually allow you to
+write the whole function in assembly.
+
+Next, you delete the C code
+and you turn the mixed C statements from the disassembly
+into comments.
+
+Now, let's go through the code one instruction at a time.
+
+First, let me quickly explain the disassembly.
+The first hex number is the address in the code memory.
+
+The next number is the actual machine instruction opcode,
+also in hexadecimal.
+
+This is followed by a human-readable mnemonic of the
+instruction, followed by its parameters.
+
+In the assembly language, you only need the mnemonic and
+parameters, so you need to delete the address and the
+opcode, as I do for the disabling interrupts instruction.
+
+The comment about pushing the registers is misaligned,
+because the disassembler had apparently no idea that the
+comment represents an instruction. You skip it for now,
+because first you need to code the if statement, which
+checks the OS_curr pointer against zero.
+
+Here, you can see that r1 is loaded with a PC-relative
+constant from the code memory. According to the C code,
+this must be the address of the OS_curr variable, for which
+the assembly language provides a special idiom: eguals-
+variable-name.
+
+You might want to remember the address of the OS_curr
+constant, which is hex-5E8, because it will repeat a couple
+of times later in the code.
+
+Next, r1 is loaded again, but this time with the value of
+OS_curr, and the CBZ branch instruction branches to the
+given code address if r1 is zero.
+
+You can search for the destination address of the branch,
+and sure enough you find it downstream.
+
+You need to place there an assembly label. I chose the name
+
+PendSV_restore, because that's the place in the code where
+you will start restoring the context of the next thread.
+You copy and paste the label into the CBZ instruction.
+
+So now you have a better understanding of the code
+structure. Specifically, if the OS_curr pointer is not
+zero, the CBZ instruction will not branch, so here is the
+place for the body of the if statement.
+
+The first thing here is to push the registers r4 through
+r11 onto the stack. Cortex-M actually provides an
+instruction for it, which is simply PUSH r4-r11 in curly
+braces. This wasn't that difficult, was it?
+
+
+Next, you need to store the stack pointer into the private
+sp member of the OS_curr structure. This is accomplished in
+these three instructions, except instead the fake sp that
+the compiler apparently allocated in r0, you use the real
+SP register.
+
+Here, you restore the context of the next thread. You load
+the address of OS_next into r1. And you load again the
+value of OS_next into r1. Finally, you load the value of
+the private sp member from OS_next structure into r0, which
+you replace again with the real SP.
+
+Again, the comment about popping the registers is
+misaligned, so you move it to the right place.
+These four instructions, assign OS_next to OS_curr. You
+load the addresses and values again and finally, you store
+the value of OS_next at the address of OS_curr.
+
+Now is the time to pop the registers r4 through r11 from
+the next-thread's stack, which you code similarly as the
+push instruction earlier.
+
+The re-enabling of interrupts can be left as-is.
+And the return from the PendSV_Handler function can be left
+as-is.
+
+This is the end of the function, so let's try to build it.
+Oops, the code does not compile, because the assembler
+apparently does not recognize the OS_curr and OS_next
+symbols.
+
+You can fix it by providing the explicit IMPORT assembly
+directives, like this.
+
+Now the code compiles and links cleanly, but before running
+it, I still like to improve the comments and overall
+readability of the code.
+
+Of course, as you go over this version, you can see a lot
+of repetitions and opportunities for improvement. Such
+optimization would make a lot of sense, because the
+context-switch code executes quite frequently. But let's
+leave this to the next lesson and finish today by testing
+the code in the debugger.
+
+Make sure that you have a breakpoint in your
+SysTick_Handler and run the program.
+
+Once you hit the breakpoint, step inside the OS scheduler.
+
+Leave a breakpoint here and perform manual scheduling by
+setting the OS_next pointer to the address of the blinky1
+thread.
+
+Make sure that you have a breakpoint in PendSV_Handler
+assembler code and continue running.
+
+Let's step through your assembler code one instruction at a
+time to admire your creation.
+
+The first time through the value of OS_curr in R1 is zero
+so the CBZ branch is taken. Perfect.
+
+The SP register loaded from the OS_next pointer seems
+reasonable, so let's scroll the memory view to that SP.
+The stack content seems correct.
+
+Here, you set OS_curr to OS_next, and as you can see in the
+Watch1 view OS_curr gets updated.
+
+Now, you pop the registers, and the registers R4 through
+R11 look exactly as you prepared them in the OSThread_start
+function.
+
+The pop instruction has obviously changed the SP, so you
+scroll your memory view to the new top of stack.
+
+And finally, you re-enable interrupts and you're about to
+return from PendSV.
+
+You step into the BX lr instruction and...
+Oops, instead of returning to the blinky1 thread, you end
+up in the HardFault_Handler. This is not good. We have a
+bug.
+
+But don't panic and keep your cool! It's time for some real
+debugging...
+
+It seems that everything was going just fine, up to the
+return from the PendSV_Handler, so let's just reset the CPU
+and quickly repeat the steps up to that point.
+
+So, here you are again at the BX lr instruction.
+
+Now let's think how this return instruction can fail.
+Well, the first reason could be the incorrect value in the
+LR register. But it is 0xFFFFFFF9, which is fine. I
+explained this peculiar value back in lesson 18 "interrupts
+part-3".
+
+So, the next reason for a failed return can only be an
+incorrect value for the PC register on the stack. So, let's
+have a look...
+
+Indeed, the value to be restored into the PC starts with
+hex-2. This is obviously a RAM address and not an address
+of any code in ROM. This is very suspect.
+
+So, let's check the code that has generated this stack
+content, which is your OSThread_start() function.
+Specifically, the value for the PC is prepared in this line
+of code.
+
+I wonder if you can see the bug...
+Yes, the threadHandler parameter already is a pointer-to-
+function, so taking an address of it with the ampersand
+operator is wrong. So, THIS is the bug!
+
+Let's fix it, exit the debugger, and re-build the code.
+
+Obviously, now you need to re-test the whole thing again...
+Run the code to OS_sched and manually schedule blinky1
+thread to run next.
+
+Continue, until the BX lr return from PendSV.
+
+Check the stack content, and specifically the value to be
+restored into the PC register.
+
+This is definitely an address in ROM, so it makes much more
+sense now.
+
+OK, so let's take the plunge and execute the BX lr
+instruction.
+
+And... what do you know. You end up inside the main_blinky1
+function, so you are starting the blinky1 thread!
+When you continue, you obvioulsy hit the breakpoint inside
+the scheduler again, but notice that the green LED has
+turned on on your LauchPad board!
+
+Let's remove the breakpoint from OS_sched and let the code
+run free for a while.
+
+As you can see, the green LED is blinking, which means that
+your blinky1 thread is now running.
+Restore the breakpoint in OS_sched, and manually schedule
+you blinky2 thread.
+
+Run the code to the end of PendSV and quickly verify the
+stack content of the blinky2 thread now.
+Step over the BX lr instruction and verify that switched
+the context to blinky2.
+When you stop inside the scheduler, notice that now the
+blue LED is on.
+
+Let the program run free for a while and watch the blue LED
+blink, which means that your blinky2 thread is now active.
+Of course, you can repeat the context switch between bliky1
+and blinky2 as many times as you like.
+
+This concludes this lesson about automating the context
+switch. The scheduling is still performed manually, but the
+next lesson will automate the scheduling as well.
+Specifically you will extend the MIROS RTOS with the
+simplest scheduling policy called round-robin. That way you
+will implement a time-sharing system on your LaunchPad.
+
+If you like this channel, please subscribe to stay tuned.
+You can also visit state-machine.com/quickstart for the
+class notes and project file downloads.
