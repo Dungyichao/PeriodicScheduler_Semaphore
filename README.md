@@ -374,6 +374,14 @@ For more SysTick configure, please refer to the Cortex-M4 Devices Generic Use Gu
 <img src="/img/Systick_ctrl.png" height="80%" width="80%">
 </p>
 
+** Note. In the Udemy RTOS lecture, the instructor use the following code to define the SysTick priority. When I use ```NVIC_GetPriority(SysTick_IRQn)``` to check the SysTick priority, it doesn't show 7. 
+```c++
+#define SYSPRI3 (*((volatile uint32_t *)0xE000ED20))
+SYSPRI3 =(SYSPRI3&0x00FFFFFF)|0xE0000000; // priority 7      
+```
+The instructor gives some explanation, but I think that is not correct, and here is my research: https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/Reference/Problem%20of%20setting%20the%20systick%20priority%20SYSPRI3.pdf
+
+
 ### 3.3 Result <br />
 In the main.c, we can call the above function to initialize the stack and thread
 ```c++
