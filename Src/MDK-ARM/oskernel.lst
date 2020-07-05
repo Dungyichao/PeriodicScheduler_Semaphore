@@ -1,0 +1,111 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000                 AREA             |.text|, CODE, READONLY, ALIGN=
+2
+    2 00000000                 THUMB
+    3 00000000                 PRESERVE8
+    4 00000000                 EXTERN           currentPt
+    5 00000000                 EXPORT           SysTick_Handler
+    6 00000000                 EXPORT           osSchedulerLaunch
+    7 00000000         
+    8 00000000         SysTick_Handler                      ;save r0,r1,r2,r3,r
+                                                            12,lr,pc,psr      
+    9 00000000 B672            CPSID            I
+   10 00000002 E92D 0FF0       PUSH             {R4-R11}    ;save r4,r5,r6,r7,r
+                                                            8,r9,r10,r11   
+   11 00000006 480F            LDR              R0, =currentPt ; r0 points to c
+                                                            urrentPt       
+   12 00000008 6801            LDR              R1, [R0]    ; r1= currentPt   
+   13 0000000A F8C1 D000       STR              SP, [R1]
+   14 0000000E 6849            LDR              R1, [R1,#4] ; r1 =currentPt->ne
+                                                            xt   
+   15 00000010 6001            STR              R1, [R0]    ;currentPt =r1   
+   16 00000012 B501            PUSH             {R0,LR}
+   17 00000014 E8BD 4001       POP              {R0,LR}
+   18 00000018 6801            LDR              R1,[R0]     ;R1= currentPt i.e.
+                                                             New thread
+   19 0000001A F8D1 D000       LDR              SP, [R1]    ;SP= currentPt->sta
+                                                            ckPt   
+   20 0000001E E8BD 0FF0       POP              {R4-R11}
+   21 00000022 B662            CPSIE            I
+   22 00000024 4770            BX               LR
+   23 00000026         
+   24 00000026         
+   25 00000026         
+   26 00000026         osSchedulerLaunch
+   27 00000026 4807            LDR              R0, =currentPt
+   28 00000028 6802            LDR              R2, [R0]    ; R2 =currentPt    
+                                                               
+   29 0000002A F8D2 D000       LDR              SP, [R2]    ;SP = currentPt->st
+                                                            ackPt    
+   30 0000002E E8BD 0FF0       POP              {R4-R11}
+   31 00000032 BC0F            POP              {R0-R3}
+   32 00000034 F85D CB04       POP              {R12}
+   33 00000038 B001            ADD              SP,SP,#4
+   34 0000003A F85D EB04       POP              {LR}
+   35 0000003E B001            ADD              SP,SP,#4
+   36 00000040 B662            CPSIE            I
+   37 00000042 4770            BX               LR
+   38 00000044         
+   39 00000044                 ALIGN
+   40 00000044                 END
+              00000000 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp.sp --apcs=
+interwork --depend=stream\oskernel_1.d -ostream\oskernel_1.o -I.\RTE\_stream -I
+C:\Users\dungyichao\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include 
+-IC:\Users\dungyichao\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.14.0\Drivers
+\CMSIS\Device\ST\STM32F4xx\Include --predefine="__EVAL SETA 1" --predefine="__M
+ICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 529" --predefine="_RTE_ SET
+A 1" --predefine="STM32F411xE SETA 1" --list=oskernel.lst osKernel.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+.text 00000000
+
+Symbol: .text
+   Definitions
+      At line 1 in file osKernel.s
+   Uses
+      None
+Comment: .text unused
+SysTick_Handler 00000000
+
+Symbol: SysTick_Handler
+   Definitions
+      At line 8 in file osKernel.s
+   Uses
+      At line 5 in file osKernel.s
+Comment: SysTick_Handler used once
+osSchedulerLaunch 00000026
+
+Symbol: osSchedulerLaunch
+   Definitions
+      At line 26 in file osKernel.s
+   Uses
+      At line 6 in file osKernel.s
+Comment: osSchedulerLaunch used once
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+External symbols
+
+currentPt 00000000
+
+Symbol: currentPt
+   Definitions
+      At line 4 in file osKernel.s
+   Uses
+      At line 11 in file osKernel.s
+      At line 27 in file osKernel.s
+
+1 symbol
+342 symbols in table
