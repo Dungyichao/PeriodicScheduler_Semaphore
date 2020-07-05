@@ -1,4 +1,4 @@
-# Task Scheduler
+# Real-Time Operating Systems (RTOS)
 Task scheduling is an important concept in Real-Time Operating Systems (Task, thread, process are interchangeable). Take your daily life for example, when trying to listen to music on your cellphone while surfing news websites through the internet (receiving data from wi-fi router in the meantime). How does it work under only one core of CPU (CPU can only execute one command at a time)? Each task such as open the browser may require hundred or thousand lines of codes, then how can we listen to music and open websites at the same time? It comes to task scheduling. We will use <b>STM32F411RE Nucleo64</b> and <b>ST7735S TFT LCD</b> to demonstrate the concept. If any reference link in this tutorial cannot be accessed, please refer to the Reference folder above.
 
 1. [What is the Goal](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#1-what-is-the-goal-)
