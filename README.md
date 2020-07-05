@@ -579,6 +579,8 @@ We are approaching the goal. However, we cannot directly apply the same code fro
 
 ### 5.1 Configure CubeMX <br />
 
+You can follow the following steps to configure the CubeMX. If you want to jump to the code directly, then you can simply download the CubeMX project in the above folder ```CubeMX``` and click Generate Code. This will give you exactly the same configuration of the later tutorial so that you can skip Section 5.1 and goining on with Section 5.2. 
+
 <p align="center">
 <table>
     <thead>
