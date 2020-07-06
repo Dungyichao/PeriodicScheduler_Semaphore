@@ -1170,6 +1170,8 @@ The result will be the following.
 <img src="/img/periodic4.gif" height="50%" width="50%">
 </p>
 
+### 7.5 Thread Sleep
+We can also make one of task sleep for specified time period. During the sleeping time, the task scheduler would skip the sleeping task and move on to executing the non-sleeping task. 
 
 # 8. Reference and conclusion
 * Udemy course: Build Your Own RealTime OS (RTOS) From Ground Up on ARM 1. Instructor: Israel Gbati
