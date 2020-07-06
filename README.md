@@ -706,6 +706,9 @@ void SysTick_Handler(void)
    ICSR = 0x10000000; //  Bit28. Change PendSV exception state to pending. trigger PendSV  
 }
 ```
+
+For more information of ICSR, please check document: Cortex - M4 Devices Generic User Guide (page 4-14) provided in the folder ```Reference```
+
 # 7. Period Scheduling
 In this section, we will introduce 4 method to achieve period scheduling. Please disable all the semaphore and LCD related elements. Why do we need period scheduling? Some tasks require being executed every SysTick exception while some tasks don't need to be executed so frequently. Thus, for those tasks only need longer period, we can adobt the following methods.
 
