@@ -34,7 +34,9 @@ Task scheduling is an important concept in Real-Time Operating Systems (Task, th
 	* 7.2 [Method 2 - Timer Interrupts](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#72-method-2---timer-interrupts)
 	* 7.3 [Method 3 - Thread Control Blocks (TCB)](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#73-method-3---thread-control-blocks-tcb)
 	* 7.4 [TCB + Timer Interrupts](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#74-tcb--timer-interrupts)
+	* 7.5 [Method 4 - Thread Sleep](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#75-thread-sleep)
 8. [Reference and conclusion](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#7-reference-and-conclusion)
+
 
 # 1. What is the Goal <br />
 Let's first take a look at what are we going to achieve after this tutorial.
@@ -705,7 +707,7 @@ void SysTick_Handler(void)
 }
 ```
 # 7. Period Scheduling
-In this section, we will introduce 3 method to achieve period scheduling. Please disable all the semaphore and LCD related elements. Why do we need period scheduling? Some tasks require being executed every SysTick exception while some tasks don't need to be executed so frequently. Thus, for those tasks only need longer period, we can adobt the following methods.
+In this section, we will introduce 4 method to achieve period scheduling. Please disable all the semaphore and LCD related elements. Why do we need period scheduling? Some tasks require being executed every SysTick exception while some tasks don't need to be executed so frequently. Thus, for those tasks only need longer period, we can adobt the following methods.
 
 We will follow the code and function in section 3.2 
 [(Implement Task, Stack, Thread Control Block and Context Switch)](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#32-implement-task-stack-thread-control-block-and-context-switch-)
