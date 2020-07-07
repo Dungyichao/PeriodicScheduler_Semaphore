@@ -1178,6 +1178,8 @@ The result will be the following.
 ### 7.5 Method 4 - Thread Sleep
 We can also make one of task sleep for specified time period. During the sleeping time, the task scheduler would skip the sleeping task and move on to executing the non-sleeping task. 
 
+We will continue the code from section [7.4](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#74-tcb--timer-interrupts) with a little modification.
+
 # 8. Reference and conclusion
 * Udemy course: Build Your Own RealTime OS (RTOS) From Ground Up on ARM 1. Instructor: Israel Gbati
 
