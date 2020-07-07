@@ -696,6 +696,8 @@ PendSV_Handler             ;save r0,r1,r2,r3,r12,lr,pc,psr
     BX      LR 
 ```
 
+If you encounter multiply defined of PendSV_Handler, please disable the PendSV_Handler defined in ```stm32f4xx_it.h``` and ```stm32f4xx_it.c``` file.
+
 In the osKernel.c, we add
 
 ```c++
@@ -1178,7 +1180,7 @@ The result will be the following.
 ### 7.5 Method 4 - Thread Sleep
 We can also make one of task sleep for specified time period. During the sleeping time, the task scheduler would skip the sleeping task and move on to executing the non-sleeping task. 
 
-We will continue the code from section [7.4](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#74-tcb--timer-interrupts) with a little modification.
+We will continue the code from section [7.4](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#74-tcb--timer-interrupts) with a little modification. You can start from the CubeMX project provided in ```CubeMX``` folder and generate code from it. Copy the code from ```code/7.4```,  disable the PendSV_Handler as well as TIM2_IRQHandler defined in ```stm32f4xx_it.h``` and ```stm32f4xx_it.c``` file.
 
 # 8. Reference and conclusion
 * Udemy course: Build Your Own RealTime OS (RTOS) From Ground Up on ARM 1. Instructor: Israel Gbati
