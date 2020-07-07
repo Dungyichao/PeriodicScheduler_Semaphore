@@ -1180,7 +1180,7 @@ The result will be the following.
 ### 7.5 Method 4 - Thread Sleep
 We can also make one of task sleep for specified time period. During the sleeping time, the task scheduler would skip the sleeping task and move on to executing the non-sleeping task. 
 
-We will continue the code from section [7.4](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#74-tcb--timer-interrupts) with a little modification. You can start from the CubeMX project provided in ```CubeMX``` folder and generate code from it. Copy the code from ```code/7.4```,  disable the PendSV_Handler as well as TIM2_IRQHandler defined in ```stm32f4xx_it.h``` and ```stm32f4xx_it.c``` file.
+We will continue the code from section [7.4](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#74-tcb--timer-interrupts) with a little modification. Start a new project in Kuvision, select device STM32F411RETx, configure the Run-Time Environment (check CMSIS --> CORE, Device --> Startup). Copy the code from ```code/7.4``` into project folder, include paths of this project folder. Add existing file of the copied code.
 
 # 8. Reference and conclusion
 * Udemy course: Build Your Own RealTime OS (RTOS) From Ground Up on ARM 1. Instructor: Israel Gbati
