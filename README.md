@@ -1182,7 +1182,18 @@ We can also make one of task sleep for specified time period. During the sleepin
 
 We will continue the code from section [7.4](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#74-tcb--timer-interrupts) with a little modification. Start a new project in Kuvision, select device STM32F411RETx, configure the Run-Time Environment (check CMSIS --> CORE, Device --> Startup). Copy the code from ```code/7.4``` into project folder, include paths of this project folder. Add existing file of the copied code.
 
-We don't need to put periodic tasks or event triggered tasks into sleep because they are often short, so we now look into the ```tcb``` part and add sleep function into it. Remember our main tasks which is in ```tcb``` runs infinit while (1) loop, only when the time quanta is up, or OS thread yield function is called, then the task in the tcb will stop temporally which we can see in [section 3](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#3-code-concept-of-preemptive-scheduling-with-round-robin-) . Sleep will be the third method to put the task in tcb to stop temporally. 
+We don't need to put periodic tasks or event triggered tasks into sleep because they are often short, so we now look into the ```tcb``` part and add sleep function into it. Remember our main tasks which is in ```tcb``` runs infinit while (1) loop, only when the time quanta is up, or OS thread yield function is called, then the task in the tcb will stop temporally which we can see in [section 3](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#3-code-concept-of-preemptive-scheduling-with-round-robin-) . Sleep will be the third method to put the task in tcb to stop temporally. Now our tcb will be like the following
+
+```c++
+struct tcb{
+	
+	int32_t *stackPt;
+	struct tcb *nextPt;
+	uint32_t sleepTime;
+	
+};
+```
+
 
 # 8. Reference and conclusion
 * Udemy course: Build Your Own RealTime OS (RTOS) From Ground Up on ARM 1. Instructor: Israel Gbati
