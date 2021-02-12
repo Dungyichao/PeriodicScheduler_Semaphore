@@ -35,7 +35,7 @@ Task scheduling is an important concept in Real-Time Operating Systems (Task, th
 	* 7.3 [Method 3 - Thread Control Blocks (TCB)](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#73-method-3---thread-control-blocks-tcb)
 	* 7.4 [TCB + Timer Interrupts](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#74-tcb--timer-interrupts)
 	* 7.5 [Method 4 - Thread Sleep](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#75-method-4---thread-sleep)
-8. [Inter-Thread Data Transfer]
+8. [Inter-Thread Data Transfer](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#8-inter-thread-data-transfer)
 9. [Reference and conclusion](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#7-reference-and-conclusion)
 
 
