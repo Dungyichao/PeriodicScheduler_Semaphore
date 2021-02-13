@@ -1198,6 +1198,160 @@ struct tcb{
 # 8. Inter-Thread Data Transfer
 If one thread (thread 0) is keep reading data from a sensor, we want another thread (thread 1) to keep processing data from thread 0, then we can implement the following method to achieve the function mentioned.
 
+### 8.1 Configure CubeMX
+We will follow on the section [5.1](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#51-configure-cubemx-) ~ [5.4](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#54-include-header-file-and-clear-out-comment-in-mainc-). However, we add ADC like we did in another [tutorial](https://github.com/Dungyichao/STM32F4-LCD_ST7735s#31--configure-pins-on-cubemx) during CubeMX configuration in section 5.1. On the left panel, click Analog --> ADC1 --> Select Mode: IN4. Lastly, we generate the code.
+
+### 8.2 Inter-Thread Communication Code
+
+In ```osKernel.c``` we add following code. In ```main.c```, one task (reading sensor value) will keep calling ```osFifoPut(value)``` while another take (display read value on LCD) will keep calling ```osFifoGet()```.
+```c++
+uint32_t PutI;
+uint32_t GetI;
+uint32_t OS_Fifo[FIFO_SIZE];
+int32_t  current_fifo_size;
+uint32_t lost_data;
+
+
+void osFifoInit(void){
+  PutI =0;
+	GetI =0;
+	osSemaphoreInit(&current_fifo_size,0);
+	lost_data =0;
+	
+}
+
+
+int8_t osFifoPut(uint32_t data){
+	
+  if(current_fifo_size ==  FIFO_SIZE){
+      lost_data++;
+      return -1;
+   }
+    OS_Fifo[PutI] = data;
+    PutI = (PutI+1)% FIFO_SIZE;
+    osSignalSet(&current_fifo_size);
+	
+    return 1;
+}
+
+uint32_t osFifoGet(void){
+    uint32_t data;
+    osSignalWait(&current_fifo_size);
+    __disable_irq();
+    data  = OS_Fifo[GetI];
+    GetI =  (GetI+1)%FIFO_SIZE;
+    __enable_irq();	
+	
+    return data;	
+}
+ 
+```
+We also add one function to convert integer to string so that we can display on LCD ([reference](https://stackoverflow.com/questions/8257714/how-to-convert-an-int-to-string-in-c))
+
+```c++
+char* itoa(int value, char* result, int base) {
+    // check that the base if valid
+    if (base < 2 || base > 36) { *result = '\0'; return result; }
+
+    char* ptr = result, *ptr1 = result, tmp_char;
+    int tmp_value;
+
+    do {
+        tmp_value = value;
+        value /= base;
+        *ptr++ = "zyxwvutsrqponmlkjihgfedcba9876543210123456789abcdefghijklmnopqrstuvwxyz" [35 + (tmp_value - value * base)];
+    } while ( value );
+
+    // Apply negative sign
+    if (tmp_value < 0) *ptr++ = '-';
+    *ptr-- = '\0';
+    while(ptr1 < ptr) {
+        tmp_char = *ptr;
+        *ptr--= *ptr1;
+        *ptr1++ = tmp_char;
+    }
+    return result;
+}
+
+```
+
+In the ```main.c``` we add the following code
+
+```c++
+#define QUANTA	300
+int32_t semaphore1, semaphore2, semaphore0;
+volatile int sensorValue;
+char snum[5];                    // to store string converted from integer
+
+void Task0(void)                 // Reading sensor value. Our sensor is Potentiometer
+{
+	while(1)
+	{
+		osSignalWait(&semaphore0);
+		
+		HAL_ADC_Start(&hadc1);
+		HAL_ADC_PollForConversion(&hadc1,1);
+		sensorValue = HAL_ADC_GetValue(&hadc1);
+		
+		osFifoPut(sensorValue);		
+		
+		osSignalSet(&semaphore1);
+	}
+}
+
+void Task1(void)
+{
+	while(1)
+	{
+		osSignalWait(&semaphore1);
+		
+		sensorValue  = osFifoGet();
+		
+		itoa(sensorValue, snum, 10);
+		ST7735_DrawString(3, 5, snum, ST7735_RED);	
+		
+		osSignalSet(&semaphore2);
+		
+	}
+}
+
+void Task2(void)
+{
+	while(1)
+	{
+		osSignalWait(&semaphore2);
+		//ST7735_DrawString(3, 7, "Task2", ST7735_YELLOW);
+		osSignalSet(&semaphore0);	
+	}
+}
+
+int main(void)
+{
+	......
+	
+	ST7735_Init();
+	ST7735_FillScreen(ST7735_BLACK);
+	ST7735_DrawString(1, 0, "CPU=", ST7735_ORANGE);
+	
+	osSemaphoreInit(&semaphore0, 1);
+	osSemaphoreInit(&semaphore1, 0);
+	osSemaphoreInit(&semaphore2, 0);
+
+	osKernelInit();
+	osKernelAddThreads(&Task0,&Task1,&Task2);
+	osKernelLaunch(QUANTA);
+	
+	while (1)
+	  {
+
+
+
+	  }
+	
+	.....
+}
+```
+
 
 
 # 9. Reference and conclusion
