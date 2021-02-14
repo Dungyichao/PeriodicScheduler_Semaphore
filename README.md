@@ -1265,6 +1265,12 @@ char* itoa(int value, char* result, int base) {
         value /= base;
         *ptr++ = "zyxwvutsrqponmlkjihgfedcba9876543210123456789abcdefghijklmnopqrstuvwxyz" [35 + (tmp_value - value * base)];
     } while ( value );
+    
+    /*
+    The bracket operator is acting as an array index operator. The C string decays to a char *, 
+    which points to the first letter in the string 'z'. The bracket operator accesses the character 
+    at position [35 + (tmp_value - value * base)] in the C string.
+    */
 
     // Apply negative sign
     if (tmp_value < 0) *ptr++ = '-';
