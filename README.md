@@ -1201,6 +1201,10 @@ If one thread (thread 0) is keep reading data from a sensor, we want another thr
 ### 8.1 Configure CubeMX
 We will follow on the section [5.1](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#51-configure-cubemx-) ~ [5.4](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#54-include-header-file-and-clear-out-comment-in-mainc-). However, we add ADC like we did in another [tutorial](https://github.com/Dungyichao/STM32F4-LCD_ST7735s#31--configure-pins-on-cubemx) during CubeMX configuration in section 5.1. On the left panel, click Analog --> ADC1 --> Select Mode: IN4. On the left panel, click SYS --> Timebase Source --> Select TIM2. Lastly, we generate the code.
 
+<p align="center">
+<img src="/img/8_cubemx_config.png" height="70%" width="70%">
+</p>
+
 ### 8.2 Inter-Thread Communication Code
 
 In ```osKernel.c``` we add following code. In ```main.c```, one task (reading sensor value) will keep calling ```osFifoPut(value)``` while another take (display read value on LCD) will keep calling ```osFifoGet()```. The value will be stored in and read from array ```OS_Fifo```.
