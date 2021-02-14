@@ -1199,7 +1199,7 @@ struct tcb{
 If one thread (thread 0) is keep reading data from a sensor, we want another thread (thread 1) to keep processing data from thread 0, then we can implement the following method to achieve the function mentioned.
 
 ### 8.1 Configure CubeMX
-We will follow on the section [5.1](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#51-configure-cubemx-) ~ [5.4](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#54-include-header-file-and-clear-out-comment-in-mainc-). However, we add ADC like we did in another [tutorial](https://github.com/Dungyichao/STM32F4-LCD_ST7735s#31--configure-pins-on-cubemx) during CubeMX configuration in section 5.1. On the left panel, click Analog --> ADC1 --> Select Mode: IN4. Lastly, we generate the code.
+We will follow on the section [5.1](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#51-configure-cubemx-) ~ [5.4](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#54-include-header-file-and-clear-out-comment-in-mainc-). However, we add ADC like we did in another [tutorial](https://github.com/Dungyichao/STM32F4-LCD_ST7735s#31--configure-pins-on-cubemx) during CubeMX configuration in section 5.1. On the left panel, click Analog --> ADC1 --> Select Mode: IN4. On the left panel, click SYS --> Timebase Source --> Select TIM2. Lastly, we generate the code.
 
 ### 8.2 Inter-Thread Communication Code
 
