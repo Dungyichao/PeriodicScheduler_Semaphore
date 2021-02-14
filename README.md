@@ -1365,7 +1365,7 @@ int main(void)
 	.....
 }
 ```
-
+Compile the project and load to the board, you may find the LCD is turning full bright. Hard reset the board and the LCD should be turning black as our program does. You can try to increase the  sensor update frequency by reducing ```#define QUANTA 300``` in the ```main.c```.
 
 
 # 9. Reference and conclusion
