@@ -1210,21 +1210,19 @@ We will follow on the section [5.1](https://github.com/Dungyichao/PeriodicSchedu
 In ```osKernel.c``` we add following code. In ```main.c```, one task (reading sensor value) will keep calling ```osFifoPut(value)``` while another task (display read value on LCD) will keep calling ```osFifoGet()```. The value will be stored in and read from array ```OS_Fifo```.
 ```c++
 #define FIFO_SIZE 15
-uint32_t PutI;
-uint32_t GetI;
-uint32_t OS_Fifo[FIFO_SIZE];
-int32_t  current_fifo_size;
-uint32_t lost_data;
+uint32_t PutI;                // Put index
+uint32_t GetI;                // Get index
+uint32_t OS_Fifo[FIFO_SIZE];  // Array to store value
+int32_t  current_fifo_size;   // Grow as more data being stored into the Array OS_Fifo. This variable would not exceed FIFO_SIZE
+uint32_t lost_data;           // amount of data which has not been read and get overwrite
 
 
 void osFifoInit(void){
   PutI =0;
-	GetI =0;
-	osSemaphoreInit(&current_fifo_size,0);
-	lost_data =0;
-	
+  GetI =0;
+  osSemaphoreInit(&current_fifo_size,0);
+  lost_data =0;	
 }
-
 
 int8_t osFifoPut(uint32_t data){
 	
@@ -1234,7 +1232,7 @@ int8_t osFifoPut(uint32_t data){
    }
     OS_Fifo[PutI] = data;
     PutI = (PutI+1)% FIFO_SIZE;
-    osSignalSet(&current_fifo_size);
+    osSignalSet(&current_fifo_size);     //current_fifo_size will add one
 	
     return 1;
 }
