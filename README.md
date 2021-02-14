@@ -1214,7 +1214,7 @@ uint32_t PutI;                // Put index
 uint32_t GetI;                // Get index
 uint32_t OS_Fifo[FIFO_SIZE];  // Array to store value
 int32_t  current_fifo_size;   // Grow as more data being stored into the Array OS_Fifo. This variable would not exceed FIFO_SIZE
-uint32_t lost_data;           // amount of data which has not been read and get overwrite
+uint32_t lost_data;           // amount of data which has not been put into the array and get discarded.
 
 
 void osFifoInit(void){
