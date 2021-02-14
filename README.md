@@ -1247,14 +1247,6 @@ uint32_t osFifoGet(void){
 }
  
 ```
-The following code should be added to ```osKernel.h```
-```c++
-void osFifoInit(void);
-int8_t osFifoPut(uint32_t data);
-uint32_t osFifoGet(void);		
-char* itoa(int value, char* result, int base);													 
-#define PERIOD		100
-```
 
 We also add one function to convert integer to string so that we can display on LCD ([reference](https://stackoverflow.com/questions/8257714/how-to-convert-an-int-to-string-in-c))
 
@@ -1283,6 +1275,14 @@ char* itoa(int value, char* result, int base) {
     return result;
 }
 
+```
+The following code should be added to ```osKernel.h```
+```c++
+void osFifoInit(void);
+int8_t osFifoPut(uint32_t data);
+uint32_t osFifoGet(void);		
+char* itoa(int value, char* result, int base);													 
+#define PERIOD		100
 ```
 
 In the ```main.c``` we add the following code
