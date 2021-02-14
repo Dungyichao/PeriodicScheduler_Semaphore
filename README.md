@@ -35,8 +35,11 @@ Task scheduling is an important concept in Real-Time Operating Systems (Task, th
 	* 7.3 [Method 3 - Thread Control Blocks (TCB)](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#73-method-3---thread-control-blocks-tcb)
 	* 7.4 [TCB + Timer Interrupts](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#74-tcb--timer-interrupts)
 	* 7.5 [Method 4 - Thread Sleep](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#75-method-4---thread-sleep)
-8. 
-9. [Inter-Thread Data Transfer](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#8-inter-thread-data-transfer)
+8. [Other Scheduling Method](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#8-other-scheduling-method)
+	* 8.1 [Priority Scheduling](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#81-priority-scheduling)
+	* 8.2 [Sporadic Scheduling](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#82-sporadic-scheduling)
+	* 8.3 [Fixed Scheduling](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#83-fixed-scheduling)
+9. [Inter-Thread Data Transfer](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#9-inter-thread-data-transfer)
 10. [Reference and conclusion](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#7-reference-and-conclusion)
 
 
@@ -1389,7 +1392,7 @@ Compile the project and load to the board, you may find the LCD is turning full 
 <img src="/img/inter_thread_comm3.gif" height="80%" width="80%"> 
 </p> 
 
-# 9. Reference and conclusion
+# 10. Reference and conclusion
 * Udemy course: Build Your Own RealTime OS (RTOS) From Ground Up on ARM 1. Instructor: Israel Gbati
 
 The reason of making this tutorial is that the code provided from instructor of the Udemy course is not working at all and the instructor didn't reply to any student at all. This tutorial is to guide those people who want to get some knowledge of multitasking.
