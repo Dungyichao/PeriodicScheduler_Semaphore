@@ -1196,14 +1196,14 @@ struct tcb{
 ```
 
 # 8. Inter-Thread Data Transfer
-If one thread (thread 0) is keep reading data from a sensor, we want another thread (thread 1) to keep processing data from thread 0, then we can implement the following method to achieve the function mentioned.
+If one thread (thread 0) is keep reading data from a sensor, we want another thread (thread 1) to keep processing data from thread 0, then we can implement the following method to achieve the function mentioned. Here is our project, we got one Potentiometer and LCD device. The Potentiometer will act as a sensor, Task0 in our code will keep reading the sensor value, while Task1 will keep showing the sensor value onto the LCD.  
 
 ### 8.1 Configure CubeMX
 We will follow on the section [5.1](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#51-configure-cubemx-) ~ [5.4](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#54-include-header-file-and-clear-out-comment-in-mainc-). However, we add ADC like we did in another [tutorial](https://github.com/Dungyichao/STM32F4-LCD_ST7735s#31--configure-pins-on-cubemx) during CubeMX configuration in section 5.1. On the left panel, click Analog --> ADC1 --> Select Mode: IN4. On the left panel, click SYS --> Timebase Source --> Select TIM2. Lastly, we generate the code.
 
 ### 8.2 Inter-Thread Communication Code
 
-In ```osKernel.c``` we add following code. In ```main.c```, one task (reading sensor value) will keep calling ```osFifoPut(value)``` while another take (display read value on LCD) will keep calling ```osFifoGet()```.
+In ```osKernel.c``` we add following code. In ```main.c```, one task (reading sensor value) will keep calling ```osFifoPut(value)``` while another take (display read value on LCD) will keep calling ```osFifoGet()```. The value will be stored in and read from array ```OS_Fifo```.
 ```c++
 #define FIFO_SIZE 15
 uint32_t PutI;
