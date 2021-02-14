@@ -1367,6 +1367,9 @@ int main(void)
 ```
 Compile the project and load to the board, you may find the LCD is turning full bright. Hard reset the board and the LCD should be turning black. Try to roate the Potentiometer to see the value chaning on the LCD board. The following is the result. 
 
+<p align="center">
+<img src="/img/inter_thread_comm3.gif" height="80%" width="80%"> 
+</p> 
 
 # 9. Reference and conclusion
 * Udemy course: Build Your Own RealTime OS (RTOS) From Ground Up on ARM 1. Instructor: Israel Gbati
