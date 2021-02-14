@@ -713,7 +713,7 @@ void SysTick_Handler(void)
    ICSR = 0x10000000; //  Bit28. Change PendSV exception state to pending. trigger PendSV  
 }
 ```
-The SysTick_Handler will then trigger the PendSV.
+The SysTick_Handler will then trigger the PendSV. You might encounter error (about multiple defined PendSV) when compiling. You just need to comment out the PendSV function in ```stm32f4xx_it.c``` and ```stm32f4xx_it.h```.
 For more information of ICSR, please check document: Cortex - M4 Devices Generic User Guide (page 4-14) provided in the folder ```Reference```. Look for ```PENDSVCLR``` and ```PENDSVSET```
 
 # 7. Period Scheduling
