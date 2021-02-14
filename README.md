@@ -40,7 +40,7 @@ Task scheduling is an important concept in Real-Time Operating Systems (Task, th
 	* 8.2 [Sporadic Scheduling](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#82-sporadic-scheduling)
 	* 8.3 [Fixed Scheduling](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#83-fixed-scheduling)
 9. [Inter-Thread Data Transfer](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#9-inter-thread-data-transfer)
-10. [Reference and conclusion](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#7-reference-and-conclusion)
+10. [Reference and conclusion](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#10-reference-and-conclusion)
 
 
 # 1. What is the Goal <br />
