@@ -1288,6 +1288,10 @@ char* itoa(int value, char* result, int base);
 In the ```main.c``` we add the following code
 
 ```c++
+#include "st7735.h"
+#include "fonts.h"
+#include "osKernel.h"
+
 #define QUANTA	300
 int32_t semaphore1, semaphore2, semaphore0;
 volatile int sensorValue;
