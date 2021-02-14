@@ -35,8 +35,9 @@ Task scheduling is an important concept in Real-Time Operating Systems (Task, th
 	* 7.3 [Method 3 - Thread Control Blocks (TCB)](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#73-method-3---thread-control-blocks-tcb)
 	* 7.4 [TCB + Timer Interrupts](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#74-tcb--timer-interrupts)
 	* 7.5 [Method 4 - Thread Sleep](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#75-method-4---thread-sleep)
-8. [Inter-Thread Data Transfer](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#8-inter-thread-data-transfer)
-9. [Reference and conclusion](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#7-reference-and-conclusion)
+8. 
+9. [Inter-Thread Data Transfer](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#8-inter-thread-data-transfer)
+10. [Reference and conclusion](https://github.com/Dungyichao/PeriodicScheduler_Semaphore/blob/master/README.md#7-reference-and-conclusion)
 
 
 # 1. What is the Goal <br />
@@ -1195,17 +1196,26 @@ struct tcb{
 };
 ```
 
-# 8. Inter-Thread Data Transfer
+# 8. Other Scheduling Method
+
+## 8.1 Priority Scheduling
+
+## 8.2 Sporadic Scheduling
+
+## 8.3 Fixed Scheduling
+
+
+# 9. Inter-Thread Data Transfer
 If one thread (thread 0) is keep reading data from a sensor, we want another thread (thread 1) to keep processing data from thread 0, then we can implement the following method to achieve the function mentioned. Here is our project, we got one Potentiometer and LCD device. The Potentiometer will act as a sensor, Task0 in our code will keep reading the sensor value, while Task1 will keep showing the sensor value onto the LCD.  
 
-### 8.1 Configure CubeMX
+### 9.1 Configure CubeMX
 We will follow on the section [5.1](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#51-configure-cubemx-) ~ [5.4](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#54-include-header-file-and-clear-out-comment-in-mainc-). However, we add ADC like we did in another [tutorial](https://github.com/Dungyichao/STM32F4-LCD_ST7735s#31--configure-pins-on-cubemx) during CubeMX configuration in section 5.1. On the left panel, click Analog --> ADC1 --> Select Mode: IN4. On the left panel, click SYS --> Timebase Source --> Select TIM2. Lastly, we generate the code.
 
 <p align="center">
 <img src="/img/8_cubemx_config.png" height="70%" width="70%">
 </p>
 
-### 8.2 Inter-Thread Communication Code
+### 9.2 Inter-Thread Communication Code
 
 In ```osKernel.c``` we add following code. In ```main.c```, one task (reading sensor value) will keep calling ```osFifoPut(value)``` while another task (display read value on LCD) will keep calling ```osFifoGet()```. The value will be stored in and read from array ```OS_Fifo```.
 ```c++
