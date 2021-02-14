@@ -1292,7 +1292,7 @@ In the ```main.c``` we add the following code
 #include "fonts.h"
 #include "osKernel.h"
 
-#define QUANTA	300
+#define QUANTA	50
 int32_t semaphore1, semaphore2, semaphore0;
 volatile int sensorValue;
 char snum[5];                    // to store string converted from integer
@@ -1365,7 +1365,7 @@ int main(void)
 	.....
 }
 ```
-Compile the project and load to the board, you may find the LCD is turning full bright. Hard reset the board and the LCD should be turning black as our program does. You can try to increase the  sensor update frequency by reducing ```#define QUANTA 300``` in the ```main.c```.
+Compile the project and load to the board, you may find the LCD is turning full bright. Hard reset the board and the LCD should be turning black. Try to roate the Potentiometer to see the value chaning on the LCD board. The following is the result. 
 
 
 # 9. Reference and conclusion
