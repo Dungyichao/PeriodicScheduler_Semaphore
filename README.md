@@ -1205,6 +1205,7 @@ We will follow on the section [5.1](https://github.com/Dungyichao/PeriodicSchedu
 
 In ```osKernel.c``` we add following code. In ```main.c```, one task (reading sensor value) will keep calling ```osFifoPut(value)``` while another take (display read value on LCD) will keep calling ```osFifoGet()```.
 ```c++
+#define FIFO_SIZE 15
 uint32_t PutI;
 uint32_t GetI;
 uint32_t OS_Fifo[FIFO_SIZE];
@@ -1246,6 +1247,15 @@ uint32_t osFifoGet(void){
 }
  
 ```
+The following code should be added to ```osKernel.h```
+```c++
+void osFifoInit(void);
+int8_t osFifoPut(uint32_t data);
+uint32_t osFifoGet(void);		
+char* itoa(int value, char* result, int base);													 
+#define PERIOD		100
+```
+
 We also add one function to convert integer to string so that we can display on LCD ([reference](https://stackoverflow.com/questions/8257714/how-to-convert-an-int-to-string-in-c))
 
 ```c++
