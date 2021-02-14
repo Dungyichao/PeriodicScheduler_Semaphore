@@ -1189,6 +1189,7 @@ We will continue the code from section [7.4](https://github.com/Dungyichao/Perio
 
 We don't need to put periodic tasks or event triggered tasks into sleep because they are often short, so we now look into the ```tcb``` part and add sleep function into it. Remember our main tasks which is in ```tcb``` runs infinit while (1) loop, only when the time quanta is up, or OS thread yield function is called, then the task in the tcb will stop temporally which we can see in [section 3](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#3-code-concept-of-preemptive-scheduling-with-round-robin-) . Sleep will be the third method to put the task in tcb to stop temporally. Now our tcb will be like the following
 
+In ```osKernel.c``` we modify ```struct tcb``` and add function ```osThreadSleep``` (don't forget to put it into header file)
 ```c++
 struct tcb{
 	
@@ -1197,7 +1198,15 @@ struct tcb{
 	uint32_t sleepTime;
 	
 };
+
+void osThreadSleep(uint32_t sleep_time){
+   __disable_irq();
+   currentPt->sleepTime =  sleep_time;
+   __enable_irq();
+   osThreadYield();
+}
 ```
+
 
 # 8. Other Scheduling Method
 
