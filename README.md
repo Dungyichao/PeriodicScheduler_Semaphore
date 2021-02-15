@@ -1397,6 +1397,8 @@ osSchedulerLaunch
 
 In ```main.c```
 ```c++
+........
+#include "osKernel.h"
 uint32_t count0,count1,count2, count3,count4,count5,count6,count7;
 
 void Task0(void)
