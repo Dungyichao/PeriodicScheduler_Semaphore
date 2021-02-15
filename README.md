@@ -1482,6 +1482,10 @@ int main(void)
 }
 ```
 
+<p align="center">
+<img src="/img/Priority_scheduling.gif" height="50%" width="50%">
+</p>
+
 ## 8.2 Sporadic Scheduling
 
 ## 8.3 Fixed Scheduling
