@@ -1285,13 +1285,13 @@ void osPriorityScheduler(void)
 }
 
 uint8_t osKernelAddThreads( void(*task0)(void),uint32_t p0,
-														void(*task1)(void),uint32_t p1,
-														void(*task2)(void),uint32_t p2,
-														void(*task3)(void),uint32_t p3,
-														void(*task4)(void),uint32_t p4,
-														void(*task5)(void),uint32_t p5,
-														void(*task6)(void),uint32_t p6,
-														void(*task7)(void),uint32_t p7)
+			    void(*task1)(void),uint32_t p1,
+			    void(*task2)(void),uint32_t p2,
+			    void(*task3)(void),uint32_t p3,
+			    void(*task4)(void),uint32_t p4,
+			    void(*task5)(void),uint32_t p5,
+			    void(*task6)(void),uint32_t p6,
+			    void(*task7)(void),uint32_t p7)
 {
 	__disable_irq();
 	
@@ -1348,6 +1348,51 @@ uint8_t osKernelAddThreads( void(*task0)(void),uint32_t p0,
 			    void(*task5)(void),uint32_t p5,
 			    void(*task6)(void),uint32_t p6,
 			    void(*task7)(void),uint32_t p7);
+```
+
+In ```osKernel.s```
+```c++
+		AREA |.text|, CODE, READONLY, ALIGN=2
+        THUMB
+		PRESERVE8
+		EXTERN  currentPt
+		EXPORT	PendSV_Handler
+		EXPORT  osSchedulerLaunch
+		IMPORT osPriorityScheduler
+
+PendSV_Handler           ;save r0,r1,r2,r3,r12,lr,pc,psr      
+    CPSID   I                  
+    PUSH    {R4-R11}        ;save r4,r5,r6,r7,r8,r9,r10,r11   
+    LDR     R0, =currentPt  ; r0 points to currentPt       
+    LDR     R1, [R0]        ; r1= currentPt   
+    STR     SP, [R1]   
+
+    PUSH    {R0,LR}
+    BL	    osPriorityScheduler    ;;do the tasks  and set currentPt = currentPt->next
+    POP	    {R0,LR}
+   
+    LDR     R1, [R0]        ;r1= currentPt    (which is the next task)
+    LDR     SP, [R1]        ;SP= currentPt->stackPt   
+    POP     {R4-R11}           
+    CPSIE   I                  
+    BX      LR
+	
+
+osSchedulerLaunch
+    LDR     R0, =currentPt         
+    LDR     R2, [R0]       ; R2 =currentPt       
+    LDR     SP, [R2]       ;SP = currentPt->stackPt    
+    POP     {R4-R11}          
+    POP     {R0-R3}            
+    POP     {R12}
+    ADD     SP,SP,#4           
+    POP     {LR}               
+    ADD     SP,SP,#4         
+    CPSIE   I                 
+    BX      LR                 
+
+    ALIGN
+    END
 ```
 
 ## 8.2 Sporadic Scheduling
