@@ -1224,7 +1224,6 @@ void osKernelInit(void)
 void (*PeriodicTask)(void);
 
 void osPeriodicTask_Init(void(*task)(void), uint32_t freq, uint8_t priority){
-
 	__disable_irq();
 	PeriodicTask = task;
 
@@ -1238,19 +1237,16 @@ void osPeriodicTask_Init(void(*task)(void), uint32_t freq, uint8_t priority){
 	 NVIC_EnableIRQ(TIM4_IRQn);
 }
 
-
 void TIM4_IRQHandler(void){
-	
 	TIM4->SR =0;
 	(*PeriodicTask)();
-
 }
 ```
 
 In ```osKernel.h``` we add the following
 ```c++
 void osThreadSleep(uint32_t sleep_time);
-void periodic_events_execute(void);		                                   //code in 7.4							
+void periodic_events_execute(void);		                                   //code in 7.4
 void osPeriodicTask_Init(void(*task)(void), uint32_t freq, uint8_t priority);      //code in 7.4
 ```
 
