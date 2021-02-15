@@ -1413,6 +1413,7 @@ In ```main.c```
 ```c++
 ........
 #include "osKernel.h"
+#define	QUANTA	10
 uint32_t count0,count1,count2, count3,count4,count5,count6,count7;
 
 void Task0(void)
@@ -1472,6 +1473,7 @@ int main(void)
 	.....
 	osKernelInit();
 	osKernelAddThreads(&Task0,5,&Task1,1,&Task2,1,&Task3,2,&Task4,5,&Task5,1,&Task6,2,&Task7,3);
+	osKernelLaunch(QUANTA);
 	
 	while(1)
 	{
