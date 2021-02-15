@@ -1318,7 +1318,7 @@ uint8_t osKernelAddThreads( void(*task0)(void),uint32_t p0,
 	osKernelStackInit(3);TCB_STACK[3][STACKSIZE-2] = (int32_t)(task3); /*Init PC*/
 	osKernelStackInit(4);TCB_STACK[4][STACKSIZE-2] = (int32_t)(task4); /*Init PC*/
 	osKernelStackInit(5);TCB_STACK[5][STACKSIZE-2] = (int32_t)(task5); /*Init PC*/
-  osKernelStackInit(6);TCB_STACK[6][STACKSIZE-2] = (int32_t)(task6); /*Init PC*/
+        osKernelStackInit(6);TCB_STACK[6][STACKSIZE-2] = (int32_t)(task6); /*Init PC*/
 	osKernelStackInit(7);TCB_STACK[7][STACKSIZE-2] = (int32_t)(task7); /*Init PC*/
 	
 	currentPt = &tcbs[0];
