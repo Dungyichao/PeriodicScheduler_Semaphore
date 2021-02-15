@@ -1189,7 +1189,7 @@ We will continue the code from section [7.4](https://github.com/Dungyichao/Perio
 
 We don't need to put periodic tasks or event triggered tasks into sleep because they are often short, so we now look into the ```tcb``` part and add sleep function into it. Remember our main tasks which is in ```tcb``` runs infinit while (1) loop, only when the time quanta is up, or OS thread yield function is called, then the task in the tcb will stop temporally which we can see in [section 3](https://github.com/Dungyichao/PeriodicScheduler_Semaphore#3-code-concept-of-preemptive-scheduling-with-round-robin-) . Sleep will be the third method to put the task in tcb to stop temporally. Now our tcb will be like the following
 
-In ```osKernel.c``` we modify ```struct tcb``` and add function ```osThreadSleep``` (don't forget to put it into header file)
+Following code in section 7.4. In ```osKernel.c``` we modify ```struct tcb``` and add function ```osThreadSleep``` (don't forget to put it into header file). Unlike section 7.4 using TIM2, we use TIM4 to trigger the function periodic_events_execute which would help us manage the sleep time of each task
 ```c++
 struct tcb{
 	
@@ -1205,12 +1205,150 @@ void osThreadSleep(uint32_t sleep_time){
    __enable_irq();
    osThreadYield();
 }
+
+void periodic_events_execute(void){
+	for(int i =0;i<NUM_OF_THREADS;i++){
+	   if(tcbs[i].sleepTime >0){
+		  tcbs[i].sleepTime--;
+		 }
+	 }
+}
+
+void osKernelInit(void)
+{
+     __disable_irq();
+     MILLIS_PRESCALER=(BUS_FREQ/1000);
+     osPeriodicTask_Init(periodic_events_execute,1000,6);
+}
+
+void (*PeriodicTask)(void);
+
+void osPeriodicTask_Init(void(*task)(void), uint32_t freq, uint8_t priority){
+
+	__disable_irq();
+	PeriodicTask = task;
+
+   	RCC->APB1ENR |=0x4;
+   	TIM4->PSC =  16-1;    /* 16 000 000 / 16 = 1 000 000*/
+	TIM4->ARR =  (1000000/freq)-1;
+   	TIM4->CR1 =1;
+	 
+	 TIM4->DIER |=1;
+	 NVIC_SetPriority(TIM4_IRQn,priority);
+	 NVIC_EnableIRQ(TIM4_IRQn);
+}
+
+
+void TIM4_IRQHandler(void){
+	
+	TIM4->SR =0;
+	(*PeriodicTask)();
+
+}
+```
+
+In ```osKernel.h``` we add the following
+```c++
+void osThreadSleep(uint32_t sleep_time);
+void periodic_events_execute(void);		                                   //code in 7.4							
+void osPeriodicTask_Init(void(*task)(void), uint32_t freq, uint8_t priority);      //code in 7.4
 ```
 
 
 # 8. Other Scheduling Method
 
 ## 8.1 Priority Scheduling
+
+We will required Thread Sleep functions in Section 7.5
+In ```osKernel.c```
+```c++
+typedef void(*taskT)(void);
+#define NUM_OF_THREADS  8  
+
+void osPriorityScheduler(void)
+{
+	  tcbType *_currentPt = currentPt;
+  	tcbType *nextThreadToRun = _currentPt;
+	  uint8_t highestPriorityFound = 255;
+	
+	 do{
+		  _currentPt =_currentPt->nextPt;
+		  if((_currentPt->priority <highestPriorityFound)&&
+		     (_currentPt->blocked ==0)&&
+		     (_currentPt->sleepTime ==0)){
+			 nextThreadToRun =_currentPt;
+			 highestPriorityFound = _currentPt->priority; 
+		   }
+	  }while(_currentPt != currentPt);
+ 
+	  currentPt  =  nextThreadToRun;
+}
+
+uint8_t osKernelAddThreads( void(*task0)(void),uint32_t p0,
+														void(*task1)(void),uint32_t p1,
+														void(*task2)(void),uint32_t p2,
+														void(*task3)(void),uint32_t p3,
+														void(*task4)(void),uint32_t p4,
+														void(*task5)(void),uint32_t p5,
+														void(*task6)(void),uint32_t p6,
+														void(*task7)(void),uint32_t p7)
+{
+	__disable_irq();
+	
+	tcbs[0].nextPt = &tcbs[1];
+	tcbs[1].nextPt = &tcbs[2];
+	tcbs[2].nextPt = &tcbs[3];
+	tcbs[3].nextPt = &tcbs[4];
+	tcbs[4].nextPt = &tcbs[5];
+	tcbs[5].nextPt = &tcbs[6];
+	tcbs[6].nextPt = &tcbs[7];
+	tcbs[7].nextPt = &tcbs[0];
+	
+	osKernelStackInit(0);TCB_STACK[0][STACKSIZE-2] = (int32_t)(task0); /*Init PC*/
+	osKernelStackInit(1);TCB_STACK[1][STACKSIZE-2] = (int32_t)(task1); /*Init PC*/
+	osKernelStackInit(2);TCB_STACK[2][STACKSIZE-2] = (int32_t)(task2); /*Init PC*/
+	osKernelStackInit(3);TCB_STACK[3][STACKSIZE-2] = (int32_t)(task3); /*Init PC*/
+	osKernelStackInit(4);TCB_STACK[4][STACKSIZE-2] = (int32_t)(task4); /*Init PC*/
+	osKernelStackInit(5);TCB_STACK[5][STACKSIZE-2] = (int32_t)(task5); /*Init PC*/
+  osKernelStackInit(6);TCB_STACK[6][STACKSIZE-2] = (int32_t)(task6); /*Init PC*/
+	osKernelStackInit(7);TCB_STACK[7][STACKSIZE-2] = (int32_t)(task7); /*Init PC*/
+	
+	currentPt = &tcbs[0];
+	
+	for(int i=0;i<NUM_OF_THREADS;i++){
+	 tcbs[i].blocked  = 0;
+	 tcbs[i].sleepTime = 0;
+	}
+	
+	
+	tcbs[0].priority = p0;
+	tcbs[1].priority = p1;
+	tcbs[2].priority = p2;
+	tcbs[3].priority = p3;
+	tcbs[4].priority = p4;
+	tcbs[5].priority = p5;
+	tcbs[6].priority = p6;
+	tcbs[7].priority = p7;
+	
+	__enable_irq();
+	
+	return 1;
+}
+
+```
+
+In ```osKernel.h```
+```c++
+void osPriorityScheduler(void);				
+uint8_t osKernelAddThreads( void(*task0)(void),uint32_t p0,
+			    void(*task1)(void),uint32_t p1,
+			    void(*task2)(void),uint32_t p2,
+			    void(*task3)(void),uint32_t p3,
+			    void(*task4)(void),uint32_t p4,
+			    void(*task5)(void),uint32_t p5,
+			    void(*task6)(void),uint32_t p6,
+			    void(*task7)(void),uint32_t p7);
+```
 
 ## 8.2 Sporadic Scheduling
 
