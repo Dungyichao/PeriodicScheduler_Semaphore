@@ -1343,6 +1343,12 @@ uint8_t osKernelAddThreads( void(*task0)(void),uint32_t p0,
 	return 1;
 }
 
+void SysTick_Handler(void)
+{ 
+   //Trigger PendSV
+   ICSR = 0x10000000; //  Bit28. Change PendSV exception state to pending. trigger PendSV  
+}
+
 ```
 
 In ```osKernel.h```
