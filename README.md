@@ -1265,6 +1265,14 @@ In ```osKernel.c```
 typedef void(*taskT)(void);
 #define NUM_OF_THREADS  8  
 
+struct tcb{
+  int32_t *stackPt;       
+  struct tcb *nextPt;  
+  uint32_t sleepTime;
+  uint32_t priority;
+  uint32_t blocked;
+};
+
 void osPriorityScheduler(void)
 {
 	  tcbType *_currentPt = currentPt;
